@@ -18,13 +18,19 @@ public class RebellionEventArgs : System.EventArgs
 }
 public delegate void RebellionHandler(RebellionEventArgs rebellionEventArgs, object sender);
 
-public class POWManager : MonoBehaviour
+public class POWManager : MonoBehaviour,IInjectPlayer
 {
     [SerializeField]
     private List<POWGroupAsset> POWGroupAssets = default;
 
     private List<Koma> komas = new List<Koma>();
     public RebellionHandler OnRebellion;
+
+    private void Start()
+    {
+        
+    }
+
     public void TurnedIntoPOW(Koma koma)
     {
         komas.Add(koma);
@@ -61,5 +67,10 @@ public class POWManager : MonoBehaviour
         {
             OnRebellion?.Invoke(new RebellionEventArgs(allRebillions.ToArray()), this);
         }
+    }
+
+    public void InjectPlayer(PlayerNumber playerNumber)
+    {
+        
     }
 }
