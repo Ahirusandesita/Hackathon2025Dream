@@ -24,9 +24,9 @@ public class POWManager : MonoBehaviour,IInjectPlayer
     private List<POWGroupAsset> POWGroupAssets = default;
     private PlayerNumber playerNumber;
     private List<Koma> komas = new List<Koma>();
-    public RebellionHandler OnRebellion;
+    public event RebellionHandler OnRebellion;
 
-    private void Start()
+    private void Initialize()
     {
         GameManager gameManager = FindObjectOfType<GameManager>();
 
@@ -80,5 +80,6 @@ public class POWManager : MonoBehaviour,IInjectPlayer
     public void InjectPlayer(PlayerNumber playerNumber)
     {
         this.playerNumber = playerNumber;
+        Initialize();
     }
 }

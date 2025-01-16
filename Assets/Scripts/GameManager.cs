@@ -43,4 +43,15 @@ public class GameManager : MonoBehaviour
         }
         throw new System.NullReferenceException();
     }
+    public GameObject Me(PlayerNumber playerNumber)
+    {
+        switch (playerNumber)
+        {
+            case PlayerNumber.Player1:
+                return Player1;
+            case PlayerNumber.Player2:
+                return Player2;
+        }
+        throw new System.NullReferenceException();
+    }
 }
