@@ -22,13 +22,21 @@ public class POWManager : MonoBehaviour,IInjectPlayer
 {
     [SerializeField]
     private List<POWGroupAsset> POWGroupAssets = default;
-
+    private PlayerNumber playerNumber;
     private List<Koma> komas = new List<Koma>();
     public RebellionHandler OnRebellion;
 
     private void Start()
     {
-        
+        GameManager gameManager = FindObjectOfType<GameManager>();
+
+        gameManager.GetComponent<TurnManager>().OnTurnEnd += (turnEndPlayer) =>
+        {
+            if(turnEndPlayer == playerNumber)
+            {
+                Rebellion();
+            }
+        };
     }
 
     public void TurnedIntoPOW(Koma koma)
@@ -71,6 +79,6 @@ public class POWManager : MonoBehaviour,IInjectPlayer
 
     public void InjectPlayer(PlayerNumber playerNumber)
     {
-        
+        this.playerNumber = playerNumber;
     }
 }
