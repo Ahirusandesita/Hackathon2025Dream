@@ -6,30 +6,16 @@
 // --------------------------------------------------------- 
 using UnityEngine;
 using System.Collections;
+using System;
 public class ClickSystem : MonoBehaviour
 {
-    #region variable 
-
     private float _rayRenge = 30f;
 
     private Vector3 _rayHitPotision;
 
     private Masu _hitPostionMasu;
+    public event Action<Masu> OnClickMasu = default;
 
-    #endregion
-    #region property
-    #endregion
-    #region method
-
-    private void Awake()
-    {
-
-    }
-
-    private void Start()
-    {
-
-    }
 
     private void Update()
     {
@@ -45,7 +31,10 @@ public class ClickSystem : MonoBehaviour
             // レイキャスト発射
             if (Physics.Raycast(ClickRay, out hit, _rayRenge))
             {
-                _hitPostionMasu = hit.collider.GetComponent<Masu>();
+                if (hit.collider.TryGetComponent(out Masu masu))
+                {
+                    OnClickMasu?.Invoke(masu);
+                }
 
                 _rayHitPotision = hit.point;
 
@@ -58,6 +47,5 @@ public class ClickSystem : MonoBehaviour
 
         }
 
-    } 
+    }
 }
-#endregion

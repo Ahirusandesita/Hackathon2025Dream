@@ -9,6 +9,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UIElements;
 
 public class KomaController : MonoBehaviour, IInjectPlayer
 {
@@ -16,6 +17,7 @@ public class KomaController : MonoBehaviour, IInjectPlayer
     private Ban _ban = default;
     private List<Koma> _ownKomas = default;
     private PlayerNumber _myPlayerNumber = default;
+    private PhaseManager _phaseManager = default;
 
     private void Initialize()
     {
@@ -33,6 +35,19 @@ public class KomaController : MonoBehaviour, IInjectPlayer
         gameManager.Me(_myPlayerNumber).GetComponent<POWManager>().OnRebellion += (eventData, sender) =>
         {
             _ownKomas.RemoveAll(item => eventData.Rebellions.Contains(item));
+        };
+
+        _phaseManager = FindObjectOfType<PhaseManager>();
+
+        ClickSystem clickSystem = FindObjectOfType<ClickSystem>();
+        clickSystem.OnClickMasu += masu =>
+        {
+            switch (_phaseManager.CurrentPhase)
+            {
+                case PhaseManager.Phase.Attack or PhaseManager.Phase.Move:
+                    OnClickKoma(masu.OwnPosition);
+                    break;
+            }
         };
     }
 
