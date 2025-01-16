@@ -28,8 +28,7 @@ public class BanUI : MonoBehaviour
         _transform = transform;
         Vector3 rightDiff = Vector3.right * -(_transform.position.x / 4);
         Vector3 upDiff = Vector3.up * 0.1f;
-        Vector3 forwardDiff = Vector3.forward * -(_transform.position.z / 4);
-        Debug.Log(rightDiff + forwardDiff);
+        Vector3 forwardDiff = Vector3.forward * (_transform.position.z / 4);
         for (int i = 0; i < 9; i++)
         {
             for (int j = 0; j < 9; j++)

@@ -15,6 +15,8 @@ public class Ban : MonoBehaviour
     //private BanUI _banUI = default;
     private Koma[,] _ban = new Koma[9,9];
 
+    [SerializeField]
+    private int test = 0;
     #endregion
 
     #region property
@@ -28,6 +30,14 @@ public class Ban : MonoBehaviour
     private void Awake()
     {
         _transform = transform;
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            Debug.Log(GetVectorForInt(test));
+        }
     }
     #endregion
 
@@ -153,8 +163,8 @@ public class Ban : MonoBehaviour
     private Vector2Int GetVectorForInt(int sumPos)
     {
         Vector2Int result = default;
-        result.x = sumPos % _ban.Length;
-        result.y = sumPos / ((int)_ban.LongLength / _ban.Length);
+        result.x = sumPos % _ban.GetLength(0);
+        result.y = sumPos / _ban.GetLength(1);
         return result;
     }
 
