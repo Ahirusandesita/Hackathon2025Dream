@@ -11,7 +11,7 @@ using System;
 public class TurnManager : MonoBehaviour
 {
     /// <summary>
-    /// PlayerNumber : 次のプレイヤーのナンバー
+    /// PlayerNumber : ターン終わった人のプレイヤーのナンバー
     /// </summary>
     public event Action<PlayerNumber> OnTurnEnd;
     private PlayerNumber nowTurnPlayerNumber = PlayerNumber.Player1;
