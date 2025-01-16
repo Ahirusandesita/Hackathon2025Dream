@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb8686b0bf29ca847978538258e62d76, type: 3}
+  m_Name: DummyData
+  m_EditorClassIdentifier: 
+  NumberofPOWNeededForRebellion: 4
+  komaAssets:
+  - {fileID: 11400000, guid: 71cd87b8ed29c9b409202388159ce3f5, type: 2}
