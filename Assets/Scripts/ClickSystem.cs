@@ -22,17 +22,17 @@ public class ClickSystem : MonoBehaviour
     #region method
 
     private void Awake()
- {
+    {
 
- }
- 
- private void Start ()
- {
+    }
 
- }
+    private void Start()
+    {
 
- private void Update ()
- {
+    }
+
+    private void Update()
+    {
 
         // ç∂ÉNÉäÉbÉNÇµÇΩÇ∆Ç´
         if (Input.GetMouseButton(0))
@@ -57,5 +57,7 @@ public class ClickSystem : MonoBehaviour
             }
 
         }
-        #endregion
-    }
+
+    } 
+}
+#endregion
