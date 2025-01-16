@@ -160,6 +160,12 @@ public class Ban : MonoBehaviour
     #endregion
 
     #region private method
+    /// <summary>
+    /// <para>GetVectorForInt</para>
+    /// <para>合計座標から座標を算出します</para>
+    /// </summary>
+    /// <param name="sumPos"></param>
+    /// <returns></returns>
     private Vector2Int GetVectorForInt(int sumPos)
     {
         Vector2Int result = default;
@@ -168,6 +174,12 @@ public class Ban : MonoBehaviour
         return result;
     }
 
+    /// <summary>
+    /// <para>CheckPositionInBan</para>
+    /// <para>座標が盤上にあるか検査します</para>
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
     private bool CheckPositionInBan(Vector2Int position)
     {
         if(position.x < 0)
