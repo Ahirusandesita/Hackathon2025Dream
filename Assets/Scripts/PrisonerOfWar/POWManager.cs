@@ -2,31 +2,17 @@
 // POWManager.cs 
 // 
 // CreateDay: 
-// Creator  : 
+// Creator  : –ì‘º
 // --------------------------------------------------------- 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
 public class POWManager : MonoBehaviour
 {
- #region variable 
- #endregion
- #region property
- #endregion
- #region method
- 
- private void Awake()
- {
-
- }
- 
- private void Start ()
- {
-
- }
-
- private void Update ()
- {
-
- }
- #endregion
+    private List<Koma> komas = new List<Koma>();
+    public void TurnedIntoPOW(Koma koma)
+    {
+        
+    }
 }
