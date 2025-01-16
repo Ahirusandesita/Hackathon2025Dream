@@ -135,7 +135,7 @@ public class Ban : MonoBehaviour
     {
         // ï‘ãpóp
         List<Vector2Int> poss = new List<Vector2Int>();
-        int teamNo = 0;//_ban[pos.y, pos.x];
+        PlayerNumber myTeam = _ban[pos.y, pos.x].MyPlayerNumber;
 
         // à⁄ìÆâ¬î\ç¿ïW
         foreach (Vector2Int movable in movablePostions)
@@ -148,7 +148,7 @@ public class Ban : MonoBehaviour
                 continue;
             }
             // âΩÇ‡Ç»Ç¢
-            if (_ban[checkPos.y, checkPos.x] is null || _ban[checkPos.y, checkPos.x])
+            if (_ban[checkPos.y, checkPos.x] is null || myTeam == _ban[checkPos.y, checkPos.x].MyPlayerNumber)
             {
                 continue;
             }
