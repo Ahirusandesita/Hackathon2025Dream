@@ -11,8 +11,8 @@ public class Koma : MonoBehaviour
 {
     [SerializeField]
     private KomaAsset _komaAsset = default;
-    [SerializeField]
-    private 
+    //[SerializeField]
+    //private 
     [SerializeField]
     private Ban _ban = default;
 
@@ -20,6 +20,6 @@ public class Koma : MonoBehaviour
 
     public void Move()
     {
-        _ban.GetMovablePosition()
+        //_ban.GetMovablePosition()
     }
 }
