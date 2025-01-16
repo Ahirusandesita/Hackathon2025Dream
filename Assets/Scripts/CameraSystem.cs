@@ -25,13 +25,14 @@ public class CameraSystem : MonoBehaviour
 
     private void Awake()
     {
-        //_turnManager = FindObjectOfType<GameManager>().GetComponent<TurnManager>();
-        //_turnManager.OnTurnEnd += RotateCamera;
+        _turnManager = FindObjectOfType<TurnManager>();
+        _turnManager.OnTurnEnd += RotateCamera;
         _initialFieldOfView = _camera.fieldOfView;
     }
 
     private void Update()
     {
+        // Debug
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             RotateCamera(PlayerNumber.Player1);
@@ -48,10 +49,10 @@ public class CameraSystem : MonoBehaviour
         switch (playerNumber)
         {
             case PlayerNumber.Player1:
-                nextCameraTransform = _player1Camera;
+                nextCameraTransform = _player2Camera;
                 break;
             case PlayerNumber.Player2:
-                nextCameraTransform = _player2Camera;
+                nextCameraTransform = _player1Camera;
                 break;
         }
 
