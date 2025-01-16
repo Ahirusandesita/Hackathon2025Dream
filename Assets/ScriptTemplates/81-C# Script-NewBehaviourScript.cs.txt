@@ -4,29 +4,26 @@
 // CreateDay: 
 // Creator  : 
 // --------------------------------------------------------- 
+
 using UnityEngine;
 using System.Collections;
+
 public class #SCRIPTNAME# : MonoBehaviour
 {
- #region variable 
- #endregion
- #region property
- #endregion
- #region method
+
+	private void Awake()
+	{
+
+	}
  
- private void Awake()
- {
+	private void Start ()
+	{
 
- }
- 
- private void Start ()
- {
+	}
 
- }
+	 private void Update ()
+	{
 
- private void Update ()
- {
+	}
 
- }
- #endregion
 }
