@@ -18,7 +18,7 @@ public class RebellionEventArgs : System.EventArgs
 }
 public delegate void RebellionHandler(RebellionEventArgs rebellionEventArgs, object sender);
 
-public class POWManager : MonoBehaviour,IInjectPlayer
+public class POWManager : MonoBehaviour, IInjectPlayer
 {
     [SerializeField]
     private List<POWGroupAsset> POWGroupAssets = default;
@@ -32,7 +32,7 @@ public class POWManager : MonoBehaviour,IInjectPlayer
 
         gameManager.GetComponent<TurnManager>().OnTurnEnd += (turnEndPlayer) =>
         {
-            if(turnEndPlayer == playerNumber)
+            if (turnEndPlayer == playerNumber)
             {
                 Rebellion();
             }
@@ -73,6 +73,7 @@ public class POWManager : MonoBehaviour,IInjectPlayer
 
         if (allRebillions.Count > 0)
         {
+            Debug.Log($"{FindObjectOfType<GameManager>().Opponent(playerNumber).GetComponent<PlayerManager>().PlayerNomber}Ç™îΩóêÇãNÇ±ÇµÇ‹ÇµÇΩÅB");
             OnRebellion?.Invoke(new RebellionEventArgs(allRebillions.ToArray()), this);
         }
     }
