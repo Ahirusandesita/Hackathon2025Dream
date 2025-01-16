@@ -12,6 +12,7 @@ public class Ban : MonoBehaviour
 {
     #region variable 
     private Transform _transform = default;
+    //private BanUI _banUI = default;
     private Koma[,] _ban = new Koma[9,9];
 
     #endregion
@@ -78,7 +79,8 @@ public class Ban : MonoBehaviour
             }
         }
 
-        return poss.ToArray();
+        Vector2Int[] result = poss.ToArray();
+        return result;
     }
 
     /// <summary>
@@ -108,7 +110,8 @@ public class Ban : MonoBehaviour
                 poss.Add(checkPos);
             }
         }
-        return poss.ToArray();
+        Vector2Int[] result = poss.ToArray();
+        return result;
     }
 
     /// <summary>
@@ -141,7 +144,8 @@ public class Ban : MonoBehaviour
             }
             poss.Add(checkPos);
         }
-        return poss.ToArray();
+        Vector2Int[] result = poss.ToArray();
+        return result;
     }
     #endregion
 
