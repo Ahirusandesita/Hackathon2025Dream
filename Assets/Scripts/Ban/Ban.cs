@@ -97,6 +97,12 @@ public class Ban : MonoBehaviour
         {
             Vector2Int checkPos = pos + movable;
 
+            // ”ÕŠO
+            if (!CheckPositionInBan(checkPos))
+            {
+                continue;
+            }
+            // ‰½‚à‚È‚¢
             if(_ban[checkPos.y,checkPos.x] is null)
             {
                 poss.Add(checkPos);
@@ -123,6 +129,12 @@ public class Ban : MonoBehaviour
         {
             Vector2Int checkPos = pos + movable;
 
+            // ”ÕŠO
+            if (!CheckPositionInBan(checkPos))
+            {
+                continue;
+            }
+            // ‰½‚à‚È‚¢
             if (_ban[checkPos.y, checkPos.x] is null || _ban[checkPos.y, checkPos.x])
             {
                 continue;
@@ -140,6 +152,27 @@ public class Ban : MonoBehaviour
         result.x = sumPos % _ban.Length;
         result.y = sumPos / ((int)_ban.LongLength / _ban.Length);
         return result;
+    }
+
+    private bool CheckPositionInBan(Vector2Int position)
+    {
+        if(position.x < 0)
+        {
+            return false;
+        }
+        if(_ban.Length <= position.x)
+        {
+            return false;
+        }
+        if(position.y < 0)
+        {
+            return false;
+        }
+        if(((int)_ban.LongLength / _ban.Length) <= position.y)
+        {
+            return false;
+        }
+        return true;
     }
     #endregion
 }
