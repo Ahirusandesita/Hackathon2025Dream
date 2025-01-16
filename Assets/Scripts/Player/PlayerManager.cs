@@ -10,6 +10,7 @@ using System.Collections;
 
 public class PlayerManager : MonoBehaviour
 {
-    private PlayerNomber _playerNumber = default;
-    public PlayerNomber PlayerNomber => _playerNumber;
+    [SerializeField]
+    private PlayerNumber _playerNumber = default;
+    public PlayerNumber PlayerNomber => _playerNumber;
 }
