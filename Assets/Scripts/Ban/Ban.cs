@@ -11,8 +11,11 @@ using System.Collections.Generic;
 public class Ban : MonoBehaviour
 {
     #region variable 
+    private const int NONE = 0;
+    private const int EXIST = 1;
+
     private Transform _transform = default;
-    private Koma[,] _ban = new Koma[9,9];
+    private int[,] _ban = new int[9,9];
 
     #endregion
 
@@ -32,19 +35,21 @@ public class Ban : MonoBehaviour
 
     #region Get method
     /// <summary>
-    /// <para>GetInteractablePosition</para>
-    /// <para>操作可能なマスを返す</para>
+    /// <para>GetNonePosition</para>
+    /// <para>何もないマスを返す</para>
     /// </summary>
-    /// <returns>操作可能なマス（絶対座標）</returns>
-    public Vector2Int[] GetInteractablePosition()
+    /// <returns>何もないマス（絶対座標）</returns>
+    public Vector2Int[] GetNonePosition()
     {
+        // 返却用
         List<Vector2Int> poss = new List<Vector2Int>();
-
+        // 合計座標
         int sumPos = -1;
-        foreach(Koma banKoma in _ban)
+        // 
+        foreach(int banKoma in _ban)
         {
             sumPos++;
-            if(banKoma is null)
+            if(banKoma == NONE)
             {
                 poss.Add(GetVectorForInt(sumPos));
             }
@@ -60,35 +65,21 @@ public class Ban : MonoBehaviour
     /// <param name="pos"></param>
     /// <param name="koma"></param>
     /// <returns>移動可能なマス（絶対座標）</returns>
-    public Vector2Int[] GetMovablePosition(Vector2Int pos, Koma koma)
+    public Vector2Int[] GetMovablePosition(Vector2Int pos, Vector2Int[] movables)
     {
+        // 返却用
         List<Vector2Int> poss = new List<Vector2Int>();
-
-
-        return default;
-    }
-
-    /// <summary>
-    /// <para>GetNowPosition</para>
-    /// <para>現在の駒のマスを返す</para>
-    /// </summary>
-    /// <param name="koma"></param>
-    /// <returns>現在座標</returns>
-    public Vector2Int GetNowPosition(Koma koma)
-    {
-        int sumPos = -1;
-        // 盤の駒検索
-        foreach(Koma banKoma in _ban)
+        // 移動可能座標
+        foreach(Vector2Int movable in movables)
         {
-            sumPos++;
-            if(banKoma == koma)
+            Vector2Int checkPos = pos + movable;
+
+            if(_ban[checkPos.y,checkPos.x] == NONE)
             {
-                break;
+                poss.Add(checkPos);
             }
         }
-        Vector2Int result = GetVectorForInt(sumPos);
-
-        return result;
+        return poss.ToArray();
     }
     #endregion
 
