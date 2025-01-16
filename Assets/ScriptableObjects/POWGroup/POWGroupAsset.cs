@@ -1,14 +1,14 @@
 // --------------------------------------------------------- 
-// Koma.cs 
+// POWGroupAsset.cs 
 // 
 // CreateDay: 
 // Creator  : 
 // --------------------------------------------------------- 
 
 using UnityEngine;
-using System.Collections;
 
-public class Koma : MonoBehaviour
+[CreateAssetMenu(fileName ="NewPOWGroupAsset", menuName ="ScriptableObject/POWGroupAsset")]
+public class POWGroupAsset : MonoBehaviour
 {
 
 }
