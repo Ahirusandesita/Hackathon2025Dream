@@ -14,8 +14,8 @@ public class KomaAsset : ScriptableObject
     [SerializeField]
     private string _komaName = default;
     [SerializeField, Tooltip("‘Š‘ÎÀ•W")]
-    private List<Vector2Int> _moveablePosition = default;
+    private Vector2Int[] _movableDirection = default;
 
     public string KomaName => _komaName;
-    public IReadOnlyList<Vector2Int> MoveablePosition => _moveablePosition;
+    public Vector2Int[] MovableDirection => _movableDirection;
 }

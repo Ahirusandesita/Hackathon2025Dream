@@ -5,6 +5,7 @@
 // Creator  : 
 // --------------------------------------------------------- 
 
+using System.Linq;
 using UnityEngine;
 
 public class Koma : MonoBehaviour
@@ -12,14 +13,11 @@ public class Koma : MonoBehaviour
     [SerializeField]
     private KomaAsset _komaAsset = default;
     //[SerializeField]
-    //private 
+    //private PlayerNomber 
     [SerializeField]
     private Ban _ban = default;
+    private Vector2Int _currentPosition = default;
 
     public KomaAsset KomaAsset => _komaAsset;
-
-    public void Move()
-    {
-        //_ban.GetMovablePosition()
-    }
+    public Vector2Int CurrentPosition => _currentPosition;
 }
