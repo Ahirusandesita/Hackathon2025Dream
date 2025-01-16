@@ -11,7 +11,7 @@ public class BanUI : MonoBehaviour
 {
     #region variable 
     private Transform _transform = default;
-    private List<BanBlinkObj> _blinkObjs = new List<BanBlinkObj>();
+    private BanBlinkObj[] _blinkObjs = default;
     private List<BanBlinkObj> _nowBlink = new List<BanBlinkObj>();
 
     [SerializeField]
@@ -37,7 +37,7 @@ public class BanUI : MonoBehaviour
             }
         }
 
-        _blinkObjs.AddRange(GetComponentsInChildren<BanBlinkObj>());
+        _blinkObjs = GetComponentsInChildren<BanBlinkObj>();
     }
 
     /// <summary>
@@ -78,7 +78,7 @@ public class BanUI : MonoBehaviour
         while(_nowBlink.Count != 0)
         {
             _nowBlink[0].enabled = false;
-            _blinkObjs.Add(_nowBlink[0]);
+            _nowBlink.RemoveAt(0);
         }
     }
     #endregion
