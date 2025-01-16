@@ -6,6 +6,9 @@
 // --------------------------------------------------------- 
 using UnityEngine;
 using System.Collections;
+/// <summary>
+/// プレイヤーナンバーがInjectされる
+/// </summary>
 public interface IInjectPlayer
 {
     void InjectPlayer(PlayerNumber playerNumber);
@@ -31,7 +34,11 @@ public class GameManager : MonoBehaviour
             inject.InjectPlayer(Player2.GetComponent<PlayerManager>().PlayerNomber);
         }
     }
-
+    /// <summary>
+    /// 対戦相手のPlayerGameObjectを取得する
+    /// </summary>
+    /// <param name="playerNumber"></param>
+    /// <returns></returns>
     public GameObject Opponent(PlayerNumber playerNumber)
     {
         switch (playerNumber)
@@ -43,6 +50,11 @@ public class GameManager : MonoBehaviour
         }
         throw new System.NullReferenceException();
     }
+    /// <summary>
+    /// 自分のPlayerGameObjectを取得する
+    /// </summary>
+    /// <param name="playerNumber"></param>
+    /// <returns></returns>
     public GameObject Me(PlayerNumber playerNumber)
     {
         switch (playerNumber)
