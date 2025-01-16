@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   POWGroupAssets:
   - {fileID: 11400000, guid: 1747d825251470142ba309ab7876ad86, type: 2}
+  - {fileID: 11400000, guid: 1348ac9e2b941674ba1c633a14aaf644, type: 2}
 --- !u!114 &-5435342208648331769
 MonoBehaviour:
   m_ObjectHideFlags: 0

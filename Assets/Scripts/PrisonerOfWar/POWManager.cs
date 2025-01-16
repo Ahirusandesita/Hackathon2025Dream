@@ -7,6 +7,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 public class RebellionEventArgs : System.EventArgs
 {
     private Koma[] rebellions;
@@ -75,6 +76,7 @@ public class POWManager : MonoBehaviour, IInjectPlayer
         {
             Debug.Log($"{FindObjectOfType<GameManager>().Opponent(playerNumber).GetComponent<PlayerManager>().PlayerNomber}‚ª”½—‚ð‹N‚±‚µ‚Ü‚µ‚½B");
             OnRebellion?.Invoke(new RebellionEventArgs(allRebillions.ToArray()), this);
+            komas.RemoveAll(item => allRebillions.Contains(item));
         }
     }
 
