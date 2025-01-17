@@ -11,7 +11,7 @@ using System.Collections.Generic;
 public class BanUI : MonoBehaviour
 {
     #region variable 
-    private static BanUI _instatnce = default;
+    private static BanUI _instance = default;
 
     private Transform _transform = default;
     private Ban _ban = default;
@@ -37,8 +37,8 @@ public class BanUI : MonoBehaviour
     #region singleton
     public static BanUI Get()
     {
-        _instatnce = _instatnce != default ? FindAnyObjectByType<BanUI>() : _instatnce;
-        return _instatnce;
+        _instance = _instance != default ? FindAnyObjectByType<BanUI>() : _instance;
+        return _instance;
     }
     #endregion
 
