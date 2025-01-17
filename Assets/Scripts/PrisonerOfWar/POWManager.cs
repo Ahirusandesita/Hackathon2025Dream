@@ -8,6 +8,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
+
 public class RebellionEventArgs : System.EventArgs
 {
     private Koma[] rebellions;
@@ -18,10 +20,13 @@ public class RebellionEventArgs : System.EventArgs
     }
 }
 public delegate void RebellionHandler(RebellionEventArgs rebellionEventArgs, object sender);
-
+public delegate UniTask WaitWithRebellionHandler(RebellionEventArgs rebellionEventArgs, object sender);
 public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameManager>, IInject<IReadOnlyList<POWGroupAsset>>
 {
     public event RebellionHandler OnRebellion;
+    public event WaitWithRebellionHandler OnWaitRebellion;
+
+
     private IReadOnlyList<POWGroupAsset> POWGroupAssets;
     private PlayerNumber playerNumber;
     private List<Koma> POWs = new List<Koma>();
@@ -82,7 +87,7 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
         POWStandBys.Remove(koma);
     }
 
-    private void Rebellion()
+    private async void Rebellion()
     {
         List<Koma> allRebillions = new List<Koma>();
         foreach (POWGroupAsset group in POWGroupAssets)
@@ -113,10 +118,16 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
         {
             Debug.Log($"{FindObjectOfType<GameManager>().Opponent(playerNumber).GetComponent<PlayerManager>().PlayerNomber}が反乱を起こしました。");
             OnRebellion?.Invoke(new RebellionEventArgs(allRebillions.ToArray()), this);
+            if (OnWaitRebellion != null)
+            {
+                await UniTask.WhenAll(
+                    OnWaitRebellion?.GetInvocationList()
+                        .OfType<WaitWithHandler>()
+                            .Select(async (OnAysncEvent) => await OnAysncEvent.Invoke()));
+            }
             POWs.RemoveAll(item => allRebillions.Contains(item));
         }
 
-        //現在アニメーション待機していない
         gameManager.GetComponent<IPhaseChanger>().RebellionCheckEnd(playerNumber);
     }
     void IInject<PlayerNumber>.Inject(PlayerNumber playerNumber)
