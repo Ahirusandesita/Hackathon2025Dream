@@ -51,6 +51,9 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
         gameManager.GetComponent<PhaseManager>().OnPowPutEnd += (playerNumber) =>
         {
             clickSystem.OnClickMasu -= POWPut;
+
+            //‰¼
+            gameManager.GetComponent<IPhaseChanger>().RebellionCheckStart(playerNumber);
         };
     }
     private void POWPut(Masu masu)
