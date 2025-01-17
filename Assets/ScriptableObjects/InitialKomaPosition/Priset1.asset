@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Priset1
   m_EditorClassIdentifier: 
   _initialPositions:
-  - _koma: {fileID: -3280762377907714100, guid: b29a564ec99b12b47a1afc1f3f8e7f0e, type: 3}
+  - _koma: {fileID: -282418160332066350, guid: 1563aad2389ef1849b75cec70d09b2b5, type: 3}
     _position: {x: 4, y: 6}
   - _koma: {fileID: 1530677973945101966, guid: 53294fc358f67054d827af4c33b53b51, type: 3}
     _position: {x: 0, y: 8}
