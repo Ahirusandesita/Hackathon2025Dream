@@ -4,22 +4,20 @@
 // CreateDay: 
 // Creator  : 
 // --------------------------------------------------------- 
-using UnityEngine;
-using System.Collections;
+
 using System;
+using UnityEngine;
+
 public class ClickSystem : MonoBehaviour
 {
     private float _rayRenge = 30f;
-
     private Vector3 _rayHitPotision;
-
     private Masu _hitPostionMasu;
-    public event Action<Masu> OnClickMasu = default;
 
+    public event Action<Masu> OnClickMasu = default;
 
     private void Update()
     {
-
         // 左クリックしたとき
         if (Input.GetMouseButton(0))
         {
@@ -40,12 +38,6 @@ public class ClickSystem : MonoBehaviour
 
                 //Debug.Log("当たった所　" + _rayHitPotision);   
             }
-            else
-            {
-                return;
-            }
-
         }
-
     }
 }

@@ -5,14 +5,14 @@
 // Creator  : 
 // --------------------------------------------------------- 
 
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.UIElements;
+using UnityEngine;
 
 public class KomaController : MonoBehaviour, IInjectPlayer
 {
+    [SerializeField]
+    private InitialKomaPositionAsset _initialKomaPositionAsset = default;
     [SerializeField]
     private Ban _ban = default;
     private List<Koma> _ownKomas = default;
