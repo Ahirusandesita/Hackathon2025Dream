@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _komaName: Fu
   _movableDirection: []
-  _icon: {fileID: 21300000, guid: 26693e66496ec5842ba9d364ff3285de, type: 3}
+  _icon: {fileID: 21300000, guid: 86112d5109aa8b849a09cd9a1b92b6ba, type: 3}
