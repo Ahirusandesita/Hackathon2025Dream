@@ -1,8 +1,8 @@
 // --------------------------------------------------------- 
 // BlinkColor.cs 
 // 
-// CreateDay: 
-// Creator  : 
+// CreateDay: 2025/1/17
+// Creator  : Shizuku
 // --------------------------------------------------------- 
 public enum BlinkColor
 {

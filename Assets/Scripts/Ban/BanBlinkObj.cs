@@ -1,8 +1,8 @@
 // --------------------------------------------------------- 
 // BanBlinkObj.cs 
 // 
-// CreateDay: 
-// Creator  : 
+// CreateDay: 2025/1/16
+// Creator  : Shizuku
 // --------------------------------------------------------- 
 using UnityEngine;
 using System.Collections;

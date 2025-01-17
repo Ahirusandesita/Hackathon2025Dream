@@ -37,7 +37,7 @@ public class BanUI : MonoBehaviour
     #region singleton
     public static BanUI Get()
     {
-        _instance = _instance != default ? FindAnyObjectByType<BanUI>() : _instance;
+        _instance = _instance == default ? FindAnyObjectByType<BanUI>() : _instance;
         return _instance;
     }
     #endregion
@@ -49,7 +49,6 @@ public class BanUI : MonoBehaviour
     private void Awake()
     {
         _transform = transform;
-        FindAnyObjectByType<ClickSystem>().OnClickMasu += Blink;
         _ban = GetComponent<Ban>();
         _rightDiff = -(_transform.position.x / _ban.BanHalfWidth);
         _upDiff = _transform.position.y + _upDiff;
@@ -66,11 +65,18 @@ public class BanUI : MonoBehaviour
     /// <param name="blinkPositions"></param>
     public void Blink(Vector2Int[] blinkPositions, BlinkColor color = BlinkColor.Normal)
     {
+        // 全て消灯
         BlinkOff();
 
         Vector2Int pos = default;
         foreach(BanBlinkObj blinkObj in _blinkObjs)
         {
+            // すでに予定していた座標をすべて点灯させた
+            if(blinkPositions.Length == _nowBlink.Count)
+            {
+                break;
+            }
+
             pos.x = _ban.BanHalfWidth + (int)(blinkObj.transform.position.x / _rightDiff);
             pos.y = Mathf.Abs(-_ban.BanHalfHeight + (int)(blinkObj.transform.position.z / _forwardDiff));
             foreach (Vector2Int blinkPos in blinkPositions)
@@ -92,6 +98,7 @@ public class BanUI : MonoBehaviour
     /// <param name="blinkPositions"></param>
     public void Blink(Vector2Int blinkPosition, BlinkColor color = BlinkColor.Normal)
     {
+        // 全て消灯
         BlinkOff();
 
         Vector2Int pos = default;
@@ -159,12 +166,6 @@ public class BanUI : MonoBehaviour
     #endregion
 
     #region private method
-    private void Blink(Masu masu)
-    {
-        Debug.Log(masu + " " + _ban.CheckPosition(masu.OwnPosition));
-        Blink(masu.OwnPosition, BlinkColor.Attack);
-    }
-
     private Color GetColorForEnum(BlinkColor color)
     {
         switch(color)
