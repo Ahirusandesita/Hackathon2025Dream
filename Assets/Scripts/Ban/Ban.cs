@@ -12,9 +12,6 @@ using System.Collections.Generic;
 public class Ban : MonoBehaviour
 {
     #region variable 
-    private static Ban _instance = default;
-  
-
     private Transform _transform = default;
     private Koma[,] _ban = new Koma[9,9];
 

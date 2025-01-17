@@ -110,6 +110,22 @@ public class BanUI : MonoBehaviour
             }
         }
     }
+
+    public void BlinkOff()
+    {
+        // 今点滅しているものがなければ何もしない
+        if (_nowBlink.Count == 0)
+        {
+            return;
+        }
+
+        // 今点滅しているものを消灯する
+        while (_nowBlink.Count != 0)
+        {
+            _nowBlink[0].enabled = false;
+            _nowBlink.RemoveAt(0);
+        }
+    }
     #endregion
 
     #region Get method
@@ -146,23 +162,8 @@ public class BanUI : MonoBehaviour
     #region private method
     private void Blink(Masu masu)
     {
+        Debug.Log(masu);
         Blink(masu.OwnPosition, BlinkColor.Attack);
-    }
-
-    private void BlinkOff()
-    {
-        // 今点滅しているものがなければ何もしない
-        if (_nowBlink.Count == 0)
-        {
-            return;
-        }
-
-        // 今点滅しているものを消灯する
-        while (_nowBlink.Count != 0)
-        {
-            _nowBlink[0].enabled = false;
-            _nowBlink.RemoveAt(0);
-        }
     }
 
     private Color GetColorForEnum(BlinkColor color)
