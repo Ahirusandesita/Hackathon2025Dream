@@ -12,6 +12,8 @@ using System.Collections.Generic;
 public class Ban : MonoBehaviour
 {
     #region variable 
+    private static Ban _instance = default;
+
     private Transform _transform = default;
     private Koma[,] _ban = new Koma[9,9];
 
@@ -26,6 +28,14 @@ public class Ban : MonoBehaviour
     public int BanHeight { get { return _ban.GetLength(1); } }
     public int BanHalfWidth { get { return Mathf.FloorToInt(BanWidth / 2); } }
     public int BanHalfHeight { get { return Mathf.FloorToInt(BanHeight / 2); } }
+    #endregion
+
+    #region singleton
+    public static Ban Get()
+    {
+        _instance = _instance != default ? FindAnyObjectByType<Ban>() : _instance;
+        return _instance;
+    }
     #endregion
 
     #region unity method
@@ -58,6 +68,16 @@ public class Ban : MonoBehaviour
     public void SetKoma(Koma koma, Vector2Int pos)
     {
         _ban[pos.y, pos.x] = koma;
+    }
+
+    /// <summary>
+    /// <para>RemoveKoma</para>
+    /// <para>ãÓÇçÌèúÇµÇ‹Ç∑</para>
+    /// </summary>
+    /// <param name="pos"></param>
+    public void RemoveKoma(Vector2Int pos)
+    {
+        _ban[pos.y, pos.x] = default;
     }
 
     /// <summary>
