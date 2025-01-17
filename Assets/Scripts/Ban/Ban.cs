@@ -47,15 +47,15 @@ public class Ban : MonoBehaviour
         _transform = transform;
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.T))
-        {
-            Vector2Int a = GetVectorForInt(test);
-            Debug.Log(a + " " + CheckPosition(a) + " " + _ban[a.y, a.x]);
-            _banUI.Blink(a);
-        }
-    }
+    //private void Update()
+    //{
+    //    if(Input.GetKeyDown(KeyCode.T))
+    //    {
+    //        Vector2Int a = GetVectorForInt(test);
+    //        Debug.Log(a + " " + CheckPosition(a) + " " + _ban[a.y, a.x]);
+    //        _banUI.Blink(a);
+    //    }
+    //}
     #endregion
 
     #region Set method
@@ -147,10 +147,14 @@ public class Ban : MonoBehaviour
     {
         // 返却用
         List<Vector2Int> poss = new List<Vector2Int>();
+        PlayerNumber myTeam = _ban[pos.y, pos.x].MyPlayerNumber;
+        int dire = PlayerManager.GetMoveDirectionCoefficient(myTeam);
+
         // 移動可能座標
-        foreach(Vector2Int movable in movablePositions)
+        foreach (Vector2Int movable in movablePositions)
         {
-            Vector2Int checkPos = pos + movable;
+            Vector2Int direMovable = movable * dire;
+            Vector2Int checkPos = pos + direMovable;
 
             // 盤外
             if (!CheckPositionInBan(checkPos))
@@ -180,20 +184,25 @@ public class Ban : MonoBehaviour
         // 返却用
         List<Vector2Int> poss = new List<Vector2Int>();
         PlayerNumber myTeam = _ban[pos.y, pos.x].MyPlayerNumber;
+        int dire = PlayerManager.GetMoveDirectionCoefficient(myTeam);
 
+        //Debug.Log(movablePostions.Length);
         // 移動可能座標
         foreach (Vector2Int movable in movablePostions)
         {
-            Vector2Int checkPos = pos + movable;
-
+            Vector2Int direMovable = movable * dire;
+            Vector2Int checkPos = pos + direMovable;
+            //Debug.Log(checkPos);
             // 盤外
             if (!CheckPositionInBan(checkPos))
             {
+                //Debug.Log("none");
                 continue;
             }
             // 何もない
             if (_ban[checkPos.y, checkPos.x] is null || myTeam == _ban[checkPos.y, checkPos.x].MyPlayerNumber)
             {
+                //Debug.Log("null or myteam");
                 continue;
             }
             poss.Add(checkPos);
