@@ -11,25 +11,41 @@ using System.Collections.Generic;
 public class BanUI : MonoBehaviour
 {
     #region variable 
+    private static BanUI _instatnce = default;
+
     private Transform _transform = default;
     private Ban _ban = default;
-    [SerializeField]
     private BanBlinkObj[] _blinkObjs = default;
     private List<BanBlinkObj> _nowBlink = new List<BanBlinkObj>();
 
-    [SerializeField]
     private float _rightDiff = 0f;
-    [SerializeField]
     private float _upDiff = 0.1f;
-    [SerializeField]
     private float _forwardDiff = 0f;
+
+    [SerializeField]
+    private Color _normalColor = Color.white;
+    [SerializeField]
+    private Color _movableColor = Color.green;
+    [SerializeField]
+    private Color _attackableColor = Color.red;
     #endregion
 
     #region property
 
     #endregion
 
-    #region method
+    #region singleton
+    public static BanUI Get()
+    {
+        _instatnce = _instatnce != default ? FindAnyObjectByType<BanUI>() : _instatnce;
+        return _instatnce;
+    }
+    #endregion
+
+    #region Unity method
+    /// <summary>
+    /// 初期化処理
+    /// </summary>
     private void Awake()
     {
         _transform = transform;
@@ -41,13 +57,15 @@ public class BanUI : MonoBehaviour
         _forwardDiff = (_transform.position.z / _ban.BanHalfHeight);
         _blinkObjs = GetComponentsInChildren<BanBlinkObj>();
     }
+    #endregion
 
+    #region method
     /// <summary>
     /// <para>Blink</para>
     /// <para>点滅させる</para>
     /// </summary>
     /// <param name="blinkPositions"></param>
-    public void Blink(Vector2Int[] blinkPositions)
+    public void Blink(Vector2Int[] blinkPositions, BlinkColor color = BlinkColor.Normal)
     {
         BlinkOff();
 
@@ -60,6 +78,7 @@ public class BanUI : MonoBehaviour
             {
                 if(pos == blinkPos)
                 {
+                    blinkObj.SetColor(GetColorForEnum(color));
                     blinkObj.enabled = true;
                     _nowBlink.Add(blinkObj);
                     break;
@@ -72,7 +91,7 @@ public class BanUI : MonoBehaviour
     /// <para>点滅させる</para>
     /// </summary>
     /// <param name="blinkPositions"></param>
-    public void Blink(Vector2Int blinkPosition)
+    public void Blink(Vector2Int blinkPosition, BlinkColor color = BlinkColor.Normal)
     {
         BlinkOff();
 
@@ -84,13 +103,16 @@ public class BanUI : MonoBehaviour
             Debug.Log(pos + " " + blinkPosition);
             if (pos == blinkPosition)
             {
+                blinkObj.SetColor(GetColorForEnum(color));
                 blinkObj.enabled = true;
                 _nowBlink.Add(blinkObj);
                 break;
             }
         }
     }
+    #endregion
 
+    #region Get method
     /// <summary>
     /// <para>GetWorldPosition</para>
     /// <para>マス座標をワールド座標に変換します</para>
@@ -124,7 +146,7 @@ public class BanUI : MonoBehaviour
     #region private method
     private void Blink(Masu masu)
     {
-
+        Blink(masu.OwnPosition, BlinkColor.Attack);
     }
 
     private void BlinkOff()
@@ -141,7 +163,20 @@ public class BanUI : MonoBehaviour
             _nowBlink[0].enabled = false;
             _nowBlink.RemoveAt(0);
         }
+    }
 
+    private Color GetColorForEnum(BlinkColor color)
+    {
+        switch(color)
+        {
+            case BlinkColor.Normal:
+                return _normalColor;
+            case BlinkColor.Move:
+                return _movableColor;
+            case BlinkColor.Attack:
+                return _attackableColor;
+        }
+        return _normalColor;
     }
     #endregion
 }
