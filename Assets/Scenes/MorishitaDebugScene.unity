@@ -128,11 +128,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7969176027519137419, guid: 34906ae988ad8e641955b76ded1f635c, type: 3}
   m_PrefabInstance: {fileID: 1871866522}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &153612009 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: -6865121218046207256, guid: 34906ae988ad8e641955b76ded1f635c, type: 3}
-  m_PrefabInstance: {fileID: 1871866522}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &153612013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,10 +137,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 153612008}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f84e0018bc98b8741a371bb2a3d97db7, type: 3}
+  m_Script: {fileID: 11500000, guid: dc67d0df026bea94f810bc335f5bdb76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 153612009}
+--- !u!95 &153612014
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153612008}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4da473d5108768f478a70337d64b0677, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &724221703
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -398,8 +413,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -6865121218046207256, guid: 34906ae988ad8e641955b76ded1f635c, type: 3}
+      propertyPath: m_UpdateMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6865121218046207256, guid: 34906ae988ad8e641955b76ded1f635c, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 101875045685152891, guid: 34906ae988ad8e641955b76ded1f635c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3410811781754983947, guid: 34906ae988ad8e641955b76ded1f635c, type: 3}
       propertyPath: clearBehavior
@@ -423,7 +446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6211982779786552283, guid: 34906ae988ad8e641955b76ded1f635c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 6211982779786552283, guid: 34906ae988ad8e641955b76ded1f635c, type: 3}
       propertyPath: m_LocalRotation.x
@@ -431,7 +454,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6211982779786552283, guid: 34906ae988ad8e641955b76ded1f635c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 6211982779786552283, guid: 34906ae988ad8e641955b76ded1f635c, type: 3}
       propertyPath: m_LocalRotation.z
@@ -443,7 +466,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6211982779786552283, guid: 34906ae988ad8e641955b76ded1f635c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 6211982779786552283, guid: 34906ae988ad8e641955b76ded1f635c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -460,6 +483,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7969176027519137419, guid: 34906ae988ad8e641955b76ded1f635c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 153612013}
+    - targetCorrespondingSourceObject: {fileID: 7969176027519137419, guid: 34906ae988ad8e641955b76ded1f635c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 153612014}
   m_SourcePrefab: {fileID: 100100000, guid: 34906ae988ad8e641955b76ded1f635c, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
