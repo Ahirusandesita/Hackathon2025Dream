@@ -9,6 +9,7 @@ using System.Collections;
 using Cysharp.Threading.Tasks;
 using System.Linq;
 using System;
+using System.Collections.Generic;
 /// <summary>
 /// プレイヤーナンバーがInjectされる
 /// </summary>
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
     private GameObject player1;
     [SerializeField]
     private GameObject player2;
+    [SerializeField]
+    private List<POWGroupAsset> POWGroupAssets = new List<POWGroupAsset>();
 
     public GameObject Player1 => player1;
     public GameObject Player2 => player2;
@@ -39,6 +42,10 @@ public class GameManager : MonoBehaviour
         foreach (IInject<GameManager> item in InterfaceUtils.FindObjectOfInterfaces<IInject<GameManager>>())
         {
             item.Inject(this);
+        }
+        foreach (IInject<IReadOnlyList<POWGroupAsset>> item in InterfaceUtils.FindObjectOfInterfaces<IInject<IReadOnlyList<POWGroupAsset>>>())
+        {
+            item.Inject(POWGroupAssets);
         }
 
 
@@ -60,6 +67,11 @@ public class GameManager : MonoBehaviour
             item.Inject(Player2.GetComponent<PlayerManager>().PlayerNomber);
         }
 
+    }
+
+    private async void Start()
+    {
+        await UniTask.WaitForSeconds(1f);
         GameStart().Forget();
     }
     /// <summary>
