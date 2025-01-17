@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using UnityEngine;
 
 public class KomaController : MonoBehaviour, IInjectPlayer
@@ -23,6 +24,8 @@ public class KomaController : MonoBehaviour, IInjectPlayer
 
     private void Initialize()
     {
+        SetInitializeKomas();
+
         GameManager gameManager = FindObjectOfType<GameManager>();
         //反乱したとき　演出とかするときは演出開始処理をforeachの中に書く
         gameManager.Opponent(_myPlayerNumber).GetComponent<POWManager>().OnRebellion += (eventData, sender) =>
@@ -73,5 +76,17 @@ public class KomaController : MonoBehaviour, IInjectPlayer
         Vector2Int[] movablePosition =
             _ban.GetMovablePosition(position, _ownKomas[clickedKomaIndex].KomaAsset.MovableDirection);
 
+    }
+
+    private void SetInitializeKomas()
+    {
+        _ownKomas = new List<Koma>();
+
+        for (int i = 0; i < _initialKomaPositionAsset.InitialPositions.Count; i++)
+        {
+            Koma koma = Instantiate(_initialKomaPositionAsset.InitialPositions[i].Koma);
+            _ownKomas.Add(koma);
+            _ownKomas[i].CurrentPosition = _initialKomaPositionAsset.InitialPositions[i].Position;
+        }
     }
 }
