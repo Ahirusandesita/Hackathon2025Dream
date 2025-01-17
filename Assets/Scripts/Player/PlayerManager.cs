@@ -46,6 +46,11 @@ public class PlayerManager : MonoBehaviour
         PhaseManager phaseManager = transform.root.GetComponent<PhaseManager>();
         phaseManager.OnAttackStart += playerNumber =>
         {
+            if (playerNumber != _playerNumber)
+            {
+                return;
+            }
+
             List<Vector2Int> ownKomaPositions = new List<Vector2Int>();
             foreach (var koma in _komaController.OwnKomas)
             {
@@ -58,7 +63,10 @@ public class PlayerManager : MonoBehaviour
 
         phaseManager.OnAttackEnd += playerNumber =>
         {
-
+            if (playerNumber != _playerNumber)
+            {
+                return;
+            }
         };
 
     }
@@ -89,12 +97,11 @@ public class PlayerManager : MonoBehaviour
     /// <param name="masu"></param>
     private void OnClickMasuAtAttack(Masu masu)
     {
-        print("AAA");
         // 相手の駒が押された
         if (_movableWorldPositions.Contains(masu.OwnPosition))
         {
-            print("BBB");
             _gameManager.Opponent(_playerNumber).GetComponent<KomaController>().TakeAttack(masu.OwnPosition);
+            // ここで攻撃可能な駒があるかチェック
             _clickSystem.OnClickMasu -= OnClickMasuAtAttack;
         }
     }

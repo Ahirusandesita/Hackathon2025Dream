@@ -19,7 +19,7 @@ public class ClickSystem : MonoBehaviour
     private void Update()
     {
         // ¶ƒNƒŠƒbƒN‚µ‚½‚Æ‚«
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ClickRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit = new RaycastHit();
