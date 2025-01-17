@@ -12,6 +12,9 @@ using System.Collections.Generic;
 public class Ban : MonoBehaviour
 {
     #region variable 
+    private static Ban _instance = default;
+  
+
     private Transform _transform = default;
     private Koma[,] _ban = new Koma[9,9];
 
@@ -75,6 +78,21 @@ public class Ban : MonoBehaviour
     #endregion
 
     #region Get method
+    public bool CheckPosition(Vector2Int checkPos)
+    {
+        // ”ÕŠO
+        if (!CheckPositionInBan(checkPos))
+        {
+            return false;
+        }
+        // ‰½‚à‚È‚¢
+        if (_ban[checkPos.y, checkPos.x] is null)
+        {
+            return true;
+        }
+        return false;
+    }
+
     /// <summary>
     /// <para>GetNonePosition</para>
     /// <para>‰½‚à‚È‚¢ƒ}ƒX‚ð•Ô‚·</para>
@@ -97,6 +115,7 @@ public class Ban : MonoBehaviour
         }
 
         Vector2Int[] result = poss.ToArray();
+        BanUI.Get().Blink(result, BlinkColor.Normal);
         return result;
     }
 
@@ -128,6 +147,7 @@ public class Ban : MonoBehaviour
             }
         }
         Vector2Int[] result = poss.ToArray();
+        BanUI.Get().Blink(result, BlinkColor.Move);
         return result;
     }
 
@@ -162,6 +182,7 @@ public class Ban : MonoBehaviour
             poss.Add(checkPos);
         }
         Vector2Int[] result = poss.ToArray();
+        BanUI.Get().Blink(result, BlinkColor.Attack);
         return result;
     }
     #endregion
