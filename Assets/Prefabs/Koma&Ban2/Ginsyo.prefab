@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 614730131581455567}
   - component: {fileID: -559405705158870271}
   - component: {fileID: -8842104551162229965}
+  - component: {fileID: -979244583905090781}
   m_Layer: 0
   m_Name: Ginsyo
   m_TagString: Untagged
@@ -94,7 +95,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3736572469483721871}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 4da473d5108768f478a70337d64b0677, type: 2}
   m_CullingMode: 0
@@ -114,11 +115,24 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3736572469483721871}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc67d0df026bea94f810bc335f5bdb76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-979244583905090781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3736572469483721871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f1502996f9d0b94a9d8d4bada5f5003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _komaAsset: {fileID: 11400000, guid: df92a09dad9ddbb4a903f6ce94bc95a9, type: 2}
 --- !u!1001 &2250237097311872997
 PrefabInstance:
   m_ObjectHideFlags: 0

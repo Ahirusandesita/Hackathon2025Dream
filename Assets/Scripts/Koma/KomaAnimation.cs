@@ -18,25 +18,12 @@ public class KomaAnimation : MonoBehaviour
 
 	private float _moveAmountY = 0.5f;
 
-	private void Awake()
-	{
-		
-	}
+
  
 	private void Start ()
 	{
 		anim = GetComponent<Animator>();
-
-		
-
-
 	}
-
-	 private void Update ()
-	{
-
-	}
-
 
 	public void Koma_MoveFront()
     {
