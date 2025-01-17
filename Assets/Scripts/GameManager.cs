@@ -73,6 +73,20 @@ public class GameManager : MonoBehaviour
     {
         await UniTask.WaitForSeconds(1f);
         GameStart().Forget();
+
+        //GetComponent<TurnManager>().OnTurnEnd += (playerNumber) =>
+        //{
+        //    IPhaseChanger phaseChanger = GetComponent<IPhaseChanger>();
+        //    switch (playerNumber)
+        //    {
+        //        case PlayerNumber.Player1:
+        //            phaseChanger.AttackStart(PlayerNumber.Player2);
+        //            break;
+        //        case PlayerNumber.Player2:
+        //            phaseChanger.AttackStart(PlayerNumber.Player1);
+        //            break;
+        //    }
+        //};
     }
     /// <summary>
     /// ‘Îí‘Šè‚ÌPlayerGameObject‚ğæ“¾‚·‚é

@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: Keima
   m_EditorClassIdentifier: 
   _komaName: Keima
-  _moveablePosition:
-  - {x: 1, y: 2}
-  - {x: -1, y: 2}
+  _movableDirection: []
+  _icon: {fileID: 21300000, guid: 0707d1127028ba94ba8371d95803ff88, type: 3}

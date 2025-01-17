@@ -46,3 +46,4 @@ MonoBehaviour:
   - {x: 0, y: -6}
   - {x: 0, y: -7}
   - {x: 0, y: -8}
+  _icon: {fileID: 21300000, guid: 9d47c2d27d0542646894aa7eabcbf521, type: 3}

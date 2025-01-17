@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb8686b0bf29ca847978538258e62d76, type: 3}
   m_Name: TestGroup
   m_EditorClassIdentifier: 
-  numberofPOWNeededForRebellion: 4
+  numberofPOWNeededForRebellion: 8
   komaAssets:
   - {fileID: 11400000, guid: 7fb808a8ec225c44baa66e7ed05453c7, type: 2}
   - {fileID: 11400000, guid: 31a52148ee8581f48b38d9e9e3868165, type: 2}
