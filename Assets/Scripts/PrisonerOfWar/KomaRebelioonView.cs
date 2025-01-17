@@ -30,7 +30,6 @@ public class KomaRebelioonView : MonoBehaviour, IInject<GameManager>, IInject<IR
 
     private void Display()
     {
-        Debug.Log(komaFrame.GetComponent<RectTransform>().lossyScale);
         for (int i = 0; i < POWGroupAssets.Count; i++)
         {
             for (int k = 0; k < POWGroupAssets[i].KomaAssets.Count; k++)
