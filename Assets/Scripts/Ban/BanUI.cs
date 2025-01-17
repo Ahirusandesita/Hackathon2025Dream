@@ -7,6 +7,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+
 public class BanUI : MonoBehaviour
 {
     #region variable 
@@ -18,6 +19,8 @@ public class BanUI : MonoBehaviour
 
     [SerializeField]
     private float _rightDiff = 0f;
+    [SerializeField]
+    private float _upDiff = 0.1f;
     [SerializeField]
     private float _forwardDiff = 0f;
     #endregion
@@ -34,6 +37,7 @@ public class BanUI : MonoBehaviour
         _ban = GetComponent<Ban>();
         Debug.Log(Mathf.FloorToInt(_ban.BanWidth));
         _rightDiff = -(_transform.position.x / _ban.BanHalfWidth);
+        _upDiff = _transform.position.y + _upDiff;
         _forwardDiff = (_transform.position.z / _ban.BanHalfHeight);
         _blinkObjs = GetComponentsInChildren<BanBlinkObj>();
     }
@@ -63,7 +67,6 @@ public class BanUI : MonoBehaviour
             }
         }
     }
-
     /// <summary>
     /// <para>Blink</para>
     /// <para>点滅させる</para>
@@ -88,26 +91,56 @@ public class BanUI : MonoBehaviour
         }
     }
 
-    private void BlinkOff()
+    /// <summary>
+    /// <para>GetWorldPosition</para>
+    /// <para>マス座標をワールド座標に変換します</para>
+    /// </summary>
+    /// <param name="masuPosition"></param>
+    /// <returns></returns>
+    public Vector3 GetWorldPosition(Vector2Int masuPosition)
     {
-        // 今点滅しているものがなければ何もしない
-        if(_nowBlink.Count == 0)
-        {
-            return;
-        }
-
-        // 今点滅しているものを消灯する
-        while(_nowBlink.Count != 0)
-        {
-            _nowBlink[0].enabled = false;
-            _nowBlink.RemoveAt(0);
-        }
+        Vector3 result = Vector3.zero;
+        result.x = _rightDiff * -(_ban.BanHalfWidth - masuPosition.x);
+        result.y = _upDiff;
+        result.z = _forwardDiff * -(masuPosition.y - _ban.BanHalfHeight);
+        return result;
     }
+    /// <summary>
+    /// <para>GetMasuPosition</para>
+    /// <para>ワールド座標をマス座標に変換します</para>
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public Vector2Int GetMasuPosition(Vector3 position)
+    {
+        Vector2Int result = default;
+        result.x = _ban.BanHalfWidth + (int)(position.x / _rightDiff);
+        result.y = Mathf.Abs(-_ban.BanHalfHeight + (int)(position.z / _forwardDiff));
+        return result;
+    }
+
     #endregion
 
     #region private method
     private void Blink(Masu masu)
     {
+
+    }
+
+    private void BlinkOff()
+    {
+        // 今点滅しているものがなければ何もしない
+        if (_nowBlink.Count == 0)
+        {
+            return;
+        }
+
+        // 今点滅しているものを消灯する
+        while (_nowBlink.Count != 0)
+        {
+            _nowBlink[0].enabled = false;
+            _nowBlink.RemoveAt(0);
+        }
 
     }
     #endregion
