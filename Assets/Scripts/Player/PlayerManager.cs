@@ -73,6 +73,11 @@ public class PlayerManager : MonoBehaviour
         if (_komaController.IsExistOwnKomaAtPosition(masu.OwnPosition, out Vector2Int[] movablePosition))
         {
             _movableWorldPositions = _ban.GetAttackablePosition(masu.OwnPosition, movablePosition);
+            print(movablePosition.Length);
+            foreach (var item in _movableWorldPositions)
+            {
+                print(item);
+            }
             _clickSystem.OnClickMasu += OnClickMasuAtAttack;
             _clickSystem.OnClickMasu -= OnClickMasuAtSelectOwn;
         }
@@ -84,9 +89,11 @@ public class PlayerManager : MonoBehaviour
     /// <param name="masu"></param>
     private void OnClickMasuAtAttack(Masu masu)
     {
+        print("AAA");
         // ‘ŠŽè‚Ì‹î‚ª‰Ÿ‚³‚ê‚½
         if (_movableWorldPositions.Contains(masu.OwnPosition))
         {
+            print("BBB");
             _gameManager.Opponent(_playerNumber).GetComponent<KomaController>().TakeAttack(masu.OwnPosition);
             _clickSystem.OnClickMasu -= OnClickMasuAtAttack;
         }
