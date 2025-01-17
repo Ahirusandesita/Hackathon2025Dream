@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class KomaController : MonoBehaviour, IInjectPlayer
@@ -16,6 +16,8 @@ public class KomaController : MonoBehaviour, IInjectPlayer
     private InitialKomaPositionAsset _initialKomaPositionAsset = default;
     [SerializeField]
     private Ban _ban = default;
+    [SerializeField]
+    private BanUI _banUI = default;
     private List<Koma> _ownKomas = default;
     private PlayerNumber _myPlayerNumber = default;
     private PhaseManager _phaseManager = default;
@@ -24,9 +26,10 @@ public class KomaController : MonoBehaviour, IInjectPlayer
 
     private void Initialize()
     {
-        SetInitializeKomas();
-
         GameManager gameManager = FindObjectOfType<GameManager>();
+        // 対局開始イベントを購読し、初期駒を配置
+        gameManager.OnWaitGameStart += SetInitializeKomas;
+
         //反乱したとき　演出とかするときは演出開始処理をforeachの中に書く
         gameManager.Opponent(_myPlayerNumber).GetComponent<POWManager>().OnRebellion += (eventData, sender) =>
         {
@@ -78,15 +81,24 @@ public class KomaController : MonoBehaviour, IInjectPlayer
 
     }
 
-    private void SetInitializeKomas()
+    private async UniTask SetInitializeKomas()
     {
         _ownKomas = new List<Koma>();
 
         for (int i = 0; i < _initialKomaPositionAsset.InitialPositions.Count; i++)
         {
-            Koma koma = Instantiate(_initialKomaPositionAsset.InitialPositions[i].Koma);
+            Vector2Int masuPosition = _initialKomaPositionAsset.InitialPositions[i].Position;
+            Vector3 worldPosition = _banUI.GetWorldPosition(masuPosition);
+            Koma koma = Instantiate(
+                _initialKomaPositionAsset.InitialPositions[i].Koma, 
+                worldPosition, 
+                Quaternion.identity
+                );
             _ownKomas.Add(koma);
-            _ownKomas[i].CurrentPosition = _initialKomaPositionAsset.InitialPositions[i].Position;
+            _ownKomas[i].CurrentPosition = masuPosition;
         }
+
+        // Debug
+        await UniTask.CompletedTask;
     }
 }

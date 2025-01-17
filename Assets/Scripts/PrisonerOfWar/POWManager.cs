@@ -19,10 +19,9 @@ public class RebellionEventArgs : System.EventArgs
 }
 public delegate void RebellionHandler(RebellionEventArgs rebellionEventArgs, object sender);
 
-public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameManager>
+public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameManager>,IInject<IReadOnlyList<POWGroupAsset>>
 {
-    [SerializeField]
-    private List<POWGroupAsset> POWGroupAssets = default;
+    private IReadOnlyList<POWGroupAsset> POWGroupAssets;
     private PlayerNumber playerNumber;
     private List<Koma> komas = new List<Koma>();
     private GameManager gameManager;
@@ -86,5 +85,10 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
     void IInject<GameManager>.Inject(GameManager gameManager)
     {
         this.gameManager = gameManager;
+    }
+
+    void IInject<IReadOnlyList<POWGroupAsset>>.Inject(IReadOnlyList<POWGroupAsset> t)
+    {
+        this.POWGroupAssets = t;
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8831859607972014180}
   - component: {fileID: -5441881297657040555}
   - component: {fileID: -5465794514410955443}
+  - component: {fileID: 1530677973945101966}
   m_Layer: 0
   m_Name: Kyosya
   m_TagString: Untagged
@@ -94,7 +95,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4788225930419326068}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 4da473d5108768f478a70337d64b0677, type: 2}
   m_CullingMode: 0
@@ -114,11 +115,24 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4788225930419326068}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc67d0df026bea94f810bc335f5bdb76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1530677973945101966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4788225930419326068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f1502996f9d0b94a9d8d4bada5f5003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _komaAsset: {fileID: 11400000, guid: 9d692740e11aa224dbfaeb7faa41d65a, type: 2}
 --- !u!1001 &6412038617761528431
 PrefabInstance:
   m_ObjectHideFlags: 0
