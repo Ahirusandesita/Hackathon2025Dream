@@ -13,7 +13,7 @@ public class InterfaceUtils
         List<T> findList = new List<T>();
 
         // オブジェクトを探索し、リストに格納
-        foreach (var component in GameObject.FindObjectsOfType<Component>())
+        foreach (var component in GameObject.FindObjectsOfType<Component>(true))
         {
             var obj = component as T;
 

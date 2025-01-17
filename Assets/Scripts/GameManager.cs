@@ -6,6 +6,9 @@
 // --------------------------------------------------------- 
 using UnityEngine;
 using System.Collections;
+using Cysharp.Threading.Tasks;
+using System.Linq;
+using System;
 /// <summary>
 /// プレイヤーナンバーがInjectされる
 /// </summary>
@@ -17,6 +20,7 @@ public interface IInject<T>
 {
     void Inject(T t);
 }
+public delegate UniTask WaitWithHandler();
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
@@ -26,6 +30,9 @@ public class GameManager : MonoBehaviour
 
     public GameObject Player1 => player1;
     public GameObject Player2 => player2;
+
+    public event WaitWithHandler OnWaitGameStart;
+    public event Action OnGameStart;
 
     private void Awake()
     {
@@ -53,7 +60,7 @@ public class GameManager : MonoBehaviour
             item.Inject(Player2.GetComponent<PlayerManager>().PlayerNomber);
         }
 
-
+        GameStart().Forget();
     }
     /// <summary>
     /// 対戦相手のPlayerGameObjectを取得する
@@ -86,5 +93,20 @@ public class GameManager : MonoBehaviour
                 return Player2;
         }
         throw new System.NullReferenceException();
+    }
+
+    private async UniTaskVoid GameStart()
+    {
+        OnGameStart?.Invoke();
+
+        if (OnWaitGameStart != null)
+        {
+            await UniTask.WhenAll(
+                OnWaitGameStart?.GetInvocationList()
+                    .OfType<WaitWithHandler>()
+                        .Select(async (OnAysncEvent) => await OnAysncEvent.Invoke()));
+        }
+
+        GetComponent<IPhaseChanger>().AttackStart(PlayerNumber.Player1);
     }
 }
