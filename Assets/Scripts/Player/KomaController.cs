@@ -132,6 +132,7 @@ public class KomaController : MonoBehaviour, IInjectPlayer
             _gameManager.Me(_myPlayerNumber).GetComponent<POWManager>().CancelPOW(_ownKomas[i]);
             _gameManager.Opponent(_myPlayerNumber).GetComponent<POWManager>().TurnedIntoPOW(_ownKomas[i]);
         }
+
         // ‘ŠŽè‚É‹î‚ð“n‚·
         _gameManager.Opponent(_myPlayerNumber).GetComponent<KomaController>().OwnKomas.Add(_ownKomas[i]);
         _ownKomas.RemoveAt(i);
