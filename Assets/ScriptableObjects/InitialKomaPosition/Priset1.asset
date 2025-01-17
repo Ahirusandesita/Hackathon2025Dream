@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c4e429239ae7a4386d04fdddf7ea01, type: 3}
   m_Name: Priset1
   m_EditorClassIdentifier: 
-  _initialPositions: []
+  _initialPositions:
+  - _koma: {fileID: 0}
+    _position: {x: 0, y: 0}

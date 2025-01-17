@@ -21,10 +21,10 @@ public class InitialKomaPositionAsset : ScriptableObject
 public class KomaAssetPositionPair
 {
 	[SerializeField]
-	private KomaAsset _komaAsset = default;
+	private Koma _koma = default;
 	[SerializeField]
 	private Vector2Int _position = default;
 
-	public KomaAsset KomaAsset => _komaAsset;
+	public Koma Koma => _koma;
 	public Vector2Int Position => _position;
 }
