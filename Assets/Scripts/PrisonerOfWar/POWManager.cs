@@ -19,27 +19,59 @@ public class RebellionEventArgs : System.EventArgs
 }
 public delegate void RebellionHandler(RebellionEventArgs rebellionEventArgs, object sender);
 
-public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameManager>,IInject<IReadOnlyList<POWGroupAsset>>
+public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameManager>, IInject<IReadOnlyList<POWGroupAsset>>
 {
+    public event RebellionHandler OnRebellion;
     private IReadOnlyList<POWGroupAsset> POWGroupAssets;
     private PlayerNumber playerNumber;
-    private List<Koma> komas = new List<Koma>();
+    private List<Koma> POWs = new List<Koma>();
+    private List<Koma> POWStandBys = new List<Koma>();
     private GameManager gameManager;
-    public event RebellionHandler OnRebellion;
+
+    private ClickSystem clickSystem;
+    private Ban ban;
+
     private void Initialize()
     {
-        gameManager.GetComponent<TurnManager>().OnTurnEnd += (turnEndPlayer) =>
+        gameManager.GetComponent<PhaseManager>().OnRebellionCheckStart += (turnEndPlayer) =>
         {
             if (turnEndPlayer == playerNumber)
             {
                 Rebellion();
             }
         };
+
+        clickSystem = gameManager.GetComponent<ClickSystem>();
+        ban = FindObjectOfType<Ban>();
+
+        gameManager.GetComponent<PhaseManager>().OnPowPutStart += (playerNumber) =>
+        {
+            clickSystem.OnClickMasu += POWPut;
+        };
+        gameManager.GetComponent<PhaseManager>().OnPowPutEnd += (playerNumber) =>
+        {
+            clickSystem.OnClickMasu -= POWPut;
+        };
+    }
+    private void POWPut(Masu masu)
+    {
+        if (ban.CheckPosition(masu.OwnPosition))
+        {
+            ban.SetKoma(POWStandBys[0], masu.OwnPosition);
+            POWStandBys.RemoveAt(0);
+
+            if (POWStandBys.Count == 0)
+            {
+                gameManager.GetComponent<IPhaseChanger>().POWPutEnd(playerNumber);
+            }
+        }
     }
 
     public void TurnedIntoPOW(Koma koma)
     {
-        komas.Add(koma);
+        POWs.Add(koma);
+
+        POWStandBys.Add(koma);
     }
 
     private void Rebellion()
@@ -50,7 +82,7 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
             int count = 0;
             List<Koma> rebillions = new List<Koma>();
 
-            foreach (Koma koma in komas)
+            foreach (Koma koma in POWs)
             {
                 foreach (KomaAsset groupInKomaAsset in group.KomaAssets)
                 {
@@ -73,8 +105,11 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
         {
             Debug.Log($"{FindObjectOfType<GameManager>().Opponent(playerNumber).GetComponent<PlayerManager>().PlayerNomber}が反乱を起こしました。");
             OnRebellion?.Invoke(new RebellionEventArgs(allRebillions.ToArray()), this);
-            komas.RemoveAll(item => allRebillions.Contains(item));
+            POWs.RemoveAll(item => allRebillions.Contains(item));
         }
+
+        //現在アニメーション待機していない
+        gameManager.GetComponent<IPhaseChanger>().RebellionCheckEnd(playerNumber);
     }
     void IInject<PlayerNumber>.Inject(PlayerNumber playerNumber)
     {

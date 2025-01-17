@@ -16,6 +16,8 @@ public interface IPhaseChanger
     void MoveEnd(PlayerNumber playerNumber);
     void KingMoveStart(PlayerNumber playerNumber);
     void KingMoveEnd(PlayerNumber playerNumber);
+    void POWPutStart(PlayerNumber playerNumber);
+    void POWPutEnd(PlayerNumber playerNumber);
     void RebellionCheckStart(PlayerNumber playerNumber);
     void RebellionCheckEnd(PlayerNumber playerNumber);
 }
@@ -27,6 +29,7 @@ public class PhaseManager : MonoBehaviour, IPhaseChanger
         Attack,
         Move,
         KingMove,
+        PowPut,
         RebellionCheck,
     }
 
@@ -40,12 +43,17 @@ public class PhaseManager : MonoBehaviour, IPhaseChanger
     public event Action<PlayerNumber> OnMoveEnd = default;
     public event Action<PlayerNumber> OnKingMoveStart = default;
     public event Action<PlayerNumber> OnKingMoveEnd = default;
+    public event Action<PlayerNumber> OnPowPutStart = default;
+    public event Action<PlayerNumber> OnPowPutEnd = default;
     public event Action<PlayerNumber> OnRebellionCheckStart = default;
     public event Action<PlayerNumber> OnRebellionCheckEnd = default;
 
-
     void IPhaseChanger.AttackStart(PlayerNumber playerNumber)
     {
+        if (!(_currentPhase == Phase.Attack || _currentPhase == Phase.RebellionCheck))
+        {
+            return;
+        }
         _currentPhase = Phase.Attack;
         OnAttackStart?.Invoke(playerNumber);
     }
@@ -57,6 +65,11 @@ public class PhaseManager : MonoBehaviour, IPhaseChanger
 
     void IPhaseChanger.MoveStart(PlayerNumber playerNumber)
     {
+        //アタックの時にMoveフェーズに以降する
+        if (_currentPhase != Phase.Attack)
+        {
+            return;
+        }
         _currentPhase = Phase.Move;
         OnMoveStart?.Invoke(playerNumber);
     }
@@ -67,24 +80,50 @@ public class PhaseManager : MonoBehaviour, IPhaseChanger
     }
 
     void IPhaseChanger.KingMoveStart(PlayerNumber playerNumber)
-	{
+    {
+        //Moveの時にキングムーブフェーズに以降する
+        if (_currentPhase != Phase.Move)
+        {
+            return;
+        }
         _currentPhase = Phase.KingMove;
         OnKingMoveStart?.Invoke(playerNumber);
     }
 
     void IPhaseChanger.KingMoveEnd(PlayerNumber playerNumber)
-	{
+    {
         OnKingMoveEnd?.Invoke(playerNumber);
-	}
+    }
 
     void IPhaseChanger.RebellionCheckStart(PlayerNumber playerNumber)
-	{
+    {
+        //Pow配置の時に反乱フェーズに以降する
+        if (_currentPhase != Phase.PowPut)
+        {
+            return;
+        }
         _currentPhase = Phase.RebellionCheck;
         OnRebellionCheckStart?.Invoke(playerNumber);
-	}
+    }
 
     void IPhaseChanger.RebellionCheckEnd(PlayerNumber playerNumber)
-	{
+    {
         OnRebellionCheckEnd?.Invoke(playerNumber);
-	}
+    }
+
+    void IPhaseChanger.POWPutStart(PlayerNumber playerNumber)
+    {
+        //KingMoveの時にPOW配置フェーズに以降する
+        if (_currentPhase != Phase.KingMove)
+        {
+            return;
+        }
+        _currentPhase = Phase.PowPut;
+        OnPowPutStart?.Invoke(playerNumber);
+    }
+
+    void IPhaseChanger.POWPutEnd(PlayerNumber playerNumber)
+    {
+        OnPowPutEnd?.Invoke(playerNumber);
+    }
 }
