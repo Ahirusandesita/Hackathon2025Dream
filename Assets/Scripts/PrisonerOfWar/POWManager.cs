@@ -76,6 +76,11 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
 
         POWStandBys.Add(koma);
     }
+    public void CancelPOW(Koma koma)
+    {
+        POWs.Remove(koma);
+        POWStandBys.Remove(koma);
+    }
 
     private void Rebellion()
     {
