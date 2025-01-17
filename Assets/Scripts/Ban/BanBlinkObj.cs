@@ -38,7 +38,7 @@ public class BanBlinkObj : MonoBehaviour
     private void OnEnable()
     {
         _render.enabled = true;
-        _render.material.DOFade(0, 0.6f);
+        _render.material.DOFade(0, 0.6f).SetLoops(-1,LoopType.Yoyo);
 
     }
 
