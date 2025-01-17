@@ -22,4 +22,4 @@ MonoBehaviour:
   - {x: -1, y: -1}
   - {x: 0, y: -1}
   - {x: 1, y: -1}
-  _icon: {fileID: 21300000, guid: 7da22cc51b0265949b642e89ed1beca6, type: 3}
+  _icon: {fileID: 21300000, guid: a8f9ef12e4a42424d9fc67ee20eca6d6, type: 3}
