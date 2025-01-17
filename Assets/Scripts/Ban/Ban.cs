@@ -33,7 +33,7 @@ public class Ban : MonoBehaviour
     #region singleton
     public static Ban Get()
     {
-        _instance = _instance != default ? FindAnyObjectByType<Ban>() : _instance;
+        _instance = _instance == default ? FindAnyObjectByType<Ban>() : _instance;
         return _instance;
     }
     #endregion
