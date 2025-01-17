@@ -5,7 +5,6 @@
 // Creator  : 
 // --------------------------------------------------------- 
 
-using System.Linq;
 using UnityEngine;
 
 public class Koma : MonoBehaviour
@@ -20,4 +19,8 @@ public class Koma : MonoBehaviour
     public KomaAsset KomaAsset => _komaAsset;
     public Vector2Int CurrentPosition => _currentPosition;
     public PlayerNumber MyPlayerNumber => _myPlayerNumber;
+    /// <summary>
+    /// 基本的に不変の値。元はどっちの駒？
+    /// </summary>
+    public PlayerNumber MyAbsolutePlayerNumber { get; set; }
 }
