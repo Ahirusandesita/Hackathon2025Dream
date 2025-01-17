@@ -118,5 +118,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f1502996f9d0b94a9d8d4bada5f5003, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _komaAsset: {fileID: 0}
-  _ban: {fileID: 0}
+  _komaAsset: {fileID: 11400000, guid: 31a52148ee8581f48b38d9e9e3868165, type: 2}
