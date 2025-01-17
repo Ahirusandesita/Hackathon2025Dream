@@ -13,6 +13,10 @@ public interface IInjectPlayer
 {
     void InjectPlayer(PlayerNumber playerNumber);
 }
+public interface IInject<T>
+{
+    void Inject(T t);
+}
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
@@ -25,14 +29,31 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        foreach(IInjectPlayer inject in Player1.GetComponentsInChildren<IInjectPlayer>())
+        foreach (IInject<GameManager> item in InterfaceUtils.FindObjectOfInterfaces<IInject<GameManager>>())
+        {
+            item.Inject(this);
+        }
+
+
+        foreach (IInjectPlayer inject in Player1.GetComponentsInChildren<IInjectPlayer>())
         {
             inject.InjectPlayer(Player1.GetComponent<PlayerManager>().PlayerNomber);
         }
-        foreach(IInjectPlayer inject in Player2.GetComponentsInChildren<IInjectPlayer>())
+        foreach (IInjectPlayer inject in Player2.GetComponentsInChildren<IInjectPlayer>())
         {
             inject.InjectPlayer(Player2.GetComponent<PlayerManager>().PlayerNomber);
         }
+
+        foreach (IInject<PlayerNumber> item in Player1.GetComponentsInChildren<IInject<PlayerNumber>>())
+        {
+            item.Inject(Player1.GetComponent<PlayerManager>().PlayerNomber);
+        }
+        foreach (IInject<PlayerNumber> item in Player2.GetComponentsInChildren<IInject<PlayerNumber>>())
+        {
+            item.Inject(Player2.GetComponent<PlayerManager>().PlayerNomber);
+        }
+
+
     }
     /// <summary>
     /// ‘Îí‘Šè‚ÌPlayerGameObject‚ğæ“¾‚·‚é
