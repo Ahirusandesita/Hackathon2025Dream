@@ -100,7 +100,7 @@ public class BanUI : MonoBehaviour
         {
             pos.x = _ban.BanHalfWidth + (int)(blinkObj.transform.position.x / _rightDiff);
             pos.y = Mathf.Abs(-_ban.BanHalfHeight + (int)(blinkObj.transform.position.z / _forwardDiff));
-            Debug.Log(pos + " " + blinkPosition);
+            //Debug.Log(pos + " " + blinkPosition);
             if (pos == blinkPosition)
             {
                 blinkObj.SetColor(GetColorForEnum(color));
@@ -162,7 +162,7 @@ public class BanUI : MonoBehaviour
     #region private method
     private void Blink(Masu masu)
     {
-        Debug.Log(masu);
+        Debug.Log(masu + " " + _ban.CheckPosition(masu.OwnPosition));
         Blink(masu.OwnPosition, BlinkColor.Attack);
     }
 

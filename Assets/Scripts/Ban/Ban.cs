@@ -42,7 +42,7 @@ public class Ban : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.T))
         {
             Vector2Int a = GetVectorForInt(test);
-            Debug.Log(a);
+            Debug.Log(a + " " + CheckPosition(a) + " " + _ban[a.y, a.x]);
             _banUI.Blink(a);
         }
     }
@@ -211,7 +211,7 @@ public class Ban : MonoBehaviour
         {
             return false;
         }
-        if(_ban.Length <= position.x)
+        if(BanWidth <= position.x)
         {
             return false;
         }
@@ -219,7 +219,7 @@ public class Ban : MonoBehaviour
         {
             return false;
         }
-        if(((int)_ban.LongLength / _ban.Length) <= position.y)
+        if(BanHeight <= position.y)
         {
             return false;
         }
