@@ -13,15 +13,19 @@ public class Ban : MonoBehaviour
 {
     #region variable 
     private Transform _transform = default;
-    //private BanUI _banUI = default;
     private Koma[,] _ban = new Koma[9,9];
 
     [SerializeField]
     private int test = 0;
+    [SerializeField]
+    private BanUI _banUI = default;
     #endregion
 
     #region property
-
+    public int BanWidth { get { return _ban.GetLength(0); } }
+    public int BanHeight { get { return _ban.GetLength(1); } }
+    public int BanHalfWidth { get { return Mathf.FloorToInt(BanWidth / 2); } }
+    public int BanHalfHeight { get { return Mathf.FloorToInt(BanHeight / 2); } }
     #endregion
 
     #region unity method
@@ -37,7 +41,9 @@ public class Ban : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.T))
         {
-            Debug.Log(GetVectorForInt(test));
+            Vector2Int a = GetVectorForInt(test);
+            Debug.Log(a);
+            _banUI.Blink(a);
         }
     }
     #endregion
