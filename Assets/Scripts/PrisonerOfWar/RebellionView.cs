@@ -18,13 +18,14 @@ public class RebellionView : MonoBehaviour, IInject<GameManager>
     void IInject<GameManager>.Inject(GameManager gameManager)
     {
         this.gameManager = gameManager;
+        Initialize();
     }
 
-    private void Start()
+    private void Initialize()
     {
         gameManager.Player1.GetComponent<POWManager>().OnWaitRebellion += async (eventData, sender) =>
         {
-            animator.Play("player1");
+            animator.SetBool("player1",true);
 
             await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("player1"));
 
@@ -35,7 +36,7 @@ public class RebellionView : MonoBehaviour, IInject<GameManager>
         };
         gameManager.Player2.GetComponent<POWManager>().OnWaitRebellion += async (eventData, sender) =>
         {
-            animator.Play("player2");
+            animator.SetBool("player2",true);
 
             await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("player2"));
 
