@@ -53,7 +53,7 @@ public class PlayerManager : MonoBehaviour
             }
 
             _clickSystem.OnClickMasu += OnClickMasuAtSelectOwn;
-            BanUI.Get().Blink(ownKomaPositions.ToArray());
+            FindObjectOfType<BanUI>().Blink(ownKomaPositions.ToArray());
         };
 
         phaseManager.OnAttackEnd += playerNumber =>
@@ -73,8 +73,8 @@ public class PlayerManager : MonoBehaviour
         if (_komaController.IsExistOwnKomaAtPosition(masu.OwnPosition, out Vector2Int[] movablePosition))
         {
             _movableWorldPositions = _ban.GetAttackablePosition(masu.OwnPosition, movablePosition);
-            _clickSystem.OnClickMasu -= OnClickMasuAtSelectOwn;
             _clickSystem.OnClickMasu += OnClickMasuAtAttack;
+            _clickSystem.OnClickMasu -= OnClickMasuAtSelectOwn;
         }
     }
 
