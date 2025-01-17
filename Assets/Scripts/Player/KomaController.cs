@@ -68,17 +68,22 @@ public class KomaController : MonoBehaviour, IInjectPlayer
 
     public void OnClickKoma(Vector2Int position)
     {
-        int clickedKomaIndex;
-        for (clickedKomaIndex = 0; clickedKomaIndex < _ownKomas.Count; clickedKomaIndex++)
-        {
-            if (_ownKomas[clickedKomaIndex].CurrentPosition == position)
-            {
-                break;
-            }
-        }
+        //int clickedKomaIndex;
+        //for (clickedKomaIndex = 0; clickedKomaIndex < _ownKomas.Count; clickedKomaIndex++)
+        //{
+        //    if (_ownKomas[clickedKomaIndex].CurrentPosition == position)
+        //    {
+        //        break;
+        //    }
+        //}
 
-        Vector2Int[] movablePosition =
-            _ban.GetMovablePosition(position, _ownKomas[clickedKomaIndex].KomaAsset.MovableDirection);
+        //if (clickedKomaIndex == _ownKomas.Count)
+        //{
+        //    return;
+        //}
+
+        //Vector2Int[] movablePosition =
+        //    _ban.GetMovablePosition(position, _ownKomas[clickedKomaIndex].KomaAsset.MovableDirection);
 
     }
 
@@ -136,10 +141,20 @@ public class KomaController : MonoBehaviour, IInjectPlayer
     private async UniTask SetInitializeKomas()
     {
         _ownKomas = new List<Koma>();
+        Vector2Int reversePosition = new Vector2Int(8, 8);
 
         for (int i = 0; i < _initialKomaPositionAsset.InitialPositions.Count; i++)
         {
-            Vector2Int masuPosition = _initialKomaPositionAsset.InitialPositions[i].Position;
+            Vector2Int masuPosition;
+            if (_myPlayerNumber == PlayerNumber.Player1)
+            {
+                masuPosition = _initialKomaPositionAsset.InitialPositions[i].Position;
+            }
+            else
+            {
+                masuPosition = reversePosition - _initialKomaPositionAsset.InitialPositions[i].Position;
+            }
+
             Vector3 worldPosition = _banUI.GetWorldPosition(masuPosition);
             Koma koma = Instantiate(
                 _initialKomaPositionAsset.InitialPositions[i].Koma,
@@ -148,6 +163,7 @@ public class KomaController : MonoBehaviour, IInjectPlayer
                 );
             _ownKomas.Add(koma);
             _ownKomas[i].CurrentPosition = masuPosition;
+            _ban.SetKoma(koma, masuPosition);
         }
 
         // Debug
