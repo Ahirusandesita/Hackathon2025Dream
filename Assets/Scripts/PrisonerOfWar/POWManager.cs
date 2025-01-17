@@ -86,7 +86,13 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
         POWs.Remove(koma);
         POWStandBys.Remove(koma);
     }
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            OnWaitRebellion?.Invoke(null, this);
+        }
+    }
     private async void Rebellion()
     {
         List<Koma> allRebillions = new List<Koma>();
