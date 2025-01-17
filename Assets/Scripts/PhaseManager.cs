@@ -50,16 +50,22 @@ public class PhaseManager : MonoBehaviour, IPhaseChanger
 
     void IPhaseChanger.AttackStart(PlayerNumber playerNumber)
     {
+
         if (!(_currentPhase == Phase.Attack || _currentPhase == Phase.RebellionCheck))
         {
             return;
         }
+        Debug.Log("Next phase start");
         _currentPhase = Phase.Attack;
         OnAttackStart?.Invoke(playerNumber);
     }
 
     void IPhaseChanger.AttackEnd(PlayerNumber playerNumber)
     {
+        if (_currentPhase != Phase.Attack)
+        {
+            return;
+        }
         OnAttackEnd?.Invoke(playerNumber);
     }
 
@@ -76,6 +82,10 @@ public class PhaseManager : MonoBehaviour, IPhaseChanger
 
     void IPhaseChanger.MoveEnd(PlayerNumber playerNumber)
     {
+        if (_currentPhase != Phase.Move)
+        {
+            return;
+        }
         OnMoveEnd?.Invoke(playerNumber);
     }
 
@@ -92,6 +102,10 @@ public class PhaseManager : MonoBehaviour, IPhaseChanger
 
     void IPhaseChanger.KingMoveEnd(PlayerNumber playerNumber)
     {
+        if (_currentPhase != Phase.KingMove)
+        {
+            return;
+        }
         OnKingMoveEnd?.Invoke(playerNumber);
     }
 
@@ -102,12 +116,18 @@ public class PhaseManager : MonoBehaviour, IPhaseChanger
         {
             return;
         }
+        Debug.Log("RebellionCheck phase start");
         _currentPhase = Phase.RebellionCheck;
         OnRebellionCheckStart?.Invoke(playerNumber);
     }
 
     void IPhaseChanger.RebellionCheckEnd(PlayerNumber playerNumber)
     {
+        if (_currentPhase != Phase.RebellionCheck)
+        {
+            return;
+        }
+        Debug.Log("RebellionCheck phase end");
         OnRebellionCheckEnd?.Invoke(playerNumber);
     }
 
@@ -118,12 +138,18 @@ public class PhaseManager : MonoBehaviour, IPhaseChanger
         {
             return;
         }
+        Debug.Log("POWPUT phase start");
         _currentPhase = Phase.PowPut;
         OnPowPutStart?.Invoke(playerNumber);
     }
 
     void IPhaseChanger.POWPutEnd(PlayerNumber playerNumber)
     {
+        if (_currentPhase != Phase.PowPut)
+        {
+            return;
+        }
+        Debug.Log("POWPUT phase end");
         OnPowPutEnd?.Invoke(playerNumber);
     }
 }
