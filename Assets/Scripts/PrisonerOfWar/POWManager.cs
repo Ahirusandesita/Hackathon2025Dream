@@ -19,18 +19,16 @@ public class RebellionEventArgs : System.EventArgs
 }
 public delegate void RebellionHandler(RebellionEventArgs rebellionEventArgs, object sender);
 
-public class POWManager : MonoBehaviour, IInjectPlayer
+public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameManager>
 {
     [SerializeField]
     private List<POWGroupAsset> POWGroupAssets = default;
     private PlayerNumber playerNumber;
     private List<Koma> komas = new List<Koma>();
+    private GameManager gameManager;
     public event RebellionHandler OnRebellion;
-
     private void Initialize()
     {
-        GameManager gameManager = FindObjectOfType<GameManager>();
-
         gameManager.GetComponent<TurnManager>().OnTurnEnd += (turnEndPlayer) =>
         {
             if (turnEndPlayer == playerNumber)
@@ -79,10 +77,14 @@ public class POWManager : MonoBehaviour, IInjectPlayer
             komas.RemoveAll(item => allRebillions.Contains(item));
         }
     }
-
-    public void InjectPlayer(PlayerNumber playerNumber)
+    void IInject<PlayerNumber>.Inject(PlayerNumber playerNumber)
     {
         this.playerNumber = playerNumber;
         Initialize();
+    }
+
+    void IInject<GameManager>.Inject(GameManager gameManager)
+    {
+        this.gameManager = gameManager;
     }
 }
