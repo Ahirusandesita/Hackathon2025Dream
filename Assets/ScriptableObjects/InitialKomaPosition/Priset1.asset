@@ -13,5 +13,19 @@ MonoBehaviour:
   m_Name: Priset1
   m_EditorClassIdentifier: 
   _initialPositions:
-  - _koma: {fileID: 0}
-    _position: {x: 0, y: 0}
+  - _koma: {fileID: -2244519681798938760, guid: 34906ae988ad8e641955b76ded1f635c, type: 3}
+    _position: {x: 7, y: 4}
+  - _koma: {fileID: -9174847585272218580, guid: 1e44351e5c602434fad434180a865524, type: 3}
+    _position: {x: 0, y: 9}
+  - _koma: {fileID: -4436728470639857143, guid: 57031a742b31ffd4b9bbc391c807d65b, type: 3}
+    _position: {x: 1, y: 9}
+  - _koma: {fileID: 8425021398294185247, guid: 360b1822425780840b6a910f7dd3dbcd, type: 3}
+    _position: {x: 2, y: 9}
+  - _koma: {fileID: 5145087933627554647, guid: e1754b797549b8b41aae1aca61a0ccf4, type: 3}
+    _position: {x: 3, y: 9}
+  - _koma: {fileID: -2905500156121797899, guid: f578678e17d2709478f49922503d7ed4, type: 3}
+    _position: {x: 4, y: 9}
+  - _koma: {fileID: 795237350135234724, guid: 939a18d608a331e4b865213d52aded52, type: 3}
+    _position: {x: 1, y: 8}
+  - _koma: {fileID: 1688405730995392523, guid: 749581162c9174e4d8c44b763369d7c8, type: 3}
+    _position: {x: 8, y: 8}
