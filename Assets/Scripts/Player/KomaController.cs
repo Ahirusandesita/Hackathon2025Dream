@@ -19,6 +19,8 @@ public class KomaController : MonoBehaviour, IInjectPlayer
     private PlayerNumber _myPlayerNumber = default;
     private PhaseManager _phaseManager = default;
 
+    public List<Koma> OwnKomas { get => _ownKomas; set => _ownKomas = value; }
+
     private void Initialize()
     {
         GameManager gameManager = FindObjectOfType<GameManager>();
