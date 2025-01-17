@@ -47,44 +47,12 @@ public class KomaController : MonoBehaviour, IInjectPlayer
         };
 
         _phaseManager = FindObjectOfType<PhaseManager>();
-
-        ClickSystem clickSystem = FindObjectOfType<ClickSystem>();
-        clickSystem.OnClickMasu += masu =>
-        {
-            switch (_phaseManager.CurrentPhase)
-            {
-                case PhaseManager.Phase.Attack or PhaseManager.Phase.Move:
-                    OnClickKoma(masu.OwnPosition);
-                    break;
-            }
-        };
     }
 
     public void InjectPlayer(PlayerNumber playerNumber)
     {
         _myPlayerNumber = playerNumber;
         Initialize();
-    }
-
-    public void OnClickKoma(Vector2Int position)
-    {
-        //int clickedKomaIndex;
-        //for (clickedKomaIndex = 0; clickedKomaIndex < _ownKomas.Count; clickedKomaIndex++)
-        //{
-        //    if (_ownKomas[clickedKomaIndex].CurrentPosition == position)
-        //    {
-        //        break;
-        //    }
-        //}
-
-        //if (clickedKomaIndex == _ownKomas.Count)
-        //{
-        //    return;
-        //}
-
-        //Vector2Int[] movablePosition =
-        //    _ban.GetMovablePosition(position, _ownKomas[clickedKomaIndex].KomaAsset.MovableDirection);
-
     }
 
     public bool IsExistOwnKomaAtPosition(Vector2Int position)
@@ -135,8 +103,26 @@ public class KomaController : MonoBehaviour, IInjectPlayer
 
         // 相手に駒を渡す
         _gameManager.Opponent(_myPlayerNumber).GetComponent<KomaController>().OwnKomas.Add(_ownKomas[i]);
+        // ここで見た目飛ばす---------------
+        // Debug
+        _ownKomas[i].gameObject.SetActive(false);
+        // ------------------------------
         _ownKomas.RemoveAt(i);
         _ban.RemoveKoma(takeAttackPosition);
+    }
+
+    public void MoveKoma(Vector2Int oldPosition, Vector2Int newPosition)
+	{
+        _ban.UpdateKomaPos(oldPosition, newPosition);
+        foreach (var koma in _ownKomas)
+        {
+            if (oldPosition == koma.CurrentPosition)
+            {
+                koma.CurrentPosition = newPosition;
+                // ビューの更新
+                koma.transform.position = _banUI.GetWorldPosition(newPosition);
+            }
+        }
     }
 
     private async UniTask SetInitializeKomas()

@@ -17,10 +17,13 @@ public class PlayerManager : MonoBehaviour
     private PlayerNumber _playerNumber = default;
     [SerializeField]
     private KomaController _komaController = default;
-    private Ban _ban = default;
     private ClickSystem _clickSystem = default;
     private GameManager _gameManager = default;
+    private PhaseManager _phaseManager = default;
+    private Vector2Int[] _attackableWorldPositions = default;
     private Vector2Int[] _movableWorldPositions = default;
+    private Vector2Int _selectedKomaPosition = default;
+    private Vector2Int[] _selectedKomaMovableDirection = default;
 
     public PlayerNumber PlayerNomber => _playerNumber;
 
@@ -40,11 +43,10 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
         _gameManager = transform.root.GetComponent<GameManager>();
-        _ban = FindObjectOfType<Ban>();
         _clickSystem = FindObjectOfType<ClickSystem>();
 
-        PhaseManager phaseManager = transform.root.GetComponent<PhaseManager>();
-        phaseManager.OnAttackStart += playerNumber =>
+        _phaseManager = transform.root.GetComponent<PhaseManager>();
+        _phaseManager.OnAttackStart += playerNumber =>
         {
             if (playerNumber != _playerNumber)
             {
@@ -58,17 +60,30 @@ public class PlayerManager : MonoBehaviour
             }
 
             _clickSystem.OnClickMasu += OnClickMasuAtSelectOwn;
-            FindObjectOfType<BanUI>().Blink(ownKomaPositions.ToArray());
+            BanUI.Get().Blink(ownKomaPositions.ToArray());
         };
 
-        phaseManager.OnAttackEnd += playerNumber =>
+        _phaseManager.OnAttackEnd += playerNumber =>
         {
             if (playerNumber != _playerNumber)
             {
                 return;
             }
+
+            _clickSystem.OnClickMasu -= OnClickMasuAtAttack;
+            _clickSystem.OnClickMasu -= OnClickMasuAtSelectOwn;
         };
 
+        _phaseManager.OnMoveStart += playerNumber =>
+        {
+            if (playerNumber != _playerNumber)
+            {
+                return;
+            }
+
+            _movableWorldPositions = Ban.Get().GetMovablePosition(_selectedKomaPosition, _selectedKomaMovableDirection);
+            _clickSystem.OnClickMasu += OnClickMasuAtMove;
+        };
     }
 
     /// <summary>
@@ -78,31 +93,44 @@ public class PlayerManager : MonoBehaviour
     private void OnClickMasuAtSelectOwn(Masu masu)
     {
         // 自分の駒が押された
-        if (_komaController.IsExistOwnKomaAtPosition(masu.OwnPosition, out Vector2Int[] movablePosition))
+        if (_komaController.IsExistOwnKomaAtPosition(masu.OwnPosition, out Vector2Int[] movablePositions))
         {
-            _movableWorldPositions = _ban.GetAttackablePosition(masu.OwnPosition, movablePosition);
-            print(movablePosition.Length);
-            foreach (var item in _movableWorldPositions)
-            {
-                print(item);
-            }
+            _selectedKomaPosition = masu.OwnPosition;
+            _selectedKomaMovableDirection = movablePositions;
+            _attackableWorldPositions = Ban.Get().GetAttackablePosition(masu.OwnPosition, movablePositions);
             _clickSystem.OnClickMasu += OnClickMasuAtAttack;
-            _clickSystem.OnClickMasu -= OnClickMasuAtSelectOwn;
         }
     }
 
     /// <summary>
-    /// 攻撃可能な駒を選択するとき
+    /// 攻撃可能なマスを選択するとき
     /// </summary>
     /// <param name="masu"></param>
     private void OnClickMasuAtAttack(Masu masu)
     {
         // 相手の駒が押された
-        if (_movableWorldPositions.Contains(masu.OwnPosition))
+        if (_attackableWorldPositions.Contains(masu.OwnPosition))
         {
-            _gameManager.Opponent(_playerNumber).GetComponent<KomaController>().TakeAttack(masu.OwnPosition);
-            // ここで攻撃可能な駒があるかチェック
-            _clickSystem.OnClickMasu -= OnClickMasuAtAttack;
+            KomaController opponent = _gameManager.Opponent(_playerNumber).GetComponent<KomaController>();
+            opponent.TakeAttack(masu.OwnPosition);
+            _attackableWorldPositions = Ban.Get().GetAttackablePosition(_selectedKomaPosition, _selectedKomaMovableDirection);
+            if (_attackableWorldPositions.Length == 0)
+			{
+                (_phaseManager as IPhaseChanger).AttackEnd(_playerNumber);
+			}
         }
     }
+
+    /// <summary>
+    /// 移動可能なマスを選択するとき
+    /// </summary>
+    /// <param name="masu"></param>
+    private void OnClickMasuAtMove(Masu masu)
+	{
+        // 移動可能なマスが押された
+        if (_movableWorldPositions.Contains(masu.OwnPosition))
+		{
+            _komaController.MoveKoma(_selectedKomaPosition, masu.OwnPosition);
+		}
+	}
 }

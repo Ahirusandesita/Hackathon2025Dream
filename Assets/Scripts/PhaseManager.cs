@@ -67,6 +67,8 @@ public class PhaseManager : MonoBehaviour, IPhaseChanger
             return;
         }
         OnAttackEnd?.Invoke(playerNumber);
+        // 攻撃終了時、自動的にMoveフェーズに遷移する
+        (this as IPhaseChanger).MoveStart(playerNumber);
     }
 
     void IPhaseChanger.MoveStart(PlayerNumber playerNumber)
