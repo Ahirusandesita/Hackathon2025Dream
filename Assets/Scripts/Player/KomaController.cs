@@ -163,6 +163,8 @@ public class KomaController : MonoBehaviour, IInjectPlayer
                 );
             _ownKomas.Add(koma);
             _ownKomas[i].CurrentPosition = masuPosition;
+            _ownKomas[i].MyPlayerNumber = _myPlayerNumber;
+            _ownKomas[i].MyAbsolutePlayerNumber = _myPlayerNumber;
             _ban.SetKoma(koma, masuPosition);
         }
 
