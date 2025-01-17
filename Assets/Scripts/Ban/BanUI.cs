@@ -11,11 +11,15 @@ public class BanUI : MonoBehaviour
 {
     #region variable 
     private Transform _transform = default;
+    private Ban _ban = default;
+    [SerializeField]
     private BanBlinkObj[] _blinkObjs = default;
     private List<BanBlinkObj> _nowBlink = new List<BanBlinkObj>();
 
     [SerializeField]
-    private GameObject _blinkObj = default;
+    private float _rightDiff = 0f;
+    [SerializeField]
+    private float _forwardDiff = 0f;
     #endregion
 
     #region property
@@ -26,17 +30,11 @@ public class BanUI : MonoBehaviour
     private void Awake()
     {
         _transform = transform;
-        Vector3 rightDiff = Vector3.right * -(_transform.position.x / 4);
-        Vector3 upDiff = Vector3.up * 0.1f;
-        Vector3 forwardDiff = Vector3.forward * (_transform.position.z / 4);
-        for (int i = 0; i < 9; i++)
-        {
-            for (int j = 0; j < 9; j++)
-            {
-                Instantiate(_blinkObj, _transform.position + rightDiff * i + upDiff + forwardDiff * j, Quaternion.identity, _transform);
-            }
-        }
-
+        FindAnyObjectByType<ClickSystem>().OnClickMasu += Blink;
+        _ban = GetComponent<Ban>();
+        Debug.Log(Mathf.FloorToInt(_ban.BanWidth));
+        _rightDiff = -(_transform.position.x / _ban.BanHalfWidth);
+        _forwardDiff = (_transform.position.z / _ban.BanHalfHeight);
         _blinkObjs = GetComponentsInChildren<BanBlinkObj>();
     }
 
@@ -52,9 +50,9 @@ public class BanUI : MonoBehaviour
         Vector2Int pos = default;
         foreach(BanBlinkObj blinkObj in _blinkObjs)
         {
-            pos.x = (int)blinkObj.transform.position.x;
-            pos.y = (int)blinkObj.transform.position.z;
-            foreach(Vector2Int blinkPos in blinkPositions)
+            pos.x = _ban.BanHalfWidth + (int)(blinkObj.transform.position.x / _rightDiff);
+            pos.y = Mathf.Abs(-_ban.BanHalfHeight + (int)(blinkObj.transform.position.z / _forwardDiff));
+            foreach (Vector2Int blinkPos in blinkPositions)
             {
                 if(pos == blinkPos)
                 {
@@ -62,6 +60,30 @@ public class BanUI : MonoBehaviour
                     _nowBlink.Add(blinkObj);
                     break;
                 }
+            }
+        }
+    }
+
+    /// <summary>
+    /// <para>Blink</para>
+    /// <para>“_–Å‚³‚¹‚é</para>
+    /// </summary>
+    /// <param name="blinkPositions"></param>
+    public void Blink(Vector2Int blinkPosition)
+    {
+        BlinkOff();
+
+        Vector2Int pos = default;
+        foreach (BanBlinkObj blinkObj in _blinkObjs)
+        {
+            pos.x = _ban.BanHalfWidth + (int)(blinkObj.transform.position.x / _rightDiff);
+            pos.y = Mathf.Abs(-_ban.BanHalfHeight + (int)(blinkObj.transform.position.z / _forwardDiff));
+            Debug.Log(pos + " " + blinkPosition);
+            if (pos == blinkPosition)
+            {
+                blinkObj.enabled = true;
+                _nowBlink.Add(blinkObj);
+                break;
             }
         }
     }
@@ -80,6 +102,13 @@ public class BanUI : MonoBehaviour
             _nowBlink[0].enabled = false;
             _nowBlink.RemoveAt(0);
         }
+    }
+    #endregion
+
+    #region private method
+    private void Blink(Masu masu)
+    {
+
     }
     #endregion
 }
