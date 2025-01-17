@@ -5,20 +5,27 @@
 // Creator  : 
 // --------------------------------------------------------- 
 
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using UnityEngine;
 
 public class KomaController : MonoBehaviour, IInjectPlayer
 {
     [SerializeField]
+    private InitialKomaPositionAsset _initialKomaPositionAsset = default;
+    [SerializeField]
     private Ban _ban = default;
     private List<Koma> _ownKomas = default;
     private PlayerNumber _myPlayerNumber = default;
+    private PhaseManager _phaseManager = default;
+
+    public List<Koma> OwnKomas { get => _ownKomas; set => _ownKomas = value; }
 
     private void Initialize()
     {
+        SetInitializeKomas();
+
         GameManager gameManager = FindObjectOfType<GameManager>();
         //反乱したとき　演出とかするときは演出開始処理をforeachの中に書く
         gameManager.Opponent(_myPlayerNumber).GetComponent<POWManager>().OnRebellion += (eventData, sender) =>
@@ -33,6 +40,19 @@ public class KomaController : MonoBehaviour, IInjectPlayer
         gameManager.Me(_myPlayerNumber).GetComponent<POWManager>().OnRebellion += (eventData, sender) =>
         {
             _ownKomas.RemoveAll(item => eventData.Rebellions.Contains(item));
+        };
+
+        _phaseManager = FindObjectOfType<PhaseManager>();
+
+        ClickSystem clickSystem = FindObjectOfType<ClickSystem>();
+        clickSystem.OnClickMasu += masu =>
+        {
+            switch (_phaseManager.CurrentPhase)
+            {
+                case PhaseManager.Phase.Attack or PhaseManager.Phase.Move:
+                    OnClickKoma(masu.OwnPosition);
+                    break;
+            }
         };
     }
 
@@ -56,5 +76,17 @@ public class KomaController : MonoBehaviour, IInjectPlayer
         Vector2Int[] movablePosition =
             _ban.GetMovablePosition(position, _ownKomas[clickedKomaIndex].KomaAsset.MovableDirection);
 
+    }
+
+    private void SetInitializeKomas()
+    {
+        _ownKomas = new List<Koma>();
+
+        for (int i = 0; i < _initialKomaPositionAsset.InitialPositions.Count; i++)
+        {
+            Koma koma = Instantiate(_initialKomaPositionAsset.InitialPositions[i].Koma);
+            _ownKomas.Add(koma);
+            _ownKomas[i].CurrentPosition = _initialKomaPositionAsset.InitialPositions[i].Position;
+        }
     }
 }

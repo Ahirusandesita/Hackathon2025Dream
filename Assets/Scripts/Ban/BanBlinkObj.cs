@@ -14,8 +14,6 @@ public class BanBlinkObj : MonoBehaviour
     private const float BLINK_TIME = 0.5f;
 
     private Renderer _render = default;
-    private float _timer = BLINK_TIME;
-    private int _reverseInt = 1;
     #endregion
 
     #region property

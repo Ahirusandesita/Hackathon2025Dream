@@ -74,4 +74,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5256a0409f8eece4380435dc04fc70a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _initialKomaPositionAsset: {fileID: 11400000, guid: 1f862e981810b2e4f8d3ee75bc8bd224, type: 2}
   _ban: {fileID: 0}

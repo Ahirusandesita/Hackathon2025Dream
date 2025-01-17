@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -5435342208648331769, guid: 65fba3f322968d04b8ccf691882d759a, type: 3}
       propertyPath: _playerNumber
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2383500184222002171, guid: 65fba3f322968d04b8ccf691882d759a, type: 3}
       propertyPath: POWGroupAssets.Array.size

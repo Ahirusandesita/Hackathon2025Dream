@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6490618038219830134}
   - component: {fileID: 8009057586027930616}
   - component: {fileID: 4094232935797591559}
+  - component: {fileID: 795237350135234724}
   m_Layer: 0
   m_Name: Kakugyo
   m_TagString: Untagged
@@ -105,3 +106,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &795237350135234724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5732849360080051893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f1502996f9d0b94a9d8d4bada5f5003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _komaAsset: {fileID: 11400000, guid: c96478a4c81aef0478a040a8a920de0e, type: 2}

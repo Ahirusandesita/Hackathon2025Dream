@@ -13,15 +13,19 @@ public class Ban : MonoBehaviour
 {
     #region variable 
     private Transform _transform = default;
-    //private BanUI _banUI = default;
     private Koma[,] _ban = new Koma[9,9];
 
     [SerializeField]
     private int test = 0;
+    [SerializeField]
+    private BanUI _banUI = default;
     #endregion
 
     #region property
-
+    public int BanWidth { get { return _ban.GetLength(0); } }
+    public int BanHeight { get { return _ban.GetLength(1); } }
+    public int BanHalfWidth { get { return Mathf.FloorToInt(BanWidth / 2); } }
+    public int BanHalfHeight { get { return Mathf.FloorToInt(BanHeight / 2); } }
     #endregion
 
     #region unity method
@@ -37,7 +41,9 @@ public class Ban : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.T))
         {
-            Debug.Log(GetVectorForInt(test));
+            Vector2Int a = GetVectorForInt(test);
+            Debug.Log(a);
+            _banUI.Blink(a);
         }
     }
     #endregion
@@ -161,6 +167,12 @@ public class Ban : MonoBehaviour
     #endregion
 
     #region private method
+    /// <summary>
+    /// <para>GetVectorForInt</para>
+    /// <para>合計座標から座標を算出します</para>
+    /// </summary>
+    /// <param name="sumPos"></param>
+    /// <returns></returns>
     private Vector2Int GetVectorForInt(int sumPos)
     {
         Vector2Int result = default;
@@ -169,6 +181,12 @@ public class Ban : MonoBehaviour
         return result;
     }
 
+    /// <summary>
+    /// <para>CheckPositionInBan</para>
+    /// <para>座標が盤上にあるか検査します</para>
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
     private bool CheckPositionInBan(Vector2Int position)
     {
         if(position.x < 0)
