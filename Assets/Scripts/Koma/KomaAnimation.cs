@@ -4,9 +4,9 @@
 // CreateDay: 
 // Creator  : 
 // --------------------------------------------------------- 
-
 using UnityEngine;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 
 public class KomaAnimation : MonoBehaviour
@@ -23,6 +23,7 @@ public class KomaAnimation : MonoBehaviour
 	private void Start ()
 	{
 		anim = GetComponent<Animator>();
+
 	}
 
 	public void Koma_MoveFront()
@@ -201,5 +202,12 @@ public class KomaAnimation : MonoBehaviour
 		transform.DOPath(waypoints, 1f, PathType.CatmullRom).SetEase(Ease.OutQuad);
 
 		anim.SetTrigger("move");
+	}
+
+	public async UniTask Koma_FallDown()
+    {
+		float end = transform.position.y;
+		transform.position += Vector3.up * 30f;
+		await transform.DOMoveY(end, 0.5f).SetEase(Ease.OutQuart).AsyncWaitForCompletion();
 	}
 }

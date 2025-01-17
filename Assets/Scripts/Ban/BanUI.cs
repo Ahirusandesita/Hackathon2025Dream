@@ -51,7 +51,6 @@ public class BanUI : MonoBehaviour
         _transform = transform;
         FindAnyObjectByType<ClickSystem>().OnClickMasu += Blink;
         _ban = GetComponent<Ban>();
-        Debug.Log(Mathf.FloorToInt(_ban.BanWidth));
         _rightDiff = -(_transform.position.x / _ban.BanHalfWidth);
         _upDiff = _transform.position.y + _upDiff;
         _forwardDiff = (_transform.position.z / _ban.BanHalfHeight);
