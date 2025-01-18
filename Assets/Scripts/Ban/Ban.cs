@@ -153,11 +153,10 @@ public class Ban : MonoBehaviour
             return false;
         }
         // ‰¤‚Ì”ÍˆÍŠO
-        if (! CheckKingAreaPosition(checkPos,team))
+        if (!CheckKingAreaPosition(checkPos,team))
         {
             return false;
         }
-
         // ‰½‚à‚È‚¢
         if (_ban[checkPos.y, checkPos.x] is null)
         {
@@ -184,11 +183,11 @@ public class Ban : MonoBehaviour
         Vector2Int targetKingPos = default;
         if (team == PlayerNumber.Player1)
         {
-            targetKingPos = _player1King.CurrentPosition;
+            targetKingPos = _player2King.CurrentPosition;
         }
         else
         {
-            targetKingPos = _player2King.CurrentPosition;
+            targetKingPos = _player1King.CurrentPosition;
         }
 
         // ‰¤‚Ìü•Ó‚ğŒŸõ
