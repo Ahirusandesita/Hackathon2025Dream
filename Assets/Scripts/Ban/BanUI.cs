@@ -22,6 +22,7 @@ public class BanUI : MonoBehaviour
     private float _upDiff = 0.1f;
     private float _forwardDiff = 0f;
 
+    private BlinkColor _blinkColor = BlinkColor.Normal;
     [SerializeField]
     private Color _normalColor = Color.white;
     [SerializeField]
@@ -31,7 +32,7 @@ public class BanUI : MonoBehaviour
     #endregion
 
     #region property
-
+    public BlinkColor BC => _blinkColor;
     #endregion
 
     #region singleton
@@ -63,7 +64,7 @@ public class BanUI : MonoBehaviour
     /// <para>点滅させる</para>
     /// </summary>
     /// <param name="blinkPositions"></param>
-    public void Blink(Vector2Int[] blinkPositions, BlinkColor color = BlinkColor.Normal)
+    public void Blink(Vector2Int[] blinkPositions)
     {
         // 全て消灯
         BlinkOff();
@@ -83,7 +84,7 @@ public class BanUI : MonoBehaviour
             {
                 if(pos == blinkPos)
                 {
-                    blinkObj.SetColor(GetColorForEnum(color));
+                    blinkObj.SetColor(GetColorForEnum(_blinkColor));
                     blinkObj.enabled = true;
                     _nowBlink.Add(blinkObj);
                     break;
@@ -96,7 +97,7 @@ public class BanUI : MonoBehaviour
     /// <para>点滅させる</para>
     /// </summary>
     /// <param name="blinkPositions"></param>
-    public void Blink(Vector2Int blinkPosition, BlinkColor color = BlinkColor.Normal)
+    public void Blink(Vector2Int blinkPosition)
     {
         // 全て消灯
         BlinkOff();
@@ -109,7 +110,7 @@ public class BanUI : MonoBehaviour
             //Debug.Log(pos + " " + blinkPosition);
             if (pos == blinkPosition)
             {
-                blinkObj.SetColor(GetColorForEnum(color));
+                blinkObj.SetColor(GetColorForEnum(_blinkColor));
                 blinkObj.enabled = true;
                 _nowBlink.Add(blinkObj);
                 break;
