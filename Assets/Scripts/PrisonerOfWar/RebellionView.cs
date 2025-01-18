@@ -25,7 +25,7 @@ public class RebellionView : MonoBehaviour, IInject<GameManager>
     {
         gameManager.Player1.GetComponent<POWManager>().OnWaitRebellion += async (eventData, sender) =>
         {
-            animator.SetBool("player1",true);
+            animator.SetTrigger("player1");
 
             await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("player1"));
 
@@ -36,7 +36,7 @@ public class RebellionView : MonoBehaviour, IInject<GameManager>
         };
         gameManager.Player2.GetComponent<POWManager>().OnWaitRebellion += async (eventData, sender) =>
         {
-            animator.SetBool("player2",true);
+            animator.SetTrigger("player2");
 
             await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("player2"));
 

@@ -88,7 +88,11 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) && playerNumber == PlayerNumber.Player1)
+        {
+            OnWaitRebellion?.Invoke(null, this);
+        }
+        if (Input.GetKeyDown(KeyCode.B) && playerNumber == PlayerNumber.Player2)
         {
             OnWaitRebellion?.Invoke(null, this);
         }
