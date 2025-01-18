@@ -13,6 +13,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks.Triggers;
 using System.Runtime.CompilerServices;
 using UnityEditor;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -119,8 +120,8 @@ public class PlayerManager : MonoBehaviour
             King king = _komaController.GetKing();
             _selectedKomaPosition = king.CurrentPosition;
             _selectedKomaMovableDirections = king.KomaAsset.MovableDirection;
-            _clickSystem.OnClickMasu += OnClickMasuAtKingSelect;
-            BanUI.Get().Blink(king.CurrentPosition);
+            _movableWorldPositions = Ban.Get().GetMovablePosition(_selectedKomaPosition, _selectedKomaMovableDirections);
+            _clickSystem.OnClickMasu += OnClickMasuAtKingMove;
         };
     }
 
@@ -185,23 +186,13 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void OnClickMasuAtKingSelect(Masu masu)
-    {
-        // Ž©•ª‚Ì‹î‚ª‰Ÿ‚³‚ê‚½
-        if (_selectedKomaPosition == masu.OwnPosition)
-        {
-            _attackableWorldPositions = Ban.Get().GetAttackablePosition(masu.OwnPosition, _selectedKomaMovableDirections);
-            _clickSystem.OnClickMasu += OnClickMasuAtKingMove;
-        }
-    }
-
     private void OnClickMasuAtKingMove(Masu masu)
     {
         // ˆÚ“®‰Â”\‚Èƒ}ƒX‚ª‰Ÿ‚³‚ê‚½
         if (_movableWorldPositions.Contains(masu.OwnPosition))
         {
             _komaController.MoveKoma(_selectedKomaPosition, masu.OwnPosition).Forget();
-            (_phaseManager as IPhaseChanger).MoveEnd(_playerNumber);
+            (_phaseManager as IPhaseChanger).KingMoveEnd(_playerNumber);
         }
     }
 }

@@ -88,7 +88,9 @@ public class PhaseManager : MonoBehaviour, IPhaseChanger
         {
             return;
         }
+
         OnMoveEnd?.Invoke(playerNumber);
+        (this as IPhaseChanger).KingMoveStart(playerNumber);
     }
 
     void IPhaseChanger.KingMoveStart(PlayerNumber playerNumber)
@@ -109,6 +111,7 @@ public class PhaseManager : MonoBehaviour, IPhaseChanger
             return;
         }
         OnKingMoveEnd?.Invoke(playerNumber);
+        (this as IPhaseChanger).POWPutStart(playerNumber);
     }
 
     void IPhaseChanger.RebellionCheckStart(PlayerNumber playerNumber)

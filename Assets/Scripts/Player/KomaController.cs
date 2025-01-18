@@ -132,17 +132,17 @@ public class KomaController : MonoBehaviour, IInjectPlayer
             {
                 koma.CurrentPosition = newPosition;
 
-                //Vector2Int moveDirection = _myPlayerNumber switch
-                //{
-                //    PlayerNumber.Player1 => newPosition - oldPosition,
-                //    PlayerNumber.Player2 => oldPosition - newPosition,
-                //    _ => throw new System.InvalidProgramException()
-                //};
-                Vector2Int moveDirection = newPosition - oldPosition;
+                Vector2Int moveDirection = _myPlayerNumber switch
+                {
+                    PlayerNumber.Player1 => newPosition - oldPosition,
+                    PlayerNumber.Player2 => oldPosition - newPosition,
+                    _ => throw new System.InvalidProgramException()
+                };
+                //Vector2Int moveDirection = newPosition - oldPosition;
                 int divideX = moveDirection.x == 0 ? 1 : Mathf.Abs(moveDirection.x);
                 int divideY = moveDirection.y == 0 ? 1 : Mathf.Abs(moveDirection.y);
                 Vector2Int moveDirectionNormalied = new Vector2Int(moveDirection.x / divideX, moveDirection.y / divideY);
-
+                print(moveDirection);
                 KomaAnimation komaAnimation = koma.GetComponent<KomaAnimation>();
                 int max = Mathf.Abs(moveDirection.x) > Mathf.Abs(moveDirection.y) ? Mathf.Abs(moveDirection.x) : Mathf.Abs(moveDirection.y);
                 for (int i = 0; i < max; i++)
@@ -150,35 +150,35 @@ public class KomaController : MonoBehaviour, IInjectPlayer
                     // ビューの更新
                     if (moveDirectionNormalied == new Vector2Int(1, -1))
                     {
-                        await komaAnimation.Koma_MoveFrontRight();
+                        await komaAnimation.Koma_MoveFrontRight(_myPlayerNumber);
                     }
                     else if (moveDirectionNormalied == new Vector2Int(0, -1))
                     {
-                        await komaAnimation.Koma_MoveFront();
+                        await komaAnimation.Koma_MoveFront(_myPlayerNumber);
                     }
                     else if (moveDirectionNormalied == new Vector2Int(-1, -1))
                     {
-                        await komaAnimation.Koma_MoveFrontLeft();
+                        await komaAnimation.Koma_MoveFrontLeft(_myPlayerNumber);
                     }
                     else if (moveDirectionNormalied == new Vector2Int(1, 0))
                     {
-                        await komaAnimation.Koma_MoveRight();
+                        await komaAnimation.Koma_MoveRight(_myPlayerNumber);
                     }
                     else if (moveDirectionNormalied == new Vector2Int(-1, 0))
                     {
-                        await komaAnimation.Koma_MoveLeft();
+                        await komaAnimation.Koma_MoveLeft(_myPlayerNumber);
                     }
                     else if (moveDirectionNormalied == new Vector2Int(1, 1))
                     {
-                        await komaAnimation.Koma_BackRight();
+                        await komaAnimation.Koma_BackRight(_myPlayerNumber);
                     }
                     else if (moveDirectionNormalied == new Vector2Int(-1, 1))
                     {
-                        await komaAnimation.Koma_BackLeft();
+                        await komaAnimation.Koma_BackLeft(_myPlayerNumber);
                     }
                     else if (moveDirectionNormalied == new Vector2Int(0, 1))
                     {
-                        await komaAnimation.Koma_MoveFrontRight();
+                        await komaAnimation.Koma_MoveFrontRight(_myPlayerNumber);
                     }
                 }
             }
