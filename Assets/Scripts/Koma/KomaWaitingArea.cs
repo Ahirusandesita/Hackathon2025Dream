@@ -27,7 +27,7 @@ public class KomaWaitingArea : MonoBehaviour
     {
         this.waitingAreas = waitingAreas;
 
-        for (int i = 0; i < canPuts.Count; i++)
+        for (int i = 0; i < waitingAreas.Count; i++)
         {
             canPuts.Add(new POWInfo(true));
         }
