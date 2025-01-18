@@ -252,6 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _komaAsset: {fileID: 11400000, guid: 71cd87b8ed29c9b409202388159ce3f5, type: 2}
+  _nariAsset: {fileID: 11400000, guid: 992ac25083806c84db6ce9bedac8527d, type: 2}
 --- !u!114 &-4096764578682769894
 MonoBehaviour:
   m_ObjectHideFlags: 0
