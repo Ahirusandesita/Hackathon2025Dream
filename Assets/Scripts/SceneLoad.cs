@@ -13,6 +13,12 @@ public class SceneLoad : MonoBehaviour
 {
 	private string SceneName = "Main";
 
+	[SerializeField]
+	AudioSource audio;
+
+	[SerializeField]
+	AudioClip clip;
+
 
 	private void Awake()
 	{
@@ -31,6 +37,8 @@ public class SceneLoad : MonoBehaviour
 
 	public void MoveScene()
     {
+		audio.PlayOneShot(clip);
+
 		SceneManager.LoadScene(SceneName);
 	}
 
