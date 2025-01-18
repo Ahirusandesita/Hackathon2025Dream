@@ -19,7 +19,9 @@ public class Ban : MonoBehaviour
 
     [SerializeField]
     private int _kingArea = 1;
+    [SerializeField]
     private Koma _player1King = default;
+    [SerializeField]
     private Koma _player2King = default;
     private Koma[,] _ban = new Koma[9,9];
 
@@ -49,14 +51,15 @@ public class Ban : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            Vector2Int ch = GetVectorForInt(_test);
-            Debug.Log(ch + " " + CheckPosition(ch) + " " + _ban[ch.y, ch.x]);
-            Koma koma = _ban[ch.y, ch.x];
-            if(koma is null)
+            string a = "";
+            for(int y = 0;y < BanHeight; y++)
             {
-                BanUI.Get().Blink(ch);
+                for(int x = 0;x < BanWidth; x++)
+                {
+                    Debug.Log(x + "," + y + " :" + _ban[y,x]);
+                }
             }
-            GetMovablePosition(koma.CurrentPosition,koma.KomaAsset.MovableDirection);
+            
         }
         if (Input.GetKeyDown(KeyCode.K))
         {
@@ -111,8 +114,10 @@ public class Ban : MonoBehaviour
     public void UpdateKomaPos(Vector2Int oldPos, Vector2Int newPos)
     {
         Koma temp = _ban[oldPos.y, oldPos.x];
+        _ban[oldPos.y, oldPos.x] = _ban[newPos.y, newPos.x];
         _ban[newPos.y, newPos.x] = temp;
-        _ban[oldPos.y, oldPos.x] = null;
+
+        //Debug.Log(oldPos + ":" + _ban[oldPos.y, oldPos.x] + " >> " + newPos + ":" + _ban[newPos.y, newPos.x]);
     }
     #endregion
 
@@ -152,8 +157,8 @@ public class Ban : MonoBehaviour
         {
             return false;
         }
-        // ‰¤‚Ì”ÍˆÍŠO
-        if (!CheckKingAreaPosition(checkPos,team))
+        // ‰¤‚Ì”ÍˆÍ“à
+        if (CheckKingAreaPosition(checkPos,team))
         {
             return false;
         }
@@ -276,6 +281,12 @@ public class Ban : MonoBehaviour
         List<Vector2Int> poss = new List<Vector2Int>();
         // ‹îŽæ“¾
         Koma koma = _ban[pos.y, pos.x];
+        if(_ban[pos.y,pos.x] is null)
+        {
+            Debug.LogWarning(pos + " is Null");
+            return default;
+        }
+        //Debug.Log("M" + pos + " " + _ban[pos.y, pos.x]);
         // ‘Š‘Î•ÏŠ·
         PlayerNumber myTeam = koma.MyPlayerNumber;
         int dire = PlayerManager.GetMoveDirectionCoefficient(myTeam);
@@ -333,6 +344,12 @@ public class Ban : MonoBehaviour
         List<Vector2Int> poss = new List<Vector2Int>();
         // ‹îŽæ“¾
         Koma koma = _ban[pos.y, pos.x];
+        if (_ban[pos.y, pos.x] is null)
+        {
+            Debug.LogWarning(pos + " is Null");
+            return default;
+        }
+        //Debug.Log("A" + pos + " " + _ban[pos.y, pos.x]);
         // ‘Š‘Î•ÏŠ·
         PlayerNumber myTeam = koma.MyPlayerNumber;
         int dire = PlayerManager.GetMoveDirectionCoefficient(myTeam);
