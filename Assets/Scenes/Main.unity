@@ -455,7 +455,7 @@ PrefabInstance:
     - target: {fileID: 4429501988845348978, guid: 406c3a3b316915e4183eee9556988964, type: 3}
       propertyPath: _initialKomaPositionAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 50dfe4bbbf07a5d4fb9a9518a7ce7f34, type: 2}
+      objectReference: {fileID: 11400000, guid: c30a6bfb8dfea344796384cc7b8ae624, type: 2}
     - target: {fileID: 5709142068500048464, guid: 406c3a3b316915e4183eee9556988964, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -504,6 +504,10 @@ PrefabInstance:
       propertyPath: _banUI
       value: 
       objectReference: {fileID: 1546688890}
+    - target: {fileID: 7160853610725835767, guid: 406c3a3b316915e4183eee9556988964, type: 3}
+      propertyPath: _initialKomaPositionAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: c30a6bfb8dfea344796384cc7b8ae624, type: 2}
     - target: {fileID: 7227597254804341718, guid: 406c3a3b316915e4183eee9556988964, type: 3}
       propertyPath: _komaController
       value: 
