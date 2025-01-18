@@ -51,7 +51,6 @@ public class Ban : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            string a = "";
             for(int y = 0;y < BanHeight; y++)
             {
                 for(int x = 0;x < BanWidth; x++)
@@ -263,6 +262,30 @@ public class Ban : MonoBehaviour
             }
         }
 
+        Vector2Int[] result = poss.ToArray();
+        BanUI.Get().Blink(result, BlinkColor.Normal);
+        return result;
+    }
+
+    /// <summary>
+    /// <para>GetPutPosition</para>
+    /// <para>設置可能なマスを返す</para>
+    /// </summary>
+    /// <param name="team"></param>
+    /// <returns></returns>
+    public Vector2Int[] GetPutPosition(PlayerNumber team)
+    {
+        // 返却用
+        List<Vector2Int> poss = new List<Vector2Int>();
+        foreach(Vector2Int pos in GetNonePosition())
+        {
+            // 王の範囲内
+            if (CheckKingAreaPosition(pos, team))
+            {
+                continue;
+            }
+            poss.Add(pos);
+        }
         Vector2Int[] result = poss.ToArray();
         BanUI.Get().Blink(result, BlinkColor.Normal);
         return result;
