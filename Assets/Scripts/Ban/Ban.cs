@@ -139,11 +139,39 @@ public class Ban : MonoBehaviour
     }
 
     /// <summary>
+    /// <para>CheckPutPosition</para>
+    /// <para></para>
+    /// </summary>
+    /// <param name="checkPos"></param>
+    /// <param name="team"></param>
+    /// <returns></returns>
+    public bool CheckPutPosition(Vector2Int checkPos, PlayerNumber team)
+    {
+        // 盤外
+        if (!CheckPositionInBan(checkPos))
+        {
+            return false;
+        }
+        // 王の範囲外
+        if (! CheckKingAreaPosition(checkPos,team))
+        {
+            return false;
+        }
+
+        // 何もない
+        if (_ban[checkPos.y, checkPos.x] is null)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
     /// <para>CheckPosition</para>
     /// <para>指定した座標が王の周りにあるか検査します</para>
     /// </summary>
     /// <param name="checkPos"></param>
-    /// <returns></returns>
+    /// <returns>範囲内判定</returns>
     public bool CheckKingAreaPosition(Vector2Int checkPos, PlayerNumber team)
     {
         // 盤外
@@ -253,7 +281,7 @@ public class Ban : MonoBehaviour
         PlayerNumber myTeam = koma.MyPlayerNumber;
         Debug.Log(myTeam);
         int dire = PlayerManager.GetMoveDirectionCoefficient(myTeam);
-        Vector2Int[] direMovable = movablePositions; 
+        Vector2Int[] direMovable = (Vector2Int[])movablePositions.Clone(); 
         for(int i = 0;i<direMovable.Length;i++)
         {
             direMovable[i] *= dire;
@@ -263,7 +291,7 @@ public class Ban : MonoBehaviour
         // 駒の直線処理が必要である
         if(koma.KomaAsset.CollidableDirection.Length != 0)
         {
-            Vector2Int[] collideDire = koma.KomaAsset.CollidableDirection;
+            Vector2Int[] collideDire = (Vector2Int[])koma.KomaAsset.CollidableDirection.Clone();
             for (int i = 0; i < collideDire.Length; i++)
             {
                 collideDire[i] = collideDire[i] * dire;
@@ -310,7 +338,7 @@ public class Ban : MonoBehaviour
         // 相対変換
         PlayerNumber myTeam = koma.MyPlayerNumber;
         int dire = PlayerManager.GetMoveDirectionCoefficient(myTeam);
-        Vector2Int[] direMovable = movablePositions;
+        Vector2Int[] direMovable = (Vector2Int[])movablePositions.Clone();
         for (int i = 0; i < direMovable.Length; i++)
         {
             direMovable[i] *= dire;
@@ -322,7 +350,7 @@ public class Ban : MonoBehaviour
         if (koma.KomaAsset.CollidableDirection.Length != 0)
         {
             // 相対変換
-            Vector2Int[] collideDire = koma.KomaAsset.CollidableDirection;
+            Vector2Int[] collideDire = (Vector2Int[])koma.KomaAsset.CollidableDirection.Clone();
             for (int i = 0; i < collideDire.Length; i++)
             {
                 collideDire[i] = collideDire[i] * dire;
