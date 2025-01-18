@@ -151,4 +151,23 @@ public class GameManager : MonoBehaviour
 
         GetComponent<IPhaseChanger>().AttackStart(PlayerNumber.Player1);
     }
+
+    public async void GameEnd(PlayerNumber winner)
+    {
+        // Ÿ”sÒİ’è
+        if (winner == PlayerNumber.Player1)
+        {
+            //Debug
+            Debug.Log("Player1 Winner");
+        }
+        else
+        {
+            //Debug
+            Debug.Log("Player2 Winner");
+        }
+        // Ÿ”s‰‰o‘Ò‚¿
+        await UniTask.WaitForSeconds(1f);
+
+        SceneChanger.Get().GoTitleScene();
+    }
 }
