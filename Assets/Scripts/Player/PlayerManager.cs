@@ -84,6 +84,26 @@ public class PlayerManager : MonoBehaviour
             _movableWorldPositions = Ban.Get().GetMovablePosition(_selectedKomaPosition, _selectedKomaMovableDirection);
             _clickSystem.OnClickMasu += OnClickMasuAtMove;
         };
+
+        _phaseManager.OnMoveEnd += playerNumber =>
+        {
+            if (playerNumber != _playerNumber)
+            {
+                return;
+            }
+
+            _clickSystem.OnClickMasu -= OnClickMasuAtMove;
+        };
+
+        _phaseManager.OnKingMoveStart += playerNumber =>
+        {
+            if (playerNumber != _playerNumber)
+            {
+                return;
+            }
+
+            // ƒLƒ“ƒOŽæ“¾
+        };
     }
 
     /// <summary>
@@ -131,6 +151,7 @@ public class PlayerManager : MonoBehaviour
         if (_movableWorldPositions.Contains(masu.OwnPosition))
 		{
             _komaController.MoveKoma(_selectedKomaPosition, masu.OwnPosition);
-		}
+            (_phaseManager as IPhaseChanger).MoveEnd(_playerNumber);
+        }
 	}
 }
