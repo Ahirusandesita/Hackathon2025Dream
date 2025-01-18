@@ -69,6 +69,7 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
             else
             {
                 isFirstPowPut = true;
+                ban.GetNonePosition();
                 OnPOWPut?.Invoke(POWStandBys[0]);
             }
 
@@ -104,6 +105,7 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
                 }
                 else
                 {
+                    ban.GetPutPosition(playerNumber);
                     OnPOWPut?.Invoke(POWStandBys[0]);
                 }
             }
@@ -124,6 +126,7 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
                 }
                 else
                 {
+                    ban.GetPutPosition(playerNumber);
                     OnPOWPut?.Invoke(POWStandBys[0]);
                 }
             }
