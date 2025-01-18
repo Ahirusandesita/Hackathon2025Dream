@@ -15,4 +15,6 @@ MonoBehaviour:
   _komaName: Fu
   _movableDirection:
   - {x: 0, y: 1}
+  _collidableDirection: []
   _icon: {fileID: 21300000, guid: 86112d5109aa8b849a09cd9a1b92b6ba, type: 3}
+  _canNari: 1

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Triggers;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ public class KomaController : MonoBehaviour, IInjectPlayer
     private PlayerNumber _myPlayerNumber = default;
     private PhaseManager _phaseManager = default;
     private GameManager _gameManager = default;
+
 
     public List<Koma> OwnKomas { get => _ownKomas; set => _ownKomas = value; }
 
@@ -108,11 +110,8 @@ public class KomaController : MonoBehaviour, IInjectPlayer
         {
             _gameManager.Me(_myPlayerNumber).GetComponent<POWManager>().CancelPOW(_ownKomas[i]);
         }
-        else
-        {
-            _gameManager.Opponent(_myPlayerNumber).GetComponent<POWManager>().TurnedIntoPOW(_ownKomas[i]);
-        }
 
+        _gameManager.Opponent(_myPlayerNumber).GetComponent<POWManager>().TurnedIntoPOW(_ownKomas[i]);
         // ‘ŠŽè‚É‹î‚ð“n‚·
         _ownKomas[i].MyPlayerNumber = _gameManager.Opponent(_myPlayerNumber).GetComponent<PlayerManager>().PlayerNumber;
         _gameManager.Opponent(_myPlayerNumber).GetComponent<KomaController>().OwnKomas.Add(_ownKomas[i]);
@@ -146,12 +145,18 @@ public class KomaController : MonoBehaviour, IInjectPlayer
                     PlayerNumber.Player2 => oldPosition - newPosition,
                     _ => throw new System.InvalidProgramException()
                 };
-                
+
                 int divideX = moveDirection.x == 0 ? 1 : Mathf.Abs(moveDirection.x);
                 int divideY = moveDirection.y == 0 ? 1 : Mathf.Abs(moveDirection.y);
                 Vector2Int moveDirectionNormalied = new Vector2Int(moveDirection.x / divideX, moveDirection.y / divideY);
                 KomaAnimation komaAnimation = koma.GetComponent<KomaAnimation>();
                 await komaAnimation.Move(newPosition, _myPlayerNumber);
+
+                if (_ban.CheckEnemyCamp(newPosition, _myPlayerNumber) && koma.KomaAsset.CanNari)
+                {
+                    koma.KomaAsset = koma.NariAsset;
+                    koma.transform.rotation = Quaternion.Euler(Vector3.forward * 180f);
+                }
                 break;
             }
         }

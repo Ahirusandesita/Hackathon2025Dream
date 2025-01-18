@@ -18,9 +18,12 @@ public class KomaAsset : ScriptableObject
     private Vector2Int[] _collidableDirection = default;
     [SerializeField]
     private Sprite _icon = default;
+    [SerializeField]
+    private bool _canNari = default;
 
     public string KomaName => _komaName;
     public Vector2Int[] MovableDirection => _movableDirection;
     public Vector2Int[] CollidableDirection => _collidableDirection;
     public Sprite Icon => _icon;
+    public bool CanNari => _canNari;
 }
