@@ -117,6 +117,10 @@ public class BanUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// <para>BlinkOff</para>
+    /// <para>Á“”‚³‚¹‚é</para>
+    /// </summary>
     public void BlinkOff()
     {
         // ¡“_–Å‚µ‚Ä‚¢‚é‚à‚Ì‚ª‚È‚¯‚ê‚Î‰½‚à‚µ‚È‚¢
