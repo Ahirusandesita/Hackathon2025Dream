@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb8686b0bf29ca847978538258e62d76, type: 3}
-  m_Name: TestGroup
+  m_Name: KakuHisyaKinGin
   m_EditorClassIdentifier: 
-  numberofPOWNeededForRebellion: 8
+  numberofPOWNeededForRebellion: 2
   komaAssets:
-  - {fileID: 11400000, guid: 7fb808a8ec225c44baa66e7ed05453c7, type: 2}
-  - {fileID: 11400000, guid: 31a52148ee8581f48b38d9e9e3868165, type: 2}
+  - {fileID: 11400000, guid: c96478a4c81aef0478a040a8a920de0e, type: 2}
+  - {fileID: 11400000, guid: 0ffb955bd6a7c0c498074a310a3b5250, type: 2}
   - {fileID: 11400000, guid: f77bd050e35131541950af6bc29bed54, type: 2}
+  - {fileID: 11400000, guid: df92a09dad9ddbb4a903f6ce94bc95a9, type: 2}
