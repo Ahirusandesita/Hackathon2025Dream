@@ -54,8 +54,12 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
 
         gameManager.GetComponent<PhaseManager>().OnPowPutStart += (playerNumber) =>
         {
-            clickSystem.OnClickMasu += POWPut;
+            if(playerNumber != this.playerNumber)
+            {
+                return;
+            }
 
+            clickSystem.OnClickMasu += POWPut;
             if (POWStandBys.Count == 0)
             {
                 gameManager.GetComponent<IPhaseChanger>().POWPutEnd(playerNumber);
@@ -69,6 +73,11 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
         };
         gameManager.GetComponent<PhaseManager>().OnPowPutEnd += (playerNumber) =>
         {
+            if (playerNumber != this.playerNumber)
+            {
+                return;
+            }
+
             clickSystem.OnClickMasu -= POWPut;
 
             //‰¼
@@ -100,7 +109,6 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
     public void TurnedIntoPOW(Koma koma)
     {
         POWs.Add(koma);
-
         POWStandBys.Add(koma);
     }
     public void CancelPOW(Koma koma)
