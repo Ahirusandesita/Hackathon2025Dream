@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
 
 public class KomaController : MonoBehaviour, IInjectPlayer
@@ -103,16 +104,13 @@ public class KomaController : MonoBehaviour, IInjectPlayer
 
         // 相手に駒を渡す
         _gameManager.Opponent(_myPlayerNumber).GetComponent<KomaController>().OwnKomas.Add(_ownKomas[i]);
-        // ここで見た目飛ばす---------------
-        // Debug
-        _ownKomas[i].gameObject.SetActive(false);
-        // ------------------------------
+        _gameManager.Opponent(_myPlayerNumber).GetComponent<KomaWaitingArea>().Arrangement(_ownKomas[i]);
         _ownKomas.RemoveAt(i);
         _ban.RemoveKoma(takeAttackPosition);
     }
 
     public void MoveKoma(Vector2Int oldPosition, Vector2Int newPosition)
-	{
+    {
         _ban.UpdateKomaPos(oldPosition, newPosition);
         foreach (var koma in _ownKomas)
         {
@@ -120,8 +118,47 @@ public class KomaController : MonoBehaviour, IInjectPlayer
             {
                 koma.CurrentPosition = newPosition;
                 // ビューの更新
-                koma.transform.position = _banUI.GetWorldPosition(newPosition);
                 KomaAnimation komaAnimation = koma.GetComponent<KomaAnimation>();
+
+                Vector2Int moveDirection = _myPlayerNumber switch
+                {
+                    PlayerNumber.Player1 => newPosition - oldPosition,
+                    PlayerNumber.Player2 => oldPosition - newPosition,
+                    _ => throw new System.InvalidProgramException()
+                };
+
+                if (moveDirection == new Vector2Int(1, -1))
+                {
+                    komaAnimation.Koma_MoveFrontRight();
+                }
+                else if (moveDirection == new Vector2Int(0, -1))
+                {
+                    komaAnimation.Koma_MoveFront();
+                }
+                else if (moveDirection == new Vector2Int(-1, -1))
+                {
+                    komaAnimation.Koma_MoveFrontLeft();
+                }
+                else if (moveDirection == new Vector2Int(1, 0))
+                {
+                    komaAnimation.Koma_MoveFrontRight();
+                }
+                else if (moveDirection == new Vector2Int(-1, 0))
+                {
+                    komaAnimation.Koma_MoveLeft();
+                }
+                else if (moveDirection == new Vector2Int(-1, 1))
+                {
+                    komaAnimation.Koma_BackRight();
+                }
+                else if (moveDirection == new Vector2Int(-1, 1))
+                {
+                    komaAnimation.Koma_BackLeft();
+                }
+                else if (moveDirection == new Vector2Int(0, 1))
+                {
+                    komaAnimation.Koma_MoveFrontRight();
+                }
             }
         }
     }
