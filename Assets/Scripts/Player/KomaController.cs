@@ -148,7 +148,7 @@ public class KomaController : MonoBehaviour, IInjectPlayer
             }
         }
 
-        (_phaseManager as IPhaseChanger).MoveEnd(_myPlayerNumber);
+        //(_phaseManager as IPhaseChanger).MoveEnd(_myPlayerNumber);
     }
 
     /// <summary>
