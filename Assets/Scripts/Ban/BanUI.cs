@@ -32,7 +32,7 @@ public class BanUI : MonoBehaviour
     #endregion
 
     #region property
-    public BlinkColor BC => _blinkColor;
+    public BlinkColor BC { get => _blinkColor; set => _blinkColor = value; }
     #endregion
 
     #region singleton
