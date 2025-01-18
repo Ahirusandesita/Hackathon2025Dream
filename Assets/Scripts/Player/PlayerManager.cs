@@ -201,7 +201,6 @@ public class PlayerManager : MonoBehaviour
         {
             _komaController.MoveKoma(_selectedKomaPosition, masu.OwnPosition).Forget();
             (_phaseManager as IPhaseChanger).KingMoveEnd(_playerNumber);
-            print("AA");
         }
     }
 }
