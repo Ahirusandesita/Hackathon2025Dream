@@ -121,8 +121,6 @@ public class KomaController : MonoBehaviour, IInjectPlayer
             if (oldPosition == koma.CurrentPosition)
             {
                 koma.CurrentPosition = newPosition;
-                // ビューの更新
-                KomaAnimation komaAnimation = koma.GetComponent<KomaAnimation>();
 
                 Vector2Int moveDirection = _myPlayerNumber switch
                 {
@@ -131,6 +129,9 @@ public class KomaController : MonoBehaviour, IInjectPlayer
                     _ => throw new System.InvalidProgramException()
                 };
 
+                KomaAnimation komaAnimation = koma.GetComponent<KomaAnimation>();
+
+                // ビューの更新
                 if (moveDirection == new Vector2Int(1, -1))
                 {
                     komaAnimation.Koma_MoveFrontRight();
@@ -221,9 +222,8 @@ public class KomaController : MonoBehaviour, IInjectPlayer
             _ownKomas[i].MyPlayerNumber = _myPlayerNumber;
             _ownKomas[i].MyAbsolutePlayerNumber = _myPlayerNumber;
             _ban.SetKoma(koma, masuPosition);
+            koma.GetComponent<KomaAnimation>().Koma_FallDown().Forget();
+            await UniTask.Delay(System.TimeSpan.FromSeconds(0.15));
         }
-
-        // Debug
-        await UniTask.CompletedTask;
     }
 }
