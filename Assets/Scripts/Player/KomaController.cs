@@ -146,13 +146,13 @@ public class KomaController : MonoBehaviour, IInjectPlayer
                 }
                 else if (moveDirection == new Vector2Int(1, 0))
                 {
-                    komaAnimation.Koma_MoveFrontRight();
+                    komaAnimation.Koma_MoveRight();
                 }
                 else if (moveDirection == new Vector2Int(-1, 0))
                 {
                     komaAnimation.Koma_MoveLeft();
                 }
-                else if (moveDirection == new Vector2Int(-1, 1))
+                else if (moveDirection == new Vector2Int(1, 1))
                 {
                     komaAnimation.Koma_BackRight();
                 }
