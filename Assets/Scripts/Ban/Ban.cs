@@ -12,12 +12,7 @@ using System.Collections.Generic;
 public class Ban : MonoBehaviour
 {
     #region variable 
-    private enum KomaCollideTrigger
-    {
-        None = 0,
-        Collide,
-        Multi,
-    }
+    
 
     private const int CAMPRANGE = 3;
     private static Ban _instance = default;
@@ -268,6 +263,7 @@ public class Ban : MonoBehaviour
         }
 
         Vector2Int[] result = poss.ToArray();
+        BanUI.Get().BC = BlinkColor.Normal;
         BanUI.Get().Blink(result);
         return result;
     }
@@ -292,6 +288,7 @@ public class Ban : MonoBehaviour
             poss.Add(pos);
         }
         Vector2Int[] result = poss.ToArray();
+        BanUI.Get().BC = BlinkColor.Normal;
         BanUI.Get().Blink(result);
         return result;
     }
@@ -314,7 +311,7 @@ public class Ban : MonoBehaviour
             Debug.LogWarning(pos + " is Null");
             return default;
         }
-        Debug.Log("M" + pos + " " + _ban[pos.y, pos.x]);
+        //Debug.Log("M" + pos + " " + _ban[pos.y, pos.x]);
         // 相対変換
         PlayerNumber myTeam = koma.MyPlayerNumber;
         int dire = PlayerManager.GetMoveDirectionCoefficient(myTeam);
@@ -333,26 +330,27 @@ public class Ban : MonoBehaviour
             {
                 collideDire[i] = collideDire[i] * dire;
             }
-            poss.AddRange(GetCollideList(pos, movablePositions, collideDire, KomaCollideTrigger.Multi));
-            direMovable = poss.ToArray();
+            poss.AddRange(GetCollideList(pos, movablePositions, collideDire, false));
         }
-        // 移動可能座標
-        foreach (Vector2Int movable in direMovable)
+        else
         {
-            Vector2Int checkPos = pos + movable;
+            // 移動可能座標
+            foreach (Vector2Int movable in direMovable)
+            {
+                Vector2Int checkPos = pos + movable;
 
-            // 盤外
-            if (!CheckPositionInBan(checkPos))
-            {
-                continue;
-            }
-            // 何もない
-            if (_ban[checkPos.y, checkPos.x] is null)
-            {
-                poss.Add(checkPos);
+                // 盤外
+                if (!CheckPositionInBan(checkPos))
+                {
+                    continue;
+                }
+                // 何もない
+                if (_ban[checkPos.y, checkPos.x] is null)
+                {
+                    poss.Add(checkPos);
+                }
             }
         }
-
         Vector2Int[] result = poss.ToArray();
         BanUI.Get().Blink(result);
         return result;
@@ -376,7 +374,7 @@ public class Ban : MonoBehaviour
             Debug.LogWarning(pos + " is Null");
             return default;
         }
-        Debug.Log("A" + pos + " " + _ban[pos.y, pos.x]);
+        //Debug.Log("A" + pos + " " + _ban[pos.y, pos.x]);
         // 相対変換
         PlayerNumber myTeam = koma.MyPlayerNumber;
         int dire = PlayerManager.GetMoveDirectionCoefficient(myTeam);
@@ -398,29 +396,45 @@ public class Ban : MonoBehaviour
                 collideDire[i] = collideDire[i] * dire;
             }
             // 取得
-            Vector2Int[] collides = GetCollideList(pos, movablePositions, collideDire, KomaCollideTrigger.Collide);
-            direMovable = (Vector2Int[])collides.Clone();
+            Vector2Int[] collides = GetCollideList(pos, movablePositions, collideDire, true);
+            // 検査
+            foreach(Vector2Int collide in collides)
+            {
+                // 盤外
+                if (!CheckPositionInBan(collide))
+                {
+                    continue;
+                }
+                // 何もない
+                if (myTeam == _ban[collide.y, collide.x].MyPlayerNumber)
+                {
+                    continue;
+                }
+                poss.Add(collide);
+            }
         }
-        // 検査
-        foreach (Vector2Int movable in direMovable)
+        else
         {
-            Vector2Int checkPos = pos + movable;
-            //Debug.Log(checkPos);
-            // 盤外
-            if (!CheckPositionInBan(checkPos))
+            // 検査
+            foreach (Vector2Int movable in direMovable)
             {
-                //Debug.Log("none");
-                continue;
+                Vector2Int checkPos = pos + movable;
+                //Debug.Log(checkPos);
+                // 盤外
+                if (!CheckPositionInBan(checkPos))
+                {
+                    //Debug.Log("none");
+                    continue;
+                }
+                // 何もない
+                if (_ban[checkPos.y, checkPos.x] is null || myTeam == _ban[checkPos.y, checkPos.x].MyPlayerNumber)
+                {
+                    //Debug.Log("null or myteam");
+                    continue;
+                }
+                poss.Add(checkPos);
             }
-            // 何もない
-            if (_ban[checkPos.y, checkPos.x] is null || myTeam == _ban[checkPos.y, checkPos.x].MyPlayerNumber)
-            {
-                //Debug.Log("null or myteam");
-                continue;
-            }
-            poss.Add(checkPos);
         }
-        
         Vector2Int[] result = poss.ToArray();
         BanUI.Get().Blink(result);
         return result;
@@ -469,7 +483,7 @@ public class Ban : MonoBehaviour
         return true;
     }
 
-    private Vector2Int[] GetCollideList(Vector2Int pos, Vector2Int[] movablePositions, Vector2Int[] dire, KomaCollideTrigger trigger)
+    private Vector2Int[] GetCollideList(Vector2Int pos, Vector2Int[] movablePositions, Vector2Int[] dire, bool isCollide)
     {
         // 初期化
         List<Vector2Int> result = new List<Vector2Int>();
@@ -510,49 +524,31 @@ public class Ban : MonoBehaviour
         }
 
         // 衝突先を取得するか
-        switch(trigger)
+        if(isCollide)
         {
-            case KomaCollideTrigger.None:
-                // 各方向のリストを合算
-                for (int i = 0; i < dire.Length; i++)
+            // 各方向のリストを合算
+            for (int i = 0; i < dire.Length; i++)
+            {
+                // 進めるマスがない
+                if(collide[i].Count == 0)
                 {
-                    result.AddRange(collide[i]);
+                    // 1マス先の座標を設定
+                    result.Add(pos + dire[i]);
+                    continue;
                 }
-                break;
-
-            case KomaCollideTrigger.Collide:
-                for (int i = 0; i < dire.Length; i++)
-                {
-                    // 進めるマスがない
-                    if (collide[i].Count == 0)
-                    {
-                        // 1マス先の座標を設定
-                        result.Add(pos + dire[i]);
-                        continue;
-                    }
-                    // 衝突先の座標を設定
-                    result.Add(collide[i][collide[i].Count - 1] + dire[i]);
-                }
-                break;
-
-            case KomaCollideTrigger.Multi:
-                for (int i = 0; i < dire.Length; i++)
-                {
-                    // 進めるマスがない
-                    if (collide[i].Count == 0)
-                    {
-                        // 1マス先の座標を設定
-                        result.Add(pos + dire[i]);
-                        continue;
-                    }
-                    result.AddRange(collide[i]);
-                    // 衝突先の座標を設定
-                    result.Add(collide[i][collide[i].Count - 1] + dire[i]);
-                }
-                break;
-
-
+                // 衝突先の座標を設定
+                result.Add(collide[i][collide[i].Count - 1] + dire[i]);
+            }
         }
+        else
+        {
+            // 各方向のリストを合算
+            for (int i = 0; i < dire.Length; i++)
+            {
+                result.AddRange(collide[i]);
+            }
+        }
+
         return result.ToArray();
     }
     #endregion
