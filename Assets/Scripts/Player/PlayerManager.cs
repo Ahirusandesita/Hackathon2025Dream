@@ -5,16 +5,9 @@
 // Creator  : 
 // --------------------------------------------------------- 
 
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
 using System.Linq;
-using Cysharp.Threading.Tasks.Triggers;
-using System.Runtime.CompilerServices;
-using UnityEditor;
-using UnityEngine.UI;
-using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {

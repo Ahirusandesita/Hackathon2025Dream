@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.Triggers;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -169,6 +168,7 @@ public class KomaController : MonoBehaviour, IInjectPlayer
             PlayerNumber.Player2 => Quaternion.Euler(Vector3.up * 180f),
             _ => throw new System.Exception()
         };
+        BanUI.Get().BlinkOff();
     }
 
     public King GetKing()
