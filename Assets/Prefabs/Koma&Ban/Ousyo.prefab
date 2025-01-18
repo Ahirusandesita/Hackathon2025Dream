@@ -276,9 +276,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5257906678387296387}
     m_Modifications:
+    - target: {fileID: 146076792225322051, guid: 3f84bf7b3128472468418a7d89618687, type: 3}
+      propertyPath: m_Intensity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4574211419411631700, guid: 3f84bf7b3128472468418a7d89618687, type: 3}
       propertyPath: m_Name
       value: Explosion Small
+      objectReference: {fileID: 0}
+    - target: {fileID: 4574211419411631700, guid: 3f84bf7b3128472468418a7d89618687, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4692066063457054869, guid: 3f84bf7b3128472468418a7d89618687, type: 3}
       propertyPath: m_LocalPosition.x
