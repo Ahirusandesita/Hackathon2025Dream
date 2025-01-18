@@ -19,7 +19,9 @@ public class SceneChanger : MonoBehaviour
     [SerializeField,HideInInspector]
     private string _gameScene = default;
     [SerializeField, HideInInspector]
-    private string _resultScene = default;
+    private string _result1Scene = default;
+    [SerializeField, HideInInspector]
+    private string _result2Scene = default;
 
 #if UNITY_EDITOR
     [SerializeField]
@@ -27,7 +29,9 @@ public class SceneChanger : MonoBehaviour
     [SerializeField]
     private UnityEditor.SceneAsset _gameSceneAsset = default;
     [SerializeField]
-    private UnityEditor.SceneAsset _resultSceneAsset = default;
+    private UnityEditor.SceneAsset _result1SceneAsset = default;
+    [SerializeField]
+    private UnityEditor.SceneAsset _result2SceneAsset = default;
 
     private void OnValidate()
     {
@@ -39,9 +43,13 @@ public class SceneChanger : MonoBehaviour
         {
             _gameScene = _gameSceneAsset.name;
         }
-        if (_resultSceneAsset != null)
+        if (_result1SceneAsset != null)
         {
-            _resultScene = _resultSceneAsset.name;
+            _result1Scene = _result1SceneAsset.name;
+        }
+        if (_result2SceneAsset != null)
+        {
+            _result2Scene = _result2SceneAsset.name;
         }
     }
 #endif
@@ -86,9 +94,13 @@ public class SceneChanger : MonoBehaviour
         SceneManager.LoadScene(_gameScene);
     }
 
-    public void GoResultScene()
+    public void GoResult1Scene()
     {
-        SceneManager.LoadScene(_gameScene);
+        SceneManager.LoadScene(_result1Scene);
+    }
+    public void GoResult2Scene()
+    {
+        SceneManager.LoadScene(_result2Scene);
     }
     #endregion
 }

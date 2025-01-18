@@ -150,16 +150,13 @@ public class GameManager : MonoBehaviour
         if (winner == PlayerNumber.Player1)
         {
             //Debug
-            Debug.Log("Player1 Winner");
+            SceneChanger.Get().GoResult1Scene();
         }
         else
         {
             //Debug
-            Debug.Log("Player2 Winner");
+            SceneChanger.Get().GoResult2Scene();
         }
-        // èüîsââèoë“Çø
-        await UniTask.WaitForSeconds(1f);
-
-        SceneChanger.Get().GoResultScene();
+        await UniTask.CompletedTask;
     }
 }
