@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1174051516201144180}
   - component: {fileID: -4395184124152718078}
   - component: {fileID: -6484464146147167371}
+  - component: {fileID: 3751791155196795916}
   m_Layer: 0
   m_Name: Gyokusyo
   m_TagString: Untagged
@@ -144,6 +145,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66a8dde6806705b4084eb5a7031a86ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3751791155196795916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4427748587935851700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e218c6246ed26d47ae1fc9e4ae0a36a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &8160975296111228294
