@@ -30,6 +30,10 @@ public class PlayerManager : MonoBehaviour
 
     public PlayerNumber PlayerNomber => _playerNumber;
 
+    private void Update()
+    {
+        print(_selectedKomaPosition);
+    }
     public static int GetMoveDirectionCoefficient(PlayerNumber playerNumber)
     {
         switch (playerNumber)
@@ -139,11 +143,13 @@ public class PlayerManager : MonoBehaviour
             if (_attackableWorldPositions.Length == 0)
             {
                 (_phaseManager as IPhaseChanger).MoveStart(_playerNumber);
+                //FindObjectOfType<AttackEndButton>().Display();
             }
             else
             {
                 (_phaseManager as IPhaseChanger).AttackStart(_playerNumber);
                 _clickSystem.OnClickMasu += OnClickMasuAtAttack;
+                //FindObjectOfType<AttackEndButton>().Hide();
             }
         }
     }

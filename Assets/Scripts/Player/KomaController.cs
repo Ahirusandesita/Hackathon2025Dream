@@ -115,6 +115,16 @@ public class KomaController : MonoBehaviour, IInjectPlayer
 
     public void MoveKoma(Vector2Int oldPosition, Vector2Int newPosition)
     {
+        // ˆÚ“®æ‚É“G‚Ì‹î‚ª‚ ‚ê‚ÎAæ‚é
+        KomaController opponent = _gameManager.Opponent(_myPlayerNumber).GetComponent<KomaController>();
+        foreach (var opponentKoma in opponent.OwnKomas)
+        {
+            if (newPosition == opponentKoma.CurrentPosition)
+            {
+                opponent.TakeAttack(newPosition);
+            }
+        }
+
         _ban.UpdateKomaPos(oldPosition, newPosition);
         foreach (var koma in _ownKomas)
         {
@@ -182,6 +192,12 @@ public class KomaController : MonoBehaviour, IInjectPlayer
         _ban.SetKoma(koma, newPosition);
         koma.CurrentPosition = newPosition;
         koma.transform.position = _banUI.GetWorldPosition(newPosition);
+        koma.transform.rotation = _myPlayerNumber switch
+        {
+            PlayerNumber.Player1 => Quaternion.identity,
+            PlayerNumber.Player2 => Quaternion.Euler(Vector3.up * 180f),
+            _ => throw new System.Exception()
+        };
     }
 
     public King GetKing()
