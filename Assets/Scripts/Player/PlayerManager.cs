@@ -107,6 +107,7 @@ public class PlayerManager : MonoBehaviour
 
             _clickSystem.OnClickMasu -= OnClickMasuAtMove;
             _clickSystem.OnClickMasu -= OnClickMasuAtSelectOwn;
+            _clickSystem.OnClickMasu -= OnClickMasuAtAttack;
         };
 
         _phaseManager.OnKingMoveStart += playerNumber =>
@@ -115,12 +116,18 @@ public class PlayerManager : MonoBehaviour
             {
                 return;
             }
-
+            _clickSystem.OnClickMasu -= OnClickMasuAtSelectOwn;
             // ƒLƒ“ƒOæ“¾
             King king = _komaController.GetKing();
             _selectedKomaPosition = king.CurrentPosition;
             _selectedKomaMovableDirections = king.KomaAsset.MovableDirection;
             _movableWorldPositions = Ban.Get().GetMovablePosition(_selectedKomaPosition, _selectedKomaMovableDirections);
+            // ˆÚ“®‰Â”\êŠ‚ª‚È‚©‚Á‚½‚ç•‰‚¯
+            if (_movableWorldPositions.Length == 0)
+            {
+                _gameManager.GameEnd(_gameManager.Opponent(_playerNumber).GetComponent<PlayerManager>().PlayerNomber);
+                return;
+            }
             _clickSystem.OnClickMasu += OnClickMasuAtKingMove;
         };
     }
