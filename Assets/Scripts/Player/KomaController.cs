@@ -144,43 +144,7 @@ public class KomaController : MonoBehaviour, IInjectPlayer
                 Vector2Int moveDirectionNormalied = new Vector2Int(moveDirection.x / divideX, moveDirection.y / divideY);
                 print(moveDirection);
                 KomaAnimation komaAnimation = koma.GetComponent<KomaAnimation>();
-                int max = Mathf.Abs(moveDirection.x) > Mathf.Abs(moveDirection.y) ? Mathf.Abs(moveDirection.x) : Mathf.Abs(moveDirection.y);
-                for (int i = 0; i < max; i++)
-                {
-                    // ビューの更新
-                    if (moveDirectionNormalied == new Vector2Int(1, -1))
-                    {
-                        await komaAnimation.Koma_MoveFrontRight(_myPlayerNumber);
-                    }
-                    else if (moveDirectionNormalied == new Vector2Int(0, -1))
-                    {
-                        await komaAnimation.Koma_MoveFront(_myPlayerNumber);
-                    }
-                    else if (moveDirectionNormalied == new Vector2Int(-1, -1))
-                    {
-                        await komaAnimation.Koma_MoveFrontLeft(_myPlayerNumber);
-                    }
-                    else if (moveDirectionNormalied == new Vector2Int(1, 0))
-                    {
-                        await komaAnimation.Koma_MoveRight(_myPlayerNumber);
-                    }
-                    else if (moveDirectionNormalied == new Vector2Int(-1, 0))
-                    {
-                        await komaAnimation.Koma_MoveLeft(_myPlayerNumber);
-                    }
-                    else if (moveDirectionNormalied == new Vector2Int(1, 1))
-                    {
-                        await komaAnimation.Koma_BackRight(_myPlayerNumber);
-                    }
-                    else if (moveDirectionNormalied == new Vector2Int(-1, 1))
-                    {
-                        await komaAnimation.Koma_BackLeft(_myPlayerNumber);
-                    }
-                    else if (moveDirectionNormalied == new Vector2Int(0, 1))
-                    {
-                        await komaAnimation.Koma_MoveFrontRight(_myPlayerNumber);
-                    }
-                }
+                await komaAnimation.Move(newPosition, _myPlayerNumber);
             }
         }
 
