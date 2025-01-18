@@ -51,7 +51,7 @@ public class PhaseManager : MonoBehaviour, IPhaseChanger
     void IPhaseChanger.AttackStart(PlayerNumber playerNumber)
     {
 
-        if (!(_currentPhase == Phase.Attack || _currentPhase == Phase.RebellionCheck))
+        if (!(_currentPhase == Phase.Attack || _currentPhase == Phase.Move || _currentPhase == Phase.RebellionCheck))
         {
             return;
         }
@@ -74,7 +74,7 @@ public class PhaseManager : MonoBehaviour, IPhaseChanger
     void IPhaseChanger.MoveStart(PlayerNumber playerNumber)
     {
         //アタックの時にMoveフェーズに以降する
-        if (_currentPhase != Phase.Attack)
+        if (!(_currentPhase == Phase.Attack || _currentPhase == Phase.Move))
         {
             return;
         }

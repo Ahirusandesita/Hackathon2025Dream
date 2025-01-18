@@ -225,5 +225,6 @@ public class KomaController : MonoBehaviour, IInjectPlayer
             koma.GetComponent<KomaAnimation>().Koma_FallDown().Forget();
             await UniTask.Delay(System.TimeSpan.FromSeconds(0.15));
         }
+        transform.root.GetComponent<TurnManager>().TurnStart(PlayerNumber.Player1);
     }
 }

@@ -12,6 +12,7 @@ using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using Cysharp.Threading.Tasks.Triggers;
 using System.Runtime.CompilerServices;
+using UnityEditor;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -46,9 +47,8 @@ public class PlayerManager : MonoBehaviour
     {
         _gameManager = transform.root.GetComponent<GameManager>();
         _clickSystem = FindObjectOfType<ClickSystem>();
-
-        _phaseManager = transform.root.GetComponent<PhaseManager>();
-        _phaseManager.OnAttackStart += playerNumber =>
+        TurnManager turnManager = transform.root.GetComponent<TurnManager>();
+        turnManager.OnTurnStart += playerNumber =>
         {
             if (playerNumber != _playerNumber)
             {
@@ -65,6 +65,15 @@ public class PlayerManager : MonoBehaviour
             BanUI.Get().Blink(ownKomaPositions.ToArray());
         };
 
+        _phaseManager = transform.root.GetComponent<PhaseManager>();
+        _phaseManager.OnAttackStart += playerNumber =>
+        {
+            if (playerNumber != _playerNumber)
+            {
+                return;
+            }
+        };
+
         _phaseManager.OnAttackEnd += playerNumber =>
         {
             if (playerNumber != _playerNumber)
@@ -73,7 +82,6 @@ public class PlayerManager : MonoBehaviour
             }
 
             _clickSystem.OnClickMasu -= OnClickMasuAtAttack;
-            _clickSystem.OnClickMasu -= OnClickMasuAtSelectOwn;
         };
 
         _phaseManager.OnMoveStart += playerNumber =>
@@ -95,6 +103,7 @@ public class PlayerManager : MonoBehaviour
             }
 
             _clickSystem.OnClickMasu -= OnClickMasuAtMove;
+            _clickSystem.OnClickMasu -= OnClickMasuAtSelectOwn;
         };
 
         _phaseManager.OnKingMoveStart += playerNumber =>
@@ -122,10 +131,20 @@ public class PlayerManager : MonoBehaviour
         // Ž©•ª‚Ì‹î‚ª‰Ÿ‚³‚ê‚½
         if (_komaController.IsExistOwnKomaAtPosition(masu.OwnPosition, out Vector2Int[] movablePositions))
         {
+            _clickSystem.OnClickMasu -= OnClickMasuAtMove;
+            _clickSystem.OnClickMasu -= OnClickMasuAtAttack;
             _selectedKomaPosition = masu.OwnPosition;
             _selectedKomaMovableDirection = movablePositions;
             _attackableWorldPositions = Ban.Get().GetAttackablePosition(masu.OwnPosition, movablePositions);
-            _clickSystem.OnClickMasu += OnClickMasuAtAttack;
+            if (_attackableWorldPositions.Length == 0)
+            {
+                (_phaseManager as IPhaseChanger).MoveStart(_playerNumber);
+            }
+            else
+            {
+                (_phaseManager as IPhaseChanger).AttackStart(_playerNumber);
+                _clickSystem.OnClickMasu += OnClickMasuAtAttack;
+            }
         }
     }
 
@@ -142,9 +161,9 @@ public class PlayerManager : MonoBehaviour
             opponent.TakeAttack(masu.OwnPosition);
             _attackableWorldPositions = Ban.Get().GetAttackablePosition(_selectedKomaPosition, _selectedKomaMovableDirection);
             if (_attackableWorldPositions.Length == 0)
-			{
+            {
                 (_phaseManager as IPhaseChanger).AttackEnd(_playerNumber);
-			}
+            }
         }
     }
 
@@ -153,14 +172,14 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     /// <param name="masu"></param>
     private void OnClickMasuAtMove(Masu masu)
-	{
+    {
         // ˆÚ“®‰Â”\‚Èƒ}ƒX‚ª‰Ÿ‚³‚ê‚½
         if (_movableWorldPositions.Contains(masu.OwnPosition))
-		{
+        {
             _komaController.MoveKoma(_selectedKomaPosition, masu.OwnPosition);
             (_phaseManager as IPhaseChanger).MoveEnd(_playerNumber);
         }
-	}
+    }
 
     private void OnClickMasuAtKingSelect(Masu masu)
     {

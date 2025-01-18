@@ -10,6 +10,7 @@ using System;
 
 public class TurnManager : MonoBehaviour,IInject<GameManager>
 {
+    public event Action<PlayerNumber> OnTurnStart;
     /// <summary>
     /// PlayerNumber : ターン終わった人のプレイヤーのナンバー
     /// </summary>
@@ -18,6 +19,10 @@ public class TurnManager : MonoBehaviour,IInject<GameManager>
     private GameManager gameManager;
 
     public PlayerNumber NowTurnPlayerNumber => nowTurnPlayerNumber;
+    public void TurnStart(PlayerNumber playerNumber)
+    {
+        OnTurnStart?.Invoke(playerNumber);
+    }
     public void TurnEnd(PlayerNumber playerNumber)
     {
         OnTurnEnd?.Invoke(playerNumber);
@@ -30,6 +35,7 @@ public class TurnManager : MonoBehaviour,IInject<GameManager>
                 nowTurnPlayerNumber = PlayerNumber.Player1;
                 break;
         }
+        TurnStart(nowTurnPlayerNumber);
     }
 
     void IInject<GameManager>.Inject(GameManager gameManager)
