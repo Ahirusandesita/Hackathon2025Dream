@@ -37,8 +37,6 @@ public class SceneLoad : MonoBehaviour
 
 	public void MoveScene()
     {
-		audio.PlayOneShot(clip);
-
 		SceneManager.LoadScene(SceneName);
 	}
 

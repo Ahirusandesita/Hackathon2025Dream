@@ -227,7 +227,7 @@ public class Ban : MonoBehaviour
         {
             return false;
         }
-        else if(player == PlayerNumber.Player2 && checkPos.y <= BanHeight - CAMPRANGE)
+        else if(player == PlayerNumber.Player2 && checkPos.y <= BanHeight - CAMPRANGE - 1)
         {
             return false;
         }

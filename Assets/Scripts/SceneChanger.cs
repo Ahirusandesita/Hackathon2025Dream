@@ -96,11 +96,11 @@ public class SceneChanger : MonoBehaviour
 
     public void GoResult1Scene()
     {
-        SceneManager.LoadScene(_result1Scene);
+        SceneManager.LoadScene("Result1");
     }
     public void GoResult2Scene()
     {
-        SceneManager.LoadScene(_result2Scene);
+        SceneManager.LoadScene("Result2");
     }
     #endregion
 }
