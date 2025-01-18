@@ -121,8 +121,22 @@ public class KomaController : MonoBehaviour, IInjectPlayer
                 koma.CurrentPosition = newPosition;
                 // ビューの更新
                 koma.transform.position = _banUI.GetWorldPosition(newPosition);
+                KomaAnimation komaAnimation = koma.GetComponent<KomaAnimation>();
             }
         }
+    }
+
+    /// <summary>
+    /// 駒を盤上に配置する
+    /// </summary>
+    /// <param name="koma"></param>
+    /// <param name="newPosition"></param>
+    public void PutKoma(Koma koma, Vector2Int newPosition)
+    {
+        _ownKomas.Add(koma);
+        _ban.SetKoma(koma, newPosition);
+        koma.CurrentPosition = newPosition;
+        koma.transform.position = _banUI.GetWorldPosition(newPosition);
     }
 
     private async UniTask SetInitializeKomas()
