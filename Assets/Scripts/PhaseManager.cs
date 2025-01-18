@@ -62,7 +62,7 @@ public class PhaseManager : MonoBehaviour, IPhaseChanger
 
     void IPhaseChanger.AttackEnd(PlayerNumber playerNumber)
     {
-        if (_currentPhase != Phase.Attack)
+        if (!(_currentPhase == Phase.Attack || _currentPhase == Phase.Move))
         {
             return;
         }
@@ -84,7 +84,7 @@ public class PhaseManager : MonoBehaviour, IPhaseChanger
 
     void IPhaseChanger.MoveEnd(PlayerNumber playerNumber)
     {
-        if (_currentPhase != Phase.Move)
+        if (!(_currentPhase == Phase.Move || _currentPhase == Phase.Attack))
         {
             return;
         }

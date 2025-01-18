@@ -144,6 +144,7 @@ public class KomaController : MonoBehaviour, IInjectPlayer
                 Vector2Int moveDirectionNormalied = new Vector2Int(moveDirection.x / divideX, moveDirection.y / divideY);
                 KomaAnimation komaAnimation = koma.GetComponent<KomaAnimation>();
                 await komaAnimation.Move(newPosition, _myPlayerNumber);
+                break;
             }
         }
 
