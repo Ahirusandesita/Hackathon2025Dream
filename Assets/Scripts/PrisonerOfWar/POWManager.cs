@@ -111,7 +111,7 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
         if (!isFirstPowPut)
         {
             //‚±‚±Ban‚ªC³‚³‚ê‚ê‚ÎŒÄ‚ÔŠÖ”‚ð•Ï‚¦‚é
-            if (ban.CheckPosition(masu.OwnPosition))
+            if (ban.CheckPutPosition(masu.OwnPosition, playerNumber))
             {
                 gameManager.Me(playerNumber).GetComponent<KomaController>().PutKoma(POWStandBys[0], masu.OwnPosition);
                 GetComponent<KomaWaitingArea>().Remove(POWStandBys[0]);
