@@ -12,15 +12,10 @@ using System.Collections.Generic;
 public class Ban : MonoBehaviour
 {
     #region variable 
+    private const int CAMPRANGE = 3;
     private static Ban _instance = default;
 
-    private Transform _transform = default;
     private Koma[,] _ban = new Koma[9,9];
-
-    [SerializeField]
-    private int test = 0;
-    [SerializeField]
-    private BanUI _banUI = default;
     #endregion
 
     #region property
@@ -39,14 +34,6 @@ public class Ban : MonoBehaviour
     #endregion
 
     #region unity method
-    /// <summary>
-    /// ‰Šú‰»ˆ—
-    /// </summary>
-    private void Awake()
-    {
-        _transform = transform;
-    }
-
     //private void Update()
     //{
     //    if(Input.GetKeyDown(KeyCode.T))
@@ -95,6 +82,12 @@ public class Ban : MonoBehaviour
     #endregion
 
     #region Get method
+    /// <summary>
+    /// <para>CheckPosition</para>
+    /// <para>w’è‚µ‚½À•W‚ª‰½‚à‚È‚¢‚©ŒŸ¸‚µ‚Ü‚·</para>
+    /// </summary>
+    /// <param name="checkPos"></param>
+    /// <returns></returns>
     public bool CheckPosition(Vector2Int checkPos)
     {
         // ”ÕŠO
@@ -108,6 +101,32 @@ public class Ban : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// <para>CheckEnemyCamp</para>
+    /// <para>w’è‚µ‚½À•W‚ª“Gw“à‚©‚Ç‚¤‚©ŒŸ¸‚µ‚Ü‚·</para>
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckEnemyCamp(Vector2Int checkPos, PlayerNumber player)
+    {
+        // “Gw‚É‚¢‚é‚©
+        if(player == PlayerNumber.Player1 && CAMPRANGE <= checkPos.y)
+        {
+            return false;
+        }
+        else if(player == PlayerNumber.Player2 && checkPos.y <= BanHeight - CAMPRANGE)
+        {
+            return false;
+        }
+
+        // ”ÕŠO
+        if (!CheckPositionInBan(checkPos))
+        {
+            return false;
+        }
+
+        return true;
     }
 
     /// <summary>
