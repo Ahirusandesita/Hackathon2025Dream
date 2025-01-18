@@ -65,7 +65,7 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
     {
         if (ban.CheckPosition(masu.OwnPosition))
         {
-            ban.SetKoma(POWStandBys[0], masu.OwnPosition);
+            gameManager.Me(playerNumber).GetComponent<KomaController>().PutKoma(POWStandBys[0], masu.OwnPosition);
             POWStandBys.RemoveAt(0);
 
             if (POWStandBys.Count == 0)
