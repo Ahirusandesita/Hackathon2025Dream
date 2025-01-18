@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6318581033944837704}
   - component: {fileID: 8478119341579889896}
   - component: {fileID: -4386222571801961564}
+  - component: {fileID: 38089890842954887}
   m_Layer: 0
   m_Name: Ousyo
   m_TagString: Untagged
@@ -144,6 +145,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66a8dde6806705b4084eb5a7031a86ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &38089890842954887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2581790325724605068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e218c6246ed26d47ae1fc9e4ae0a36a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &8371640561650388794
