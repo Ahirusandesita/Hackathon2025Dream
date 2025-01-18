@@ -13,5 +13,12 @@ MonoBehaviour:
   m_Name: Keima
   m_EditorClassIdentifier: 
   _komaName: Keima
-  _movableDirection: []
+  _movableDirection:
+  - {x: 1, y: 1}
+  - {x: 1, y: 0}
+  - {x: 1, y: -1}
+  - {x: -1, y: 1}
+  - {x: -1, y: 0}
+  - {x: -1, y: -1}
+  _collidableDirection: []
   _icon: {fileID: 21300000, guid: f306f37343c94f244833a534a06c58d4, type: 3}
