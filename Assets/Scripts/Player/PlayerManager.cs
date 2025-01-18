@@ -20,20 +20,18 @@ public class PlayerManager : MonoBehaviour
     private PlayerNumber _playerNumber = default;
     [SerializeField]
     private KomaController _komaController = default;
+    [SerializeField]
+    private AttackEndButton _attackEndButton = default;
     private ClickSystem _clickSystem = default;
     private GameManager _gameManager = default;
     private PhaseManager _phaseManager = default;
     private Vector2Int[] _attackableWorldPositions = default;
     private Vector2Int[] _movableWorldPositions = default;
     private Vector2Int _selectedKomaPosition = default;
-    private Vector2Int[] _selectedKomaMovableDirection = default;
+    private Vector2Int[] _selectedKomaMovableDirections = default;
 
     public PlayerNumber PlayerNomber => _playerNumber;
 
-    private void Update()
-    {
-        print(_selectedKomaPosition);
-    }
     public static int GetMoveDirectionCoefficient(PlayerNumber playerNumber)
     {
         switch (playerNumber)
@@ -95,7 +93,7 @@ public class PlayerManager : MonoBehaviour
                 return;
             }
 
-            _movableWorldPositions = Ban.Get().GetMovablePosition(_selectedKomaPosition, _selectedKomaMovableDirection);
+            _movableWorldPositions = Ban.Get().GetMovablePosition(_selectedKomaPosition, _selectedKomaMovableDirections);
             _clickSystem.OnClickMasu += OnClickMasuAtMove;
         };
 
@@ -120,7 +118,7 @@ public class PlayerManager : MonoBehaviour
             // ƒLƒ“ƒOŽæ“¾
             King king = _komaController.GetKing();
             _selectedKomaPosition = king.CurrentPosition;
-            _selectedKomaMovableDirection = king.KomaAsset.MovableDirection;
+            _selectedKomaMovableDirections = king.KomaAsset.MovableDirection;
             _clickSystem.OnClickMasu += OnClickMasuAtKingSelect;
             BanUI.Get().Blink(king.CurrentPosition);
         };
@@ -138,18 +136,18 @@ public class PlayerManager : MonoBehaviour
             _clickSystem.OnClickMasu -= OnClickMasuAtMove;
             _clickSystem.OnClickMasu -= OnClickMasuAtAttack;
             _selectedKomaPosition = masu.OwnPosition;
-            _selectedKomaMovableDirection = movablePositions;
+            _selectedKomaMovableDirections = movablePositions;
             _attackableWorldPositions = Ban.Get().GetAttackablePosition(masu.OwnPosition, movablePositions);
             if (_attackableWorldPositions.Length == 0)
             {
                 (_phaseManager as IPhaseChanger).MoveStart(_playerNumber);
-                //FindObjectOfType<AttackEndButton>().Display();
+                _attackEndButton.gameObject.SetActive(false);
             }
             else
             {
                 (_phaseManager as IPhaseChanger).AttackStart(_playerNumber);
                 _clickSystem.OnClickMasu += OnClickMasuAtAttack;
-                //FindObjectOfType<AttackEndButton>().Hide();
+                _attackEndButton.gameObject.SetActive(true);
             }
         }
     }
@@ -165,7 +163,7 @@ public class PlayerManager : MonoBehaviour
         {
             KomaController opponent = _gameManager.Opponent(_playerNumber).GetComponent<KomaController>();
             opponent.TakeAttack(masu.OwnPosition);
-            _attackableWorldPositions = Ban.Get().GetAttackablePosition(_selectedKomaPosition, _selectedKomaMovableDirection);
+            _attackableWorldPositions = Ban.Get().GetAttackablePosition(_selectedKomaPosition, _selectedKomaMovableDirections);
             if (_attackableWorldPositions.Length == 0)
             {
                 (_phaseManager as IPhaseChanger).AttackEnd(_playerNumber);
@@ -192,7 +190,7 @@ public class PlayerManager : MonoBehaviour
         // Ž©•ª‚Ì‹î‚ª‰Ÿ‚³‚ê‚½
         if (_selectedKomaPosition == masu.OwnPosition)
         {
-            _attackableWorldPositions = Ban.Get().GetAttackablePosition(masu.OwnPosition, _selectedKomaMovableDirection);
+            _attackableWorldPositions = Ban.Get().GetAttackablePosition(masu.OwnPosition, _selectedKomaMovableDirections);
             _clickSystem.OnClickMasu += OnClickMasuAtKingMove;
         }
     }
