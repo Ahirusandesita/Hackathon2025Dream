@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -2383500184222002171}
   - component: {fileID: -5435342208648331769}
   - component: {fileID: 3727900825654443558}
+  - component: {fileID: -2049825040797158838}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -46,9 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb7e5c55250c12541a86a92b6e78e1ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  POWGroupAssets:
-  - {fileID: 11400000, guid: 1747d825251470142ba309ab7876ad86, type: 2}
-  - {fileID: 11400000, guid: 1348ac9e2b941674ba1c633a14aaf644, type: 2}
 --- !u!114 &-5435342208648331769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,6 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerNumber: 0
+  _komaController: {fileID: 0}
 --- !u!114 &3727900825654443558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,3 +75,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initialKomaPositionAsset: {fileID: 11400000, guid: 1f862e981810b2e4f8d3ee75bc8bd224, type: 2}
   _ban: {fileID: 0}
+  _banUI: {fileID: 0}
+--- !u!114 &-2049825040797158838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7538097644204488213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 268e69cf348f8db4fb5788f7c4e3be45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
