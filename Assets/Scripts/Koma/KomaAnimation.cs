@@ -13,7 +13,7 @@ public class KomaAnimation : MonoBehaviour
 {
     private Animator anim;
 
-    private float _moveAmount = 2.4f;
+    private float _moveAmount = -2.4f;
     private float _moveAmountHerf = 1.2f;
 
     private float _moveAmountY = 0.5f;
@@ -26,14 +26,14 @@ public class KomaAnimation : MonoBehaviour
 
     }
 
-    public async UniTask Koma_MoveFront()
+    public async UniTask Koma_MoveFront(PlayerNumber playerNumber)
     {
 
         // 初期位置
         Vector3 startPos = transform.position;
 
         // 終了位置
-        Vector3 endPos = startPos + new Vector3(0, 0, _moveAmount); // z方向に2.4f進む
+        Vector3 endPos = startPos + new Vector3(0, 0, _moveAmount * PlayerManager.GetMoveDirectionCoefficient(playerNumber)); // z方向に2.4f進む
 
         // 放物線のための経路作成
         // z方向に進む間にy方向で0.5f上がり、また元のy座標に戻る
@@ -50,14 +50,14 @@ public class KomaAnimation : MonoBehaviour
 
     }
 
-    public async UniTask Koma_MoveBack()
+    public async UniTask Koma_MoveBack(PlayerNumber playerNumber)
     {
 
         // 初期位置
         Vector3 startPos = transform.position;
 
         // 終了位置
-        Vector3 endPos = startPos + new Vector3(0, 0, -_moveAmount); // z方向に2.4f進む
+        Vector3 endPos = startPos + new Vector3(0, 0, -_moveAmount * PlayerManager.GetMoveDirectionCoefficient(playerNumber)); // z方向に2.4f進む
 
         // 放物線のための経路作成
         // z方向に進む間にy方向で0.5f上がり、また元のy座標に戻る
@@ -73,14 +73,14 @@ public class KomaAnimation : MonoBehaviour
         await UniTask.Delay(System.TimeSpan.FromSeconds(1));
     }
 
-    public async UniTask Koma_MoveRight()
+    public async UniTask Koma_MoveRight(PlayerNumber playerNumber)
     {
 
         // 初期位置
         Vector3 startPos = transform.position;
 
         // 終了位置
-        Vector3 endPos = startPos + new Vector3(_moveAmount, 0, 0); // x方向に2.4f進む
+        Vector3 endPos = startPos + new Vector3(_moveAmount * PlayerManager.GetMoveDirectionCoefficient(playerNumber), 0, 0); // x方向に2.4f進む
 
         // 放物線のための経路作成
         // z方向に進む間にy方向で0.5f上がり、また元のy座標に戻る
@@ -96,14 +96,14 @@ public class KomaAnimation : MonoBehaviour
         await UniTask.Delay(System.TimeSpan.FromSeconds(1));
     }
 
-    public async UniTask Koma_MoveLeft()
+    public async UniTask Koma_MoveLeft(PlayerNumber playerNumber)
     {
 
         // 初期位置
         Vector3 startPos = transform.position;
 
         // 終了位置
-        Vector3 endPos = startPos + new Vector3(-_moveAmount, 0, 0); // x方向に2.4f進む
+        Vector3 endPos = startPos + new Vector3(-_moveAmount * PlayerManager.GetMoveDirectionCoefficient(playerNumber), 0, 0); // x方向に2.4f進む
 
         // 放物線のための経路作成
         // z方向に進む間にy方向で0.5f上がり、また元のy座標に戻る
@@ -119,14 +119,14 @@ public class KomaAnimation : MonoBehaviour
         await UniTask.Delay(System.TimeSpan.FromSeconds(1));
     }
 
-    public async UniTask Koma_MoveFrontRight()
+    public async UniTask Koma_MoveFrontRight(PlayerNumber playerNumber)
     {
 
         // 初期位置
         Vector3 startPos = transform.position;
 
         // 終了位置
-        Vector3 endPos = startPos + new Vector3(_moveAmount, 0, _moveAmount); // x方向に2.4f進む
+        Vector3 endPos = startPos + new Vector3(_moveAmount * PlayerManager.GetMoveDirectionCoefficient(playerNumber), 0, _moveAmount * PlayerManager.GetMoveDirectionCoefficient(playerNumber)); // x方向に2.4f進む
 
         // 放物線のための経路作成
         // z方向に進む間にy方向で0.5f上がり、また元のy座標に戻る
@@ -142,13 +142,13 @@ public class KomaAnimation : MonoBehaviour
         await UniTask.Delay(System.TimeSpan.FromSeconds(1));
     }
 
-    public async UniTask Koma_MoveFrontLeft()
+    public async UniTask Koma_MoveFrontLeft(PlayerNumber playerNumber)
     {
         // 初期位置
         Vector3 startPos = transform.position;
 
         // 終了位置
-        Vector3 endPos = startPos + new Vector3(-_moveAmount, 0, _moveAmount); // x方向に2.4f進む
+        Vector3 endPos = startPos + new Vector3(-_moveAmount * PlayerManager.GetMoveDirectionCoefficient(playerNumber), 0, _moveAmount * PlayerManager.GetMoveDirectionCoefficient(playerNumber)); // x方向に2.4f進む
 
         // 放物線のための経路作成
         // z方向に進む間にy方向で0.5f上がり、また元のy座標に戻る
@@ -164,13 +164,13 @@ public class KomaAnimation : MonoBehaviour
         await UniTask.Delay(System.TimeSpan.FromSeconds(1));
     }
 
-    public async UniTask Koma_BackRight()
+    public async UniTask Koma_BackRight(PlayerNumber playerNumber)
     {
         // 初期位置
         Vector3 startPos = transform.position;
 
         // 終了位置
-        Vector3 endPos = startPos + new Vector3(_moveAmount, 0, -_moveAmount); // x方向に2.4f進む
+        Vector3 endPos = startPos + new Vector3(_moveAmount * PlayerManager.GetMoveDirectionCoefficient(playerNumber), 0, -_moveAmount * PlayerManager.GetMoveDirectionCoefficient(playerNumber)); // x方向に2.4f進む
 
         // 放物線のための経路作成
         // z方向に進む間にy方向で0.5f上がり、また元のy座標に戻る
@@ -186,13 +186,13 @@ public class KomaAnimation : MonoBehaviour
         await UniTask.Delay(System.TimeSpan.FromSeconds(1));
     }
 
-    public async UniTask Koma_BackLeft()
+    public async UniTask Koma_BackLeft(PlayerNumber playerNumber)
     {
         // 初期位置
         Vector3 startPos = transform.position;
 
         // 終了位置
-        Vector3 endPos = startPos + new Vector3(-_moveAmount, 0, -_moveAmount); // x方向に2.4f進む
+        Vector3 endPos = startPos + new Vector3(-_moveAmount * PlayerManager.GetMoveDirectionCoefficient(playerNumber), 0, -_moveAmount * PlayerManager.GetMoveDirectionCoefficient(playerNumber)); // x方向に2.4f進む
 
         // 放物線のための経路作成
         // z方向に進む間にy方向で0.5f上がり、また元のy座標に戻る
