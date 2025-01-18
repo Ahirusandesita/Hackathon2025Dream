@@ -37,6 +37,7 @@ public class KomaController : MonoBehaviour, IInjectPlayer
         {
             foreach (Koma koma in eventData.Rebellions)
             {
+                koma.MyPlayerNumber = _myPlayerNumber;
                 _ownKomas.Add(koma);
             }
         };
