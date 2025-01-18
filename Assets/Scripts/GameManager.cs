@@ -160,6 +160,6 @@ public class GameManager : MonoBehaviour
         // Ÿ”s‰‰o‘Ò‚¿
         await UniTask.WaitForSeconds(1f);
 
-        SceneChanger.Get().GoTitleScene();
+        SceneChanger.Get().GoResultScene();
     }
 }
