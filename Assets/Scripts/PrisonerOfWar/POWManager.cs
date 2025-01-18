@@ -89,6 +89,8 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
         if (ban.CheckPosition(masu.OwnPosition))
         {
             gameManager.Me(playerNumber).GetComponent<KomaController>().PutKoma(POWStandBys[0], masu.OwnPosition);
+            POWStandBys[0].GetComponent<PowMesh>().POW.enabled = true;
+            POWStandBys[0].GetComponent<PowMesh>().Normal.enabled = false;
             POWStandBys.RemoveAt(0);
 
             if (POWStandBys.Count == 0)
@@ -113,6 +115,8 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
     }
     public void CancelPOW(Koma koma)
     {
+        koma.GetComponent<PowMesh>().POW.enabled = false;
+        koma.GetComponent<PowMesh>().Normal.enabled = true;
         POWs.Remove(koma);
         POWStandBys.Remove(koma);
     }

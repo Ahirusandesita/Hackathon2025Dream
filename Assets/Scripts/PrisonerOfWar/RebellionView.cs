@@ -15,6 +15,10 @@ public class RebellionView : MonoBehaviour, IInject<GameManager>
     private Animator animator;
 
     private GameManager gameManager;
+
+    private float count = 0f;
+    private bool isCount = false;
+
     void IInject<GameManager>.Inject(GameManager gameManager)
     {
         this.gameManager = gameManager;
@@ -37,8 +41,12 @@ public class RebellionView : MonoBehaviour, IInject<GameManager>
 
             foreach(Koma koma in eventData.Rebellions)
             {
+                koma.GetComponent<PowMesh>().POW.enabled = false;
+                koma.GetComponent<PowMesh>().Normal.enabled = true;
                 koma.GetComponent<KomaRebellionEffect>().Rotation();
             }
+
+            await UniTask.Delay(2000);
         };
         gameManager.Player2.GetComponent<POWManager>().OnWaitRebellion += async (eventData, sender) =>
         {
@@ -47,8 +55,17 @@ public class RebellionView : MonoBehaviour, IInject<GameManager>
             await UniTask.Delay(2000);
             foreach (Koma koma in eventData.Rebellions)
             {
+                koma.GetComponent<PowMesh>().POW.enabled = false;
+                koma.GetComponent<PowMesh>().Normal.enabled = true;
                 koma.GetComponent<KomaRebellionEffect>().Rotation();
             }
+
+            await UniTask.Delay(2000);
         };
+    }
+
+    private void Update()
+    {
+        
     }
 }

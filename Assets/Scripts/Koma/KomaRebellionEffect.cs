@@ -7,6 +7,7 @@
 
 using UnityEngine;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 
 public class KomaRebellionEffect : MonoBehaviour
 {
@@ -35,7 +36,6 @@ public class KomaRebellionEffect : MonoBehaviour
         }
         rotation.y += 180f;
         transform.rotation = Quaternion.Euler(rotation);
-        
     }
     private IEnumerator PositionYAnimation()
     {
@@ -57,6 +57,5 @@ public class KomaRebellionEffect : MonoBehaviour
 
 
         transform.position = position;
-
     }
 }

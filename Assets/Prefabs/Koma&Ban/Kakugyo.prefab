@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 189949988394865853}
   - component: {fileID: 3778201451414763766}
   - component: {fileID: 753648502860687607}
+  - component: {fileID: -2755723576120912472}
   m_Layer: 0
   m_Name: Kakugyo
   m_TagString: Untagged
@@ -178,6 +179,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66a8dde6806705b4084eb5a7031a86ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2755723576120912472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5098029900158438975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 021c55d4203e3fe45bfeea4f4a5cfb6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normal: {fileID: 356062267454552866}
+  pow: {fileID: 0}
 --- !u!1001 &2573988173879439310
 PrefabInstance:
   m_ObjectHideFlags: 0
