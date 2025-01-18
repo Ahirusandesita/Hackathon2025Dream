@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using System;
 
 public class RebellionEventArgs : System.EventArgs
 {
@@ -26,6 +27,8 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
     public event RebellionHandler OnRebellion;
     public event WaitWithRebellionHandler OnWaitRebellion;
 
+    public event Action<Koma> OnPOWPut;
+    public event Action OnPOWPutEnd;
 
     private IReadOnlyList<POWGroupAsset> POWGroupAssets;
     private PlayerNumber playerNumber;
@@ -52,6 +55,17 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
         gameManager.GetComponent<PhaseManager>().OnPowPutStart += (playerNumber) =>
         {
             clickSystem.OnClickMasu += POWPut;
+
+            if (POWStandBys.Count == 0)
+            {
+                gameManager.GetComponent<IPhaseChanger>().POWPutEnd(playerNumber);
+                OnPOWPutEnd?.Invoke();
+            }
+            else
+            {
+                OnPOWPut?.Invoke(POWStandBys[0]);
+            }
+
         };
         gameManager.GetComponent<PhaseManager>().OnPowPutEnd += (playerNumber) =>
         {
@@ -71,9 +85,17 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
             if (POWStandBys.Count == 0)
             {
                 gameManager.GetComponent<IPhaseChanger>().POWPutEnd(playerNumber);
+                OnPOWPutEnd?.Invoke();
+            }
+            else
+            {
+                OnPOWPut?.Invoke(POWStandBys[0]);
             }
         }
     }
+
+
+
 
     public void TurnedIntoPOW(Koma koma)
     {
