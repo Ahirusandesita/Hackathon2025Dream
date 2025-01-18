@@ -67,7 +67,7 @@ public class KomaRebellionEffect : MonoBehaviour
     }
     public void Rotation()
     {
-        animator.SetTrigger("explosyon");
+        animator.SetTrigger("explosion");
 
         isRotate = true;
         isPosition = true;
