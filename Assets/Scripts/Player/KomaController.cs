@@ -138,11 +138,10 @@ public class KomaController : MonoBehaviour, IInjectPlayer
                     PlayerNumber.Player2 => oldPosition - newPosition,
                     _ => throw new System.InvalidProgramException()
                 };
-                //Vector2Int moveDirection = newPosition - oldPosition;
+                
                 int divideX = moveDirection.x == 0 ? 1 : Mathf.Abs(moveDirection.x);
                 int divideY = moveDirection.y == 0 ? 1 : Mathf.Abs(moveDirection.y);
                 Vector2Int moveDirectionNormalied = new Vector2Int(moveDirection.x / divideX, moveDirection.y / divideY);
-                print(moveDirection);
                 KomaAnimation komaAnimation = koma.GetComponent<KomaAnimation>();
                 await komaAnimation.Move(newPosition, _myPlayerNumber);
             }
