@@ -96,6 +96,13 @@ public class KomaController : MonoBehaviour, IInjectPlayer
             }
         }
 
+        // ‰¤‚ğæ‚ç‚ê‚½‚ç•‰‚¯
+        if (_ownKomas[i] is King _)
+        {
+            _gameManager.GameEnd(_gameManager.Opponent(_myPlayerNumber).GetComponent<PlayerManager>().PlayerNumber);
+            return;
+        }
+
         // ‚à‚µæ‚ç‚ê‚½‹î‚ª•ß—¸‚¾‚Á‚½‚çA•ß—¸‚É‚µ‚È‚¢
         if (_ownKomas[i].MyAbsolutePlayerNumber != _myPlayerNumber)
         {
