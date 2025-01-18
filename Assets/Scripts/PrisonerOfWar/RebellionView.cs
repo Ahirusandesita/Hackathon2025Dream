@@ -23,6 +23,12 @@ public class RebellionView : MonoBehaviour, IInject<GameManager>
 
     private void Initialize()
     {
+        gameManager.OnGameStart += () =>
+        {
+            animator.SetTrigger("StartBunner");
+        };
+
+
         gameManager.Player1.GetComponent<POWManager>().OnWaitRebellion += async (eventData, sender) =>
         {
             animator.SetTrigger("player1");
