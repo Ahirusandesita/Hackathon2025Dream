@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Triggers;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class KomaController : MonoBehaviour, IInjectPlayer
@@ -99,6 +100,9 @@ public class KomaController : MonoBehaviour, IInjectPlayer
         if (_ownKomas[i].MyAbsolutePlayerNumber != _myPlayerNumber)
         {
             _gameManager.Me(_myPlayerNumber).GetComponent<POWManager>().CancelPOW(_ownKomas[i]);
+        }
+        else
+        {
             _gameManager.Opponent(_myPlayerNumber).GetComponent<POWManager>().TurnedIntoPOW(_ownKomas[i]);
         }
 
@@ -174,6 +178,19 @@ public class KomaController : MonoBehaviour, IInjectPlayer
         _ban.SetKoma(koma, newPosition);
         koma.CurrentPosition = newPosition;
         koma.transform.position = _banUI.GetWorldPosition(newPosition);
+    }
+
+    public King GetKing()
+    {
+        foreach (var koma in _ownKomas)
+        {
+            if (koma is King king)
+            {
+                return king;
+            }
+        }
+
+        throw new System.InvalidOperationException();
     }
 
     private async UniTask SetInitializeKomas()

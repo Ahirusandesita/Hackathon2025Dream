@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using System.Linq;
+using Cysharp.Threading.Tasks.Triggers;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -103,6 +104,11 @@ public class PlayerManager : MonoBehaviour
             }
 
             // ƒLƒ“ƒOŽæ“¾
+            King king = _komaController.GetKing();
+            _selectedKomaPosition = king.CurrentPosition;
+            _selectedKomaMovableDirection = king.KomaAsset.MovableDirection;
+            _clickSystem.OnClickMasu += OnClickMasuAtKingSelect;
+            BanUI.Get().Blink(king.CurrentPosition);
         };
     }
 
@@ -154,4 +160,14 @@ public class PlayerManager : MonoBehaviour
             (_phaseManager as IPhaseChanger).MoveEnd(_playerNumber);
         }
 	}
+
+    private void OnClickMasuAtKingSelect(Masu masu)
+    {
+        // Ž©•ª‚Ì‹î‚ª‰Ÿ‚³‚ê‚½
+        if (_selectedKomaPosition == masu.OwnPosition)
+        {
+            _attackableWorldPositions = Ban.Get().GetAttackablePosition(masu.OwnPosition, _selectedKomaMovableDirection);
+            _clickSystem.OnClickMasu += OnClickMasuAtAttack;
+        }
+    }
 }
