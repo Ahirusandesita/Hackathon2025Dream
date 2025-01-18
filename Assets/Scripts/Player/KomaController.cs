@@ -107,6 +107,7 @@ public class KomaController : MonoBehaviour, IInjectPlayer
         }
 
         // ‘ŠŽè‚É‹î‚ð“n‚·
+        _ownKomas[i].MyPlayerNumber = _gameManager.Opponent(_myPlayerNumber).GetComponent<PlayerManager>().PlayerNumber;
         _gameManager.Opponent(_myPlayerNumber).GetComponent<KomaController>().OwnKomas.Add(_ownKomas[i]);
         _gameManager.Opponent(_myPlayerNumber).GetComponent<KomaWaitingArea>().Arrangement(_ownKomas[i]);
         _ownKomas.RemoveAt(i);

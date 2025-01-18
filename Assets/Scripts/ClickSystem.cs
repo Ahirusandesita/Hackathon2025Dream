@@ -14,7 +14,7 @@ public class ClickSystem : MonoBehaviour
     private Vector3 _rayHitPotision;
     private Masu _hitPostionMasu;
 
-    public event Action<Masu> OnClickMasu = default;
+    public Action<Masu> OnClickMasu = default;
 
     private void Update()
     {

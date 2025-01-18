@@ -198,7 +198,7 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
 
         if (allRebillions.Count > 0)
         {
-            Debug.Log($"{FindObjectOfType<GameManager>().Opponent(playerNumber).GetComponent<PlayerManager>().PlayerNomber}が反乱を起こしました。");
+            Debug.Log($"{FindObjectOfType<GameManager>().Opponent(playerNumber).GetComponent<PlayerManager>().PlayerNumber}が反乱を起こしました。");
             RebellionEventArgs rebellionEventArgs = new RebellionEventArgs(POWs.ToArray());
             OnRebellion?.Invoke(rebellionEventArgs, this);
             if (OnWaitRebellion != null)

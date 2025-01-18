@@ -56,20 +56,20 @@ public class GameManager : MonoBehaviour
 
         foreach (IInjectPlayer inject in Player1.GetComponentsInChildren<IInjectPlayer>())
         {
-            inject.InjectPlayer(Player1.GetComponent<PlayerManager>().PlayerNomber);
+            inject.InjectPlayer(Player1.GetComponent<PlayerManager>().PlayerNumber);
         }
         foreach (IInjectPlayer inject in Player2.GetComponentsInChildren<IInjectPlayer>())
         {
-            inject.InjectPlayer(Player2.GetComponent<PlayerManager>().PlayerNomber);
+            inject.InjectPlayer(Player2.GetComponent<PlayerManager>().PlayerNumber);
         }
 
         foreach (IInject<PlayerNumber> item in Player1.GetComponentsInChildren<IInject<PlayerNumber>>())
         {
-            item.Inject(Player1.GetComponent<PlayerManager>().PlayerNomber);
+            item.Inject(Player1.GetComponent<PlayerManager>().PlayerNumber);
         }
         foreach (IInject<PlayerNumber> item in Player2.GetComponentsInChildren<IInject<PlayerNumber>>())
         {
-            item.Inject(Player2.GetComponent<PlayerManager>().PlayerNomber);
+            item.Inject(Player2.GetComponent<PlayerManager>().PlayerNumber);
         }
 
         Player1.GetComponent<KomaWaitingArea>().InjectWaitingTransform(player1_komaWaitingAreas);

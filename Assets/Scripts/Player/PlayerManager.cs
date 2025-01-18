@@ -35,7 +35,7 @@ public class PlayerManager : MonoBehaviour
     private bool _isMoved = default;
     private bool _isAttack = default;
 
-    public PlayerNumber PlayerNomber => _playerNumber;
+    public PlayerNumber PlayerNumber => _playerNumber;
 
     public static int GetMoveDirectionCoefficient(PlayerNumber playerNumber)
     {
@@ -71,6 +71,7 @@ public class PlayerManager : MonoBehaviour
                 ownKomaPositions.Add(koma.CurrentPosition);
             }
 
+            _clickSystem.OnClickMasu = null;
             _clickSystem.OnClickMasu += OnClickMasuAtSelectOwn;
             BanUI.Get().Blink(ownKomaPositions.ToArray());
         };
@@ -129,7 +130,7 @@ public class PlayerManager : MonoBehaviour
             // ˆÚ“®‰Â”\êŠ‚ª‚È‚©‚Á‚½‚ç•‰‚¯
             if (_movableWorldPositions.Length == 0)
             {
-                _gameManager.GameEnd(_gameManager.Opponent(_playerNumber).GetComponent<PlayerManager>().PlayerNomber);
+                _gameManager.GameEnd(_gameManager.Opponent(_playerNumber).GetComponent<PlayerManager>().PlayerNumber);
                 return;
             }
             _clickSystem.OnClickMasu += OnClickMasuAtKingMove;
@@ -207,6 +208,7 @@ public class PlayerManager : MonoBehaviour
         {
             _komaController.MoveKoma(_selectedKomaPosition, masu.OwnPosition).Forget();
             (_phaseManager as IPhaseChanger).KingMoveEnd(_playerNumber);
+            print("AA");
         }
     }
 }
