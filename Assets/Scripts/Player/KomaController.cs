@@ -122,12 +122,13 @@ public class KomaController : MonoBehaviour, IInjectPlayer
             {
                 koma.CurrentPosition = newPosition;
 
-                Vector2Int moveDirection = _myPlayerNumber switch
-                {
-                    PlayerNumber.Player1 => newPosition - oldPosition,
-                    PlayerNumber.Player2 => oldPosition - newPosition,
-                    _ => throw new System.InvalidProgramException()
-                };
+                //Vector2Int moveDirection = _myPlayerNumber switch
+                //{
+                //    PlayerNumber.Player1 => newPosition - oldPosition,
+                //    PlayerNumber.Player2 => oldPosition - newPosition,
+                //    _ => throw new System.InvalidProgramException()
+                //};
+                Vector2Int moveDirection = newPosition - oldPosition;
 
                 KomaAnimation komaAnimation = koma.GetComponent<KomaAnimation>();
 
@@ -166,6 +167,8 @@ public class KomaController : MonoBehaviour, IInjectPlayer
                 }
             }
         }
+
+        (_phaseManager as IPhaseChanger).MoveEnd(_myPlayerNumber);
     }
 
     /// <summary>
@@ -212,10 +215,17 @@ public class KomaController : MonoBehaviour, IInjectPlayer
             }
 
             Vector3 worldPosition = _banUI.GetWorldPosition(masuPosition);
+            Quaternion rotation = _myPlayerNumber switch
+            {
+                PlayerNumber.Player1 => Quaternion.identity,
+                PlayerNumber.Player2 => Quaternion.Euler(Vector3.up * 180f),
+                _ => throw new System.Exception()
+            };
+
             Koma koma = Instantiate(
                 _initialKomaPositionAsset.InitialPositions[i].Koma,
                 worldPosition,
-                Quaternion.identity
+                rotation
                 );
             _ownKomas.Add(koma);
             _ownKomas[i].CurrentPosition = masuPosition;
