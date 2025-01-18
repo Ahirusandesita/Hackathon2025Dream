@@ -19,15 +19,19 @@ public class AttackEndButton : MonoBehaviour, IInject<GameManager>
         this.gameObject.SetActive(false);
     }
 
+    public void Display()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
+
     void IInject<GameManager>.Inject(GameManager gameManager)
     {
         this.gameManager = gameManager;
-
-        gameManager.GetComponent<PhaseManager>().OnAttackStart += (playerNumber) =>
-        {
-            gameObject.SetActive(true);
-            this.playerNumber = playerNumber;
-        };
 
         this.gameObject.SetActive(false);
     }

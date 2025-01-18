@@ -423,6 +423,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: RebellionCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3462055385827440791, guid: a37f7c4b9015f4f4f8217e2d893280b3, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 108.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3462055385827440791, guid: a37f7c4b9015f4f4f8217e2d893280b3, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 53.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3462055385827440791, guid: a37f7c4b9015f4f4f8217e2d893280b3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 764.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3462055385827440791, guid: a37f7c4b9015f4f4f8217e2d893280b3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 90.8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
