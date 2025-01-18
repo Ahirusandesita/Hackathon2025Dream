@@ -110,7 +110,7 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
                 }
             }
         }
-        if (!isFirstPowPut)
+        if (!isFirstPowPut && POWStandBys.Count != 0)
         {
             //‚±‚±Ban‚ªC³‚³‚ê‚ê‚ÎŒÄ‚ÔŠÖ”‚ð•Ï‚¦‚é
             if (ban.CheckPutPosition(masu.OwnPosition, playerNumber))
@@ -142,6 +142,7 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
         koma.GetComponent<PowMesh>().Normal.enabled = false;
         POWs.Add(koma);
         POWStandBys.Add(koma);
+
     }
     public void CancelPOW(Koma koma)
     {
@@ -150,27 +151,7 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
         POWs.Remove(koma);
         POWStandBys.Remove(koma);
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A) && playerNumber == PlayerNumber.Player1)
-        {
-            A().Forget();
-        }
-        if (Input.GetKeyDown(KeyCode.B) && playerNumber == PlayerNumber.Player2)
-        {
-            OnWaitRebellion?.Invoke(null, this);
-        }
-    }
-    private async UniTask A()
-    {
-        if (OnWaitRebellion != null)
-        {
-            await UniTask.WhenAll(
-                OnWaitRebellion?.GetInvocationList()
-                    .OfType<WaitWithRebellionHandler>()
-                        .Select(async (OnAysncEvent) => await OnAysncEvent.Invoke(null, this)));
-        }
-    }
+
 
     private async void Rebellion()
     {
