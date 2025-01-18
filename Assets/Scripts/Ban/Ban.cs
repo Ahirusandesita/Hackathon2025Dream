@@ -56,7 +56,7 @@ public class Ban : MonoBehaviour
             {
                 BanUI.Get().Blink(ch);
             }
-            GetAttackablePosition(koma.CurrentPosition,koma.KomaAsset.MovableDirection);
+            GetMovablePosition(koma.CurrentPosition,koma.KomaAsset.MovableDirection);
         }
         if (Input.GetKeyDown(KeyCode.K))
         {
@@ -251,10 +251,13 @@ public class Ban : MonoBehaviour
         Koma koma = _ban[pos.y, pos.x];
         // 相対変換
         PlayerNumber myTeam = koma.MyPlayerNumber;
+        Debug.Log(myTeam);
         int dire = PlayerManager.GetMoveDirectionCoefficient(myTeam);
-        for(int i = 0;i<movablePositions.Length;i++)
+        Vector2Int[] direMovable = movablePositions; 
+        for(int i = 0;i<direMovable.Length;i++)
         {
-            movablePositions[i] = movablePositions[i] * dire;
+            direMovable[i] *= dire;
+            
         }
 
         // 駒の直線処理が必要である
@@ -270,7 +273,7 @@ public class Ban : MonoBehaviour
         else
         {
             // 移動可能座標
-            foreach (Vector2Int movable in movablePositions)
+            foreach (Vector2Int movable in direMovable)
             {
                 Vector2Int checkPos = pos + movable;
 
@@ -307,9 +310,11 @@ public class Ban : MonoBehaviour
         // 相対変換
         PlayerNumber myTeam = koma.MyPlayerNumber;
         int dire = PlayerManager.GetMoveDirectionCoefficient(myTeam);
-        for (int i = 0; i < movablePositions.Length; i++)
+        Vector2Int[] direMovable = movablePositions;
+        for (int i = 0; i < direMovable.Length; i++)
         {
-            movablePositions[i] = movablePositions[i] * dire;
+            direMovable[i] *= dire;
+
         }
 
         //Debug.Log(movablePostions.Length);
@@ -343,7 +348,7 @@ public class Ban : MonoBehaviour
         else
         {
             // 検査
-            foreach (Vector2Int movable in movablePositions)
+            foreach (Vector2Int movable in direMovable)
             {
                 Vector2Int checkPos = pos + movable;
                 //Debug.Log(checkPos);

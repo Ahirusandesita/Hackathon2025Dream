@@ -44,7 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53594f07bd52752408084f865c2964c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _titleScene: 
-  _gameScene: 
-  _titleSceneAsset: {fileID: 0}
-  _gameSceneAsset: {fileID: 0}
+  _titleScene: Title
+  _gameScene: Main
+  _resultScene: Result
+  _titleSceneAsset: {fileID: 102900000, guid: 6c2fe5b10ae363d46aec07a24fbe92ca, type: 3}
+  _gameSceneAsset: {fileID: 102900000, guid: 5f64a059fc8dd334296693f315531267, type: 3}
+  _resultSceneAsset: {fileID: 102900000, guid: 058a1d849d667b74cb28ae81aa0b6bb7, type: 3}
