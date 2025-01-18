@@ -66,6 +66,7 @@ public class PlayerManager : MonoBehaviour
 
             _clickSystem.OnClickMasu = null;
             _clickSystem.OnClickMasu += OnClickMasuAtSelectOwn;
+            BanUI.Get().BC = BlinkColor.Normal;
             BanUI.Get().Blink(ownKomaPositions.ToArray());
         };
 
