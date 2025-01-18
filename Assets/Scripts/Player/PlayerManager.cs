@@ -88,6 +88,7 @@ public class PlayerManager : MonoBehaviour
                 return;
             }
 
+            BanUI.Get().BC = BlinkColor.Move;
             _movableWorldPositions = Ban.Get().GetMovablePosition(_selectedKomaPosition, _selectedKomaMovableDirections);
             if (_isFirstMove)
             {
@@ -119,6 +120,7 @@ public class PlayerManager : MonoBehaviour
             King king = _komaController.GetKing();
             _selectedKomaPosition = king.CurrentPosition;
             _selectedKomaMovableDirections = king.KomaAsset.MovableDirection;
+            BanUI.Get().BC = BlinkColor.Move;
             _movableWorldPositions = Ban.Get().GetMovablePosition(_selectedKomaPosition, _selectedKomaMovableDirections);
             // à⁄ìÆâ¬î\èÍèäÇ™Ç»Ç©Ç¡ÇΩÇÁïâÇØ
             if (_movableWorldPositions.Length == 0)
@@ -126,6 +128,7 @@ public class PlayerManager : MonoBehaviour
                 _gameManager.GameEnd(_gameManager.Opponent(_playerNumber).GetComponent<PlayerManager>().PlayerNumber);
                 return;
             }
+
             _clickSystem.OnClickMasu += OnClickMasuAtKingMove;
         };
     }
@@ -143,6 +146,7 @@ public class PlayerManager : MonoBehaviour
             //_clickSystem.OnClickMasu -= OnClickMasuAtAttack;
             _selectedKomaPosition = masu.OwnPosition;
             _selectedKomaMovableDirections = movablePositions;
+            BanUI.Get().BC = BlinkColor.Attack;
             _attackableWorldPositions = Ban.Get().GetAttackablePosition(masu.OwnPosition, movablePositions);
             if (_attackableWorldPositions.Length == 0)
             {
@@ -170,6 +174,7 @@ public class PlayerManager : MonoBehaviour
             _isAttack = true;
             KomaController opponent = _gameManager.Opponent(_playerNumber).GetComponent<KomaController>();
             opponent.TakeAttack(masu.OwnPosition);
+            BanUI.Get().BC = BlinkColor.Attack;
             _attackableWorldPositions = Ban.Get().GetAttackablePosition(_selectedKomaPosition, _selectedKomaMovableDirections);
             if (_attackableWorldPositions.Length == 0)
             {
