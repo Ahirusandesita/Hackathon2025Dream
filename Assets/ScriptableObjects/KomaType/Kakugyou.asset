@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93656ef0acf59a44fb15681c38cf7f8d, type: 3}
-  m_Name: Kaugyou
+  m_Name: Kakugyou
   m_EditorClassIdentifier: 
   _komaName: Kakugyou
   _movableDirection:
@@ -46,4 +46,9 @@ MonoBehaviour:
   - {x: -6, y: -6}
   - {x: -7, y: -7}
   - {x: -8, y: -8}
+  _collidableDirection:
+  - {x: -1, y: 1}
+  - {x: 1, y: 1}
+  - {x: -1, y: -1}
+  - {x: 1, y: -1}
   _icon: {fileID: 21300000, guid: 4ff9a428a99830a42b3d664d7d1603ff, type: 3}
