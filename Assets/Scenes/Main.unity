@@ -1079,6 +1079,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4963257830809068149, guid: 9b5025867385b81469a73f6cf9c15634, type: 3}
+      propertyPath: _result1Scene
+      value: Result1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963257830809068149, guid: 9b5025867385b81469a73f6cf9c15634, type: 3}
+      propertyPath: _result2Scene
+      value: Result2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963257830809068149, guid: 9b5025867385b81469a73f6cf9c15634, type: 3}
+      propertyPath: _result1SceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: 058a1d849d667b74cb28ae81aa0b6bb7, type: 3}
+    - target: {fileID: 4963257830809068149, guid: 9b5025867385b81469a73f6cf9c15634, type: 3}
+      propertyPath: _result2SceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: cf59f75bcd100f448bcdcef06756c9c6, type: 3}
     - target: {fileID: 7562317660111338975, guid: 9b5025867385b81469a73f6cf9c15634, type: 3}
       propertyPath: m_Name
       value: SceneChanger

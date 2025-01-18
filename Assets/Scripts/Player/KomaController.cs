@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Triggers;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -129,6 +130,7 @@ public class KomaController : MonoBehaviour, IInjectPlayer
             if (newPosition == opponentKoma.CurrentPosition)
             {
                 opponent.TakeAttack(newPosition);
+                break;
             }
         }
 
@@ -151,11 +153,10 @@ public class KomaController : MonoBehaviour, IInjectPlayer
                 Vector2Int moveDirectionNormalied = new Vector2Int(moveDirection.x / divideX, moveDirection.y / divideY);
                 KomaAnimation komaAnimation = koma.GetComponent<KomaAnimation>();
                 await komaAnimation.Move(newPosition, _myPlayerNumber);
-
                 if (_ban.CheckEnemyCamp(newPosition, _myPlayerNumber) && koma.KomaAsset.CanNari)
                 {
                     koma.KomaAsset = koma.NariAsset;
-                    koma.transform.rotation = Quaternion.Euler(Vector3.forward * 180f);
+                    koma.transform.rotation = Quaternion.Euler(koma.transform.eulerAngles.x, koma.transform.eulerAngles.y, 180f);
                 }
                 break;
             }
