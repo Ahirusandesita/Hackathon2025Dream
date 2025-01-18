@@ -54,7 +54,7 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
 
         gameManager.GetComponent<PhaseManager>().OnPowPutStart += (playerNumber) =>
         {
-            if(playerNumber != this.playerNumber)
+            if (playerNumber != this.playerNumber)
             {
                 return;
             }
@@ -120,13 +120,24 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
     {
         if (Input.GetKeyDown(KeyCode.A) && playerNumber == PlayerNumber.Player1)
         {
-            OnWaitRebellion?.Invoke(null, this);
+            A().Forget();
         }
         if (Input.GetKeyDown(KeyCode.B) && playerNumber == PlayerNumber.Player2)
         {
             OnWaitRebellion?.Invoke(null, this);
         }
     }
+    private async UniTask A()
+    {
+        if (OnWaitRebellion != null)
+        {
+            await UniTask.WhenAll(
+                OnWaitRebellion?.GetInvocationList()
+                    .OfType<WaitWithRebellionHandler>()
+                        .Select(async (OnAysncEvent) => await OnAysncEvent.Invoke(null, this)));
+        }
+    }
+
     private async void Rebellion()
     {
         List<Koma> allRebillions = new List<Koma>();
@@ -157,15 +168,17 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
         if (allRebillions.Count > 0)
         {
             Debug.Log($"{FindObjectOfType<GameManager>().Opponent(playerNumber).GetComponent<PlayerManager>().PlayerNomber}Ç™îΩóêÇãNÇ±ÇµÇ‹ÇµÇΩÅB");
-            OnRebellion?.Invoke(new RebellionEventArgs(allRebillions.ToArray()), this);
+            RebellionEventArgs rebellionEventArgs = new RebellionEventArgs(POWs.ToArray());
+            OnRebellion?.Invoke(rebellionEventArgs, this);
             if (OnWaitRebellion != null)
             {
                 await UniTask.WhenAll(
                     OnWaitRebellion?.GetInvocationList()
-                        .OfType<WaitWithHandler>()
-                            .Select(async (OnAysncEvent) => await OnAysncEvent.Invoke()));
+                        .OfType<WaitWithRebellionHandler>()
+                            .Select(async (OnAysncEvent) => await OnAysncEvent.Invoke(rebellionEventArgs, this)));
             }
-            POWs.RemoveAll(item => allRebillions.Contains(item));
+            //POWs.RemoveAll(item => allRebillions.Contains(item));
+            POWs.Clear();
         }
 
         gameManager.GetComponent<IPhaseChanger>().RebellionCheckEnd(playerNumber);
