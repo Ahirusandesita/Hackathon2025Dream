@@ -12,10 +12,21 @@ using System.Collections.Generic;
 public class Ban : MonoBehaviour
 {
     #region variable 
+    
+
     private const int CAMPRANGE = 3;
     private static Ban _instance = default;
 
+    [SerializeField]
+    private int _kingArea = 1;
+    private Koma _player1King = default;
+    private Koma _player2King = default;
     private Koma[,] _ban = new Koma[9,9];
+
+    [SerializeField,Header("Debug")]
+    private int _test = 0;
+    [SerializeField]
+    private PlayerNumber _tePl = default;
     #endregion
 
     #region property
@@ -34,15 +45,25 @@ public class Ban : MonoBehaviour
     #endregion
 
     #region unity method
-    //private void Update()
-    //{
-    //    if(Input.GetKeyDown(KeyCode.T))
-    //    {
-    //        Vector2Int a = GetVectorForInt(test);
-    //        Debug.Log(a + " " + CheckPosition(a) + " " + _ban[a.y, a.x]);
-    //        _banUI.Blink(a);
-    //    }
-    //}
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Vector2Int ch = GetVectorForInt(_test);
+            Debug.Log(ch + " " + CheckPosition(ch) + " " + _ban[ch.y, ch.x]);
+
+            if(!CheckKingAreaPosition(ch,_tePl))
+            {
+                BanUI.Get().Blink(ch,BlinkColor.Attack);
+                return;
+            }
+            BanUI.Get().Blink(ch);
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            CheckKingAreaPosition(new Vector2Int(0, 0), _tePl);
+        }
+    }
     #endregion
 
     #region Set method
@@ -55,6 +76,21 @@ public class Ban : MonoBehaviour
     public void SetKoma(Koma koma, Vector2Int pos)
     {
         _ban[pos.y, pos.x] = koma;
+
+        // 置かれた駒がキングではない
+        if(!koma.TryGetComponent(out King king))
+        {
+            return;
+        }
+        // プレイヤー対応
+        if (king.MyPlayerNumber == PlayerNumber.Player1)
+        {
+            _player1King = king;
+        }
+        else
+        {
+            _player2King = king;
+        }
     }
 
     /// <summary>
@@ -101,6 +137,52 @@ public class Ban : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// <para>CheckPosition</para>
+    /// <para>指定した座標が王の周りにあるか検査します</para>
+    /// </summary>
+    /// <param name="checkPos"></param>
+    /// <returns></returns>
+    public bool CheckKingAreaPosition(Vector2Int checkPos, PlayerNumber team)
+    {
+        // 盤外
+        if (!CheckPositionInBan(checkPos))
+        {
+            return false;
+        }
+
+        // 対象の王
+        Vector2Int targetKingPos = default;
+        if (team == PlayerNumber.Player1)
+        {
+            targetKingPos = _player1King.CurrentPosition;
+        }
+        else
+        {
+            targetKingPos = _player2King.CurrentPosition;
+        }
+
+        // 王の周辺を検索
+        List<Vector2Int> areaPos = new List<Vector2Int>();
+        for(int y = -_kingArea;y <= _kingArea;y++)
+        {
+            for(int x = -_kingArea;x <= _kingArea;x++)
+            {
+                Vector2Int checkKingAreaPos = targetKingPos;
+                checkKingAreaPos.y += y;
+                checkKingAreaPos.x += x;
+                // 盤外
+                if (!CheckPositionInBan(checkKingAreaPos))
+                {
+                    continue;
+                }
+                areaPos.Add(checkKingAreaPos);
+            }
+        }
+
+        return areaPos.Contains(checkPos);
     }
 
     /// <summary>
@@ -166,14 +248,30 @@ public class Ban : MonoBehaviour
     {
         // 返却用
         List<Vector2Int> poss = new List<Vector2Int>();
-        PlayerNumber myTeam = _ban[pos.y, pos.x].MyPlayerNumber;
+        // 駒取得
+        Koma koma = _ban[pos.y, pos.x];
+        // 相対変換
+        PlayerNumber myTeam = koma.MyPlayerNumber;
         int dire = PlayerManager.GetMoveDirectionCoefficient(myTeam);
+        for(int i = 0;i<movablePositions.Length;i++)
+        {
+            movablePositions[i] = movablePositions[i] * dire;
+        }
 
+        // 駒の直線処理が必要である
+        if(koma.KomaAsset.CollidableDirection.Length != 0)
+        {
+            Vector2Int[] collideDire = koma.KomaAsset.CollidableDirection;
+            for (int i = 0; i < collideDire.Length; i++)
+            {
+                collideDire[i] = collideDire[i] * dire;
+            }
+            //movablePositions = GetCollideList(pos, movablePositions, collideDire);
+        }
         // 移動可能座標
         foreach (Vector2Int movable in movablePositions)
         {
-            Vector2Int direMovable = movable * dire;
-            Vector2Int checkPos = pos + direMovable;
+            Vector2Int checkPos = pos + movable;
 
             // 盤外
             if (!CheckPositionInBan(checkPos))
@@ -196,21 +294,27 @@ public class Ban : MonoBehaviour
     /// <para>攻撃可能なマスを返す</para>
     /// </summary>
     /// <param name="pos">現在座標</param>
-    /// <param name="movablePostions">移動可能範囲</param>
+    /// <param name="movablePositions">移動可能範囲</param>
     /// <returns>移動可能なマス（絶対座標）</returns>
-    public Vector2Int[] GetAttackablePosition(Vector2Int pos, Vector2Int[] movablePostions)
+    public Vector2Int[] GetAttackablePosition(Vector2Int pos, Vector2Int[] movablePositions)
     {
         // 返却用
         List<Vector2Int> poss = new List<Vector2Int>();
-        PlayerNumber myTeam = _ban[pos.y, pos.x].MyPlayerNumber;
+        // 駒取得
+        Koma koma = _ban[pos.y, pos.x];
+        // 相対変換
+        PlayerNumber myTeam = koma.MyPlayerNumber;
         int dire = PlayerManager.GetMoveDirectionCoefficient(myTeam);
+        for (int i = 0; i < movablePositions.Length; i++)
+        {
+            movablePositions[i] = movablePositions[i] * dire;
+        }
 
         //Debug.Log(movablePostions.Length);
         // 移動可能座標
-        foreach (Vector2Int movable in movablePostions)
+        foreach (Vector2Int movable in movablePositions)
         {
-            Vector2Int direMovable = movable * dire;
-            Vector2Int checkPos = pos + direMovable;
+            Vector2Int checkPos = pos + movable;
             //Debug.Log(checkPos);
             // 盤外
             if (!CheckPositionInBan(checkPos))
@@ -273,5 +377,34 @@ public class Ban : MonoBehaviour
         }
         return true;
     }
+
+    //private Vector2Int[] GetCollideList(Vector2Int pos, Vector2Int[] movablePositions, Vector2Int[] dire)
+    //{
+    //    List<Vector2Int> result = new List<Vector2Int>();
+
+    //    List<Vector2Int>[] collide = new List<Vector2Int>[dire.Length];
+
+    //    foreach(Vector2Int movable in movablePositions)
+    //    {
+    //        Vector2Int checkPos = pos + movable;
+    //        // 盤外
+    //        if (!CheckPositionInBan(checkPos))
+    //        {
+    //            continue;
+    //        }
+    //        // 方向リスト
+    //        for (int i = 0;i < dire.Length;i++)
+    //        {
+    //            // 移動可能マスが入っていない かつ 
+    //            if(collide[i].Count == 0 && checkPos - dire[i] == pos)
+    //            {
+    //                collide[i].Add(checkPos);
+    //            }
+
+
+    //        }
+    //    }
+
+    //}
     #endregion
 }
