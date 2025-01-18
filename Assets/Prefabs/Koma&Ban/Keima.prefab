@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -7040970634786671609}
   - component: {fileID: 1441315833557839093}
   - component: {fileID: -7839220892802873544}
+  - component: {fileID: 3829627089150654336}
   m_Layer: 0
   m_Name: Keima
   m_TagString: Untagged
@@ -95,12 +96,12 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8276230556688763936}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 4da473d5108768f478a70337d64b0677, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -115,7 +116,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8276230556688763936}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc67d0df026bea94f810bc335f5bdb76, type: 3}
   m_Name: 
@@ -133,6 +134,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _komaAsset: {fileID: 11400000, guid: 7fb808a8ec225c44baa66e7ed05453c7, type: 2}
+--- !u!114 &3829627089150654336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8276230556688763936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66a8dde6806705b4084eb5a7031a86ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5538433156992197794
 PrefabInstance:
   m_ObjectHideFlags: 0
