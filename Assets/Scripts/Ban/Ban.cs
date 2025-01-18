@@ -278,7 +278,6 @@ public class Ban : MonoBehaviour
         Koma koma = _ban[pos.y, pos.x];
         // 相対変換
         PlayerNumber myTeam = koma.MyPlayerNumber;
-        Debug.Log(myTeam);
         int dire = PlayerManager.GetMoveDirectionCoefficient(myTeam);
         Vector2Int[] direMovable = (Vector2Int[])movablePositions.Clone(); 
         for(int i = 0;i<direMovable.Length;i++)
@@ -459,7 +458,6 @@ public class Ban : MonoBehaviour
             // 盤外
             if (!CheckPositionInBan(checkPos))
             {
-                Debug.Log(checkPos + " bangai");
                 continue;
             }
             // 方向リスト
@@ -468,19 +466,16 @@ public class Ban : MonoBehaviour
                 // 移動可能マスが入っていない かつ 自身の座標の1マス先ではない
                 if (collide[i].Count == 0 && checkPos != pos + dire[i])
                 {
-                    Debug.Log(checkPos + " noMovable");
                     continue;
                 }
                 // 移動可能マスが入っている かつ 移動可能マスの1マス先ではない
                 if(collide[i].Count != 0 && checkPos != collide[i][collide[i].Count - 1] + dire[i])
                 {
-                    Debug.Log(checkPos + " Movable");
                     continue;
                 }
                 // 何もない
                 if(_ban[checkPos.y,checkPos.x] is null)
                 {
-                    Debug.Log(checkPos + " in");
                     collide[i].Add(checkPos);
                 }
             }
