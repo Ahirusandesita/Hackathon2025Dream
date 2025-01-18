@@ -180,7 +180,7 @@ public class PlayerManager : MonoBehaviour
         // 移動可能なマスが押された
         if (_movableWorldPositions.Contains(masu.OwnPosition))
         {
-            _komaController.MoveKoma(_selectedKomaPosition, masu.OwnPosition);
+            _komaController.MoveKoma(_selectedKomaPosition, masu.OwnPosition).Forget();
             (_phaseManager as IPhaseChanger).MoveEnd(_playerNumber);
         }
     }
@@ -200,7 +200,7 @@ public class PlayerManager : MonoBehaviour
         // 移動可能なマスが押された
         if (_movableWorldPositions.Contains(masu.OwnPosition))
         {
-            _komaController.MoveKoma(_selectedKomaPosition, masu.OwnPosition);
+            _komaController.MoveKoma(_selectedKomaPosition, masu.OwnPosition).Forget();
             (_phaseManager as IPhaseChanger).MoveEnd(_playerNumber);
         }
     }

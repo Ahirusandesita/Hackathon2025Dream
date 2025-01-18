@@ -113,7 +113,7 @@ public class KomaController : MonoBehaviour, IInjectPlayer
         _ban.RemoveKoma(takeAttackPosition);
     }
 
-    public void MoveKoma(Vector2Int oldPosition, Vector2Int newPosition)
+    public async UniTaskVoid MoveKoma(Vector2Int oldPosition, Vector2Int newPosition)
     {
         // 移動先に敵の駒があれば、取る
         KomaController opponent = _gameManager.Opponent(_myPlayerNumber).GetComponent<KomaController>();
@@ -139,41 +139,47 @@ public class KomaController : MonoBehaviour, IInjectPlayer
                 //    _ => throw new System.InvalidProgramException()
                 //};
                 Vector2Int moveDirection = newPosition - oldPosition;
+                int divideX = moveDirection.x == 0 ? 1 : Mathf.Abs(moveDirection.x);
+                int divideY = moveDirection.y == 0 ? 1 : Mathf.Abs(moveDirection.y);
+                Vector2Int moveDirectionNormalied = new Vector2Int(moveDirection.x / divideX, moveDirection.y / divideY);
 
                 KomaAnimation komaAnimation = koma.GetComponent<KomaAnimation>();
-
-                // ビューの更新
-                if (moveDirection == new Vector2Int(1, -1))
+                int max = Mathf.Abs(moveDirection.x) > Mathf.Abs(moveDirection.y) ? Mathf.Abs(moveDirection.x) : Mathf.Abs(moveDirection.y);
+                for (int i = 0; i < max; i++)
                 {
-                    komaAnimation.Koma_MoveFrontRight();
-                }
-                else if (moveDirection == new Vector2Int(0, -1))
-                {
-                    komaAnimation.Koma_MoveFront();
-                }
-                else if (moveDirection == new Vector2Int(-1, -1))
-                {
-                    komaAnimation.Koma_MoveFrontLeft();
-                }
-                else if (moveDirection == new Vector2Int(1, 0))
-                {
-                    komaAnimation.Koma_MoveRight();
-                }
-                else if (moveDirection == new Vector2Int(-1, 0))
-                {
-                    komaAnimation.Koma_MoveLeft();
-                }
-                else if (moveDirection == new Vector2Int(1, 1))
-                {
-                    komaAnimation.Koma_BackRight();
-                }
-                else if (moveDirection == new Vector2Int(-1, 1))
-                {
-                    komaAnimation.Koma_BackLeft();
-                }
-                else if (moveDirection == new Vector2Int(0, 1))
-                {
-                    komaAnimation.Koma_MoveFrontRight();
+                    // ビューの更新
+                    if (moveDirectionNormalied == new Vector2Int(1, -1))
+                    {
+                        await komaAnimation.Koma_MoveFrontRight();
+                    }
+                    else if (moveDirectionNormalied == new Vector2Int(0, -1))
+                    {
+                        await komaAnimation.Koma_MoveFront();
+                    }
+                    else if (moveDirectionNormalied == new Vector2Int(-1, -1))
+                    {
+                        await komaAnimation.Koma_MoveFrontLeft();
+                    }
+                    else if (moveDirectionNormalied == new Vector2Int(1, 0))
+                    {
+                        await komaAnimation.Koma_MoveRight();
+                    }
+                    else if (moveDirectionNormalied == new Vector2Int(-1, 0))
+                    {
+                        await komaAnimation.Koma_MoveLeft();
+                    }
+                    else if (moveDirectionNormalied == new Vector2Int(1, 1))
+                    {
+                        await komaAnimation.Koma_BackRight();
+                    }
+                    else if (moveDirectionNormalied == new Vector2Int(-1, 1))
+                    {
+                        await komaAnimation.Koma_BackLeft();
+                    }
+                    else if (moveDirectionNormalied == new Vector2Int(0, 1))
+                    {
+                        await komaAnimation.Koma_MoveFrontRight();
+                    }
                 }
             }
         }
