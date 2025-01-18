@@ -32,9 +32,9 @@ public class GameManager : MonoBehaviour
     private List<POWGroupAsset> POWGroupAssets = new List<POWGroupAsset>();
 
     [SerializeField]
-    private GameObject player1_komaWaitingArea;
+    private List<GameObject> player1_komaWaitingAreas;
     [SerializeField]
-    private GameObject player2_komaWaitingArea;
+    private List<GameObject> player2_komaWaitingAreas;
 
     public GameObject Player1 => player1;
     public GameObject Player2 => player2;
@@ -72,16 +72,8 @@ public class GameManager : MonoBehaviour
             item.Inject(Player2.GetComponent<PlayerManager>().PlayerNomber);
         }
 
-        if(!player1_komaWaitingArea || !player2_komaWaitingArea)
-        {
-            Debug.LogError("‹î‘ä‚ÌGameObject‚ªƒZƒbƒg‚³‚ê‚Ä‚¢‚È‚¢");
-            Player1.GetComponent<KomaWaitingArea>().InjectWaitingTransform(this.transform);
-            Player2.GetComponent<KomaWaitingArea>().InjectWaitingTransform(this.transform);
-
-            return;
-        }
-        Player1.GetComponent<KomaWaitingArea>().InjectWaitingTransform(player1_komaWaitingArea.transform);
-        Player2.GetComponent<KomaWaitingArea>().InjectWaitingTransform(player2_komaWaitingArea.transform);
+        Player1.GetComponent<KomaWaitingArea>().InjectWaitingTransform(player1_komaWaitingAreas);
+        Player2.GetComponent<KomaWaitingArea>().InjectWaitingTransform(player2_komaWaitingAreas);
 
     }
 

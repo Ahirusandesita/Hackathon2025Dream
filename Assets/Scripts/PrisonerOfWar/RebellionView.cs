@@ -18,6 +18,7 @@ public class RebellionView : MonoBehaviour, IInject<GameManager>
 
     private float count = 0f;
     private bool isCount = false;
+    private bool isCountFinish = false;
 
     void IInject<GameManager>.Inject(GameManager gameManager)
     {
@@ -36,23 +37,13 @@ public class RebellionView : MonoBehaviour, IInject<GameManager>
         gameManager.Player1.GetComponent<POWManager>().OnWaitRebellion += async (eventData, sender) =>
         {
             animator.SetTrigger("player1");
-           // await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("player1"));
-            await UniTask.Delay(2000);
+            // await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("player1"));
+            isCount = true;
+            await UniTask.WaitUntil(() => isCountFinish);
+            count = 0f;
+            isCount = false;
+            isCountFinish = false;
 
-            foreach(Koma koma in eventData.Rebellions)
-            {
-                koma.GetComponent<PowMesh>().POW.enabled = false;
-                koma.GetComponent<PowMesh>().Normal.enabled = true;
-                koma.GetComponent<KomaRebellionEffect>().Rotation();
-            }
-
-            await UniTask.Delay(2000);
-        };
-        gameManager.Player2.GetComponent<POWManager>().OnWaitRebellion += async (eventData, sender) =>
-        {
-            animator.SetTrigger("player2");
-            //await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("player2"));
-            await UniTask.Delay(2000);
             foreach (Koma koma in eventData.Rebellions)
             {
                 koma.GetComponent<PowMesh>().POW.enabled = false;
@@ -60,12 +51,48 @@ public class RebellionView : MonoBehaviour, IInject<GameManager>
                 koma.GetComponent<KomaRebellionEffect>().Rotation();
             }
 
-            await UniTask.Delay(2000);
+            isCount = true;
+            await UniTask.WaitUntil(() => isCountFinish);
+            count = 0f;
+            isCount = false;
+            isCountFinish = false;
+        };
+        gameManager.Player2.GetComponent<POWManager>().OnWaitRebellion += async (eventData, sender) =>
+        {
+            animator.SetTrigger("player2");
+            //await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("player2"));
+            isCount = true;
+            await UniTask.WaitUntil(() => isCountFinish);
+            count = 0f;
+            isCount = false;
+            isCountFinish = false;
+
+            foreach (Koma koma in eventData.Rebellions)
+            {
+                koma.GetComponent<PowMesh>().POW.enabled = false;
+                koma.GetComponent<PowMesh>().Normal.enabled = true;
+                koma.GetComponent<KomaRebellionEffect>().Rotation();
+            }
+
+            isCount = true;
+            await UniTask.WaitUntil(() => isCountFinish);
+            count = 0f;
+            isCount = false;
+            isCountFinish = false;
         };
     }
 
     private void Update()
     {
-        
+        if (!isCount)
+        {
+            return;
+        }
+
+        count += Time.deltaTime;
+        if (count > 2f)
+        {
+            isCountFinish = true;
+        }
     }
 }

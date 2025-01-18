@@ -39,6 +39,7 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
     private ClickSystem clickSystem;
     private Ban ban;
 
+    private bool isFirstPowPut = false;
     private void Initialize()
     {
         gameManager.GetComponent<PhaseManager>().OnRebellionCheckStart += (turnEndPlayer) =>
@@ -67,6 +68,7 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
             }
             else
             {
+                isFirstPowPut = true;
                 OnPOWPut?.Invoke(POWStandBys[0]);
             }
 
@@ -86,21 +88,44 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
     }
     private void POWPut(Masu masu)
     {
-        if (ban.CheckPosition(masu.OwnPosition))
+        if (isFirstPowPut)
         {
-            gameManager.Me(playerNumber).GetComponent<KomaController>().PutKoma(POWStandBys[0], masu.OwnPosition);
-            POWStandBys[0].GetComponent<PowMesh>().POW.enabled = true;
-            POWStandBys[0].GetComponent<PowMesh>().Normal.enabled = false;
-            POWStandBys.RemoveAt(0);
+            if (ban.CheckPosition(masu.OwnPosition))
+            {
+                isFirstPowPut = false;
+                gameManager.Me(playerNumber).GetComponent<KomaController>().PutKoma(POWStandBys[0], masu.OwnPosition);
+                GetComponent<KomaWaitingArea>().Remove(POWStandBys[0]);
+                POWStandBys.RemoveAt(0);
 
-            if (POWStandBys.Count == 0)
-            {
-                gameManager.GetComponent<IPhaseChanger>().POWPutEnd(playerNumber);
-                OnPOWPutEnd?.Invoke();
+                if (POWStandBys.Count == 0)
+                {
+                    gameManager.GetComponent<IPhaseChanger>().POWPutEnd(playerNumber);
+                    OnPOWPutEnd?.Invoke();
+                }
+                else
+                {
+                    OnPOWPut?.Invoke(POWStandBys[0]);
+                }
             }
-            else
+        }
+        if (!isFirstPowPut)
+        {
+            //Ç±Ç±BanÇ™èCê≥Ç≥ÇÍÇÍÇŒåƒÇ‘ä÷êîÇïœÇ¶ÇÈ
+            if (ban.CheckPosition(masu.OwnPosition))
             {
-                OnPOWPut?.Invoke(POWStandBys[0]);
+                gameManager.Me(playerNumber).GetComponent<KomaController>().PutKoma(POWStandBys[0], masu.OwnPosition);
+                GetComponent<KomaWaitingArea>().Remove(POWStandBys[0]);
+                POWStandBys.RemoveAt(0);
+
+                if (POWStandBys.Count == 0)
+                {
+                    gameManager.GetComponent<IPhaseChanger>().POWPutEnd(playerNumber);
+                    OnPOWPutEnd?.Invoke();
+                }
+                else
+                {
+                    OnPOWPut?.Invoke(POWStandBys[0]);
+                }
             }
         }
     }
@@ -110,6 +135,8 @@ public class POWManager : MonoBehaviour, IInject<PlayerNumber>, IInject<GameMana
 
     public void TurnedIntoPOW(Koma koma)
     {
+        koma.GetComponent<PowMesh>().POW.enabled = true;
+        koma.GetComponent<PowMesh>().Normal.enabled = false;
         POWs.Add(koma);
         POWStandBys.Add(koma);
     }
